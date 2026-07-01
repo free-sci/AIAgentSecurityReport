@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { id: 'product', label: 'Product', path: '/product' },
   { id: 'team', label: 'Team', path: '/team' },
   { id: 'policy', label: 'Policy', path: '/policy' },
+  { id: 'incidents', label: 'Incidents', path: '/incidents' },
 ];
 
 export default function Header() {

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import VulnerabilityPage from './pages/VulnerabilityPage';
 import PlaceholderPage from './pages/PlaceholderPage';
+import IncidentsPage from './pages/IncidentsPage';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
             />
           }
         />
+        <Route path="/incidents" element={<IncidentsPage />} />
       </Routes>
     </BrowserRouter>
   );

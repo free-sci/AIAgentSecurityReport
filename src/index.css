@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/* ===== Custom CSS Variables ===== */
+:root {
+  --academic-dark: #0f172a;
+  --academic-blue: #2563eb;
+  --academic-slate: #f8fafc;
+  --academic-border: #e2e8f0;
+}
+
+/* ===== Base Styles ===== */
+body {
+  font-family: 'General Sans', 'Satoshi', 'Inter', sans-serif;
+  background-color: #ffffff;
+  color: #1e293b;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ===== Navigation Link Styles ===== */
+.nav-link {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #3b82f6;
+  transition: all 0.2s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link.active::after {
+  width: 80%;
+}
+
+.nav-link:hover {
+  color: #94a3b8;
+}
+
+/* ===== Sidebar Item Styles ===== */
+.sidebar-item {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-item.active {
+  background-color: #ffffff;
+  color: var(--academic-blue);
+  border-right: 4px solid var(--academic-blue);
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  font-weight: 600;
+}
+
+/* ===== Glass Card ===== */
+.glass-card {
+  background: white;
+  border: 1px solid var(--academic-border);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== Report Card ===== */
+.report-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--academic-border);
+}
+
+.report-card:hover {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+}
+
+/* ===== Sub-Axis Item ===== */
+.sub-axis-item {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sub-axis-item.active {
+  background-color: var(--academic-dark);
+  color: white;
+}
+
+/* ===== Menu Transition ===== */
+.menu-transition {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.menu-hidden {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-10px);
+}
+
+/* ===== Grid Pattern Background ===== */
+.grid-pattern {
+  background-image: radial-gradient(#cbd5e1 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+}
+
+/* ===== Scrollbar Hide ===== */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== Animations ===== */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+/* ===== Custom Scrollbar for Sidebar ===== */
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: #cbd5e1;
+}

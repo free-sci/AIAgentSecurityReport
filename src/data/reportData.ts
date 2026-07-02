@@ -1,494 +1,347 @@
-import { ScanEye, ShieldOff, Brain, Eye, FileWarning, ShieldAlert } from 'lucide-react';
+import { ScanEye, ShieldOff, Brain, Eye, FileWarning, ShieldAlert, Bug, Lock, AlertTriangle, Globe, Server, Workflow } from 'lucide-react';
 import { createElement } from 'react';
 import type { ReportCardData } from '../components/vulnerability/ReportCard';
 
-// Type for the icon components
-type IconComponent = typeof ScanEye;
+type Icon = typeof ScanEye;
 
-// Phase-specific report data
-export const PHASE_REPORTS: Record<string, ReportCardData[]> = {
-  'phase-1': [
-    {
-      id: 'r1',
-      code: 'VUL-R-01',
-      title: '需求定义中的安全假设缺失 (Missing Security Posture)',
-      riskLevel: 'high',
-      icon: createElement(FileWarning as IconComponent),
-      iconBgClass: 'bg-red-50',
-      iconTextClass: 'text-red-600',
-      description:
-        '在需求规划阶段，若未将对抗性输入检测、权限最小化及合规性需求纳入功能规格，将导致后续阶段产生难以修复的架构级缺陷。研究表明，67% 的 Agent 安全事件可追溯至需求阶段的遗漏。',
-      defenseBox: {
-        label: '核心防御方案',
-        content: '建立基于 STRIDE-LM 的安全需求矩阵，将安全属性映射为可测试的验收条件。',
-      },
-      secondaryBox: {
-        label: '行业采纳率',
-        content: '仅 34% 的组织在需求阶段开展系统化威胁建模',
-      },
-    },
-    {
-      id: 'r2',
-      code: 'VUL-R-02',
-      title: '过度信任 Chain-of-Thought 的可靠性',
-      riskLevel: 'medium',
-      icon: createElement(Brain as IconComponent),
-      iconBgClass: 'bg-amber-50',
-      iconTextClass: 'text-amber-600',
-      description:
-        '需求方可能错误假定思维链推理始终正确且无害。然而，对抗性样本已证明可操纵 CoT 过程，从而引导 Agent 做出符合攻击者意图的决策。',
-      defenseBox: {
-        label: '预防策略',
-        content: '在需求中明确 CoT 输出的审计要求与安全边界定义。',
-      },
-      secondaryBox: {
-        label: '漏洞发现趋势',
-        content: '近半年相关 CVE 数量同比增长 215%',
-      },
-    },
-  ],
-  'phase-2': [
-    {
-      id: 'r3',
-      code: 'VUL-P-01',
-      title: '感知源验证失效 (Input Source Trust Deficit)',
-      riskLevel: 'high',
-      icon: createElement(ScanEye as IconComponent),
-      iconBgClass: 'bg-blue-50',
-      iconTextClass: 'text-blue-600',
-      description:
-        '在架构设计阶段，如果未明确定义感知源的身份验证机制，Agent 可能会接受来自未授权或恶意构造的数据源输入。这种情况在多模态 Agent 中尤为突出，攻击者可以通过特定的图像伪影或超声波指令直接操纵 Agent 的初始认知。',
-      defenseBox: {
-        label: '核心防御方案',
-        content: '建立基于公钥基础设施 (PKI) 的多源数据签名验证模型。',
-      },
-      secondaryBox: {
-        label: '测评覆盖率',
-        content: '',
-        isProgress: true,
-        progressPercent: 85,
-      },
-    },
-    {
-      id: 'r4',
-      code: 'VUL-P-02',
-      title: '多模态诱导对抗攻击',
-      riskLevel: 'medium',
-      icon: createElement(ShieldOff as IconComponent),
-      iconBgClass: 'bg-amber-50',
-      iconTextClass: 'text-amber-600',
-      description:
-        '攻击者利用深度神经网络在图像/语音处理中的脆弱性，通过添加人眼不可察觉的噪声（对抗扰动），使得感知层将恶意目标误识为合法指令。架构层需引入感知预处理沙箱。分析表明，80% 的开源多模态模型在无防御状态下极易受此攻击影响。',
-      defenseBox: {
-        label: '研究前沿',
-        content: '目前正探索基于非扩散模型的感知噪声过滤算法，初步收效显著。',
-      },
-      secondaryBox: {
-        label: '典型攻击成本',
-        content: '极低 (低代码工具即可生成对抗样本)',
-      },
-    },
-  ],
-  'phase-3': [
-    {
-      id: 'r5',
-      code: 'VUL-C-01',
-      title: '不安全工具调用链拼接',
-      riskLevel: 'high',
-      icon: createElement(ShieldAlert as IconComponent),
-      iconBgClass: 'bg-red-50',
-      iconTextClass: 'text-red-600',
-      description:
-        '编码阶段常见的风险是将 LLM 生成的工具调用参数直接拼接到系统命令或 SQL 查询中。攻击者可通过提示注入使 Agent 生成的参数包含命令注入 payload，从而逃逸沙箱限制。',
-      defenseBox: {
-        label: '编码实践',
-        content: '强制使用参数化工具调用接口，禁止字符串拼接方式构造系统命令。',
-      },
-      secondaryBox: {
-        label: 'SAST 检出率',
-        content: '',
-        isProgress: true,
-        progressPercent: 62,
-      },
-    },
-    {
-      id: 'r6',
-      code: 'VUL-C-02',
-      title: '第三方 Agent SDK 供应链投毒',
-      riskLevel: 'medium',
-      icon: createElement(Eye as IconComponent),
-      iconBgClass: 'bg-amber-50',
-      iconTextClass: 'text-amber-600',
-      description:
-        '开发者广泛使用的 Agent 框架 SDK 可能被植入恶意后门，在特定条件下泄露用户会话数据或篡改工具执行逻辑。2024 年已有 3 起真实的 AI SDK 供应链攻击事件。',
-      defenseBox: {
-        label: '防护措施',
-        content: '锁定 SDK 版本哈希，使用 Sigstore 或类似工具验证包完整性。',
-      },
-      secondaryBox: {
-        label: '影响范围',
-        content: '波及约 12,000+ 下游应用',
-      },
-    },
-  ],
-  'phase-4': [
-    {
-      id: 'r7',
-      code: 'VUL-T-01',
-      title: '动态 Jailbreak 的自动化渗透测试',
-      riskLevel: 'high',
-      icon: createElement(ScanEye as IconComponent),
-      iconBgClass: 'bg-blue-50',
-      iconTextClass: 'text-blue-600',
-      description:
-        '评估阶段需模拟 Tree of Attacks with Pruning (TAP) 等自动化越狱框架，对 Agent 安全对齐进行压力测试。这些框架利用 LLM 自动生成并剪枝攻击路径，发现人工红队遗漏的漏洞。',
-      defenseBox: {
-        label: '测试标准',
-        content: '推荐采用 ASRP-EVAL 基准，包含 2,400+ 对抗测试用例。',
-      },
-      secondaryBox: {
-        label: '绕过率',
-        content: '主流 Agent 平均绕过率达 42%',
-      },
-    },
-    {
-      id: 'r8',
-      code: 'VUL-T-02',
-      title: '权限提升路径的静态分析缺失',
-      riskLevel: 'medium',
-      icon: createElement(ShieldOff as IconComponent),
-      iconBgClass: 'bg-amber-50',
-      iconTextClass: 'text-amber-600',
-      description:
-        'Agent 间交互协议中存在的权限传递漏洞传统 SAST 工具难以发现，需引入基于图数据库的权限传递路径分析。',
-      defenseBox: {
-        label: '工具链',
-        content: '构建 Neo4j 权限图 + Cypher 查询发现隐蔽提权路径。',
-      },
-      secondaryBox: {
-        label: '检出率提升',
-        content: '',
-        isProgress: true,
-        progressPercent: 78,
-      },
-    },
-  ],
-  'phase-5': [
-    {
-      id: 'r9',
-      code: 'VUL-D-01',
-      title: '部署配置中的默认凭证泄露',
-      riskLevel: 'high',
-      icon: createElement(FileWarning as IconComponent),
-      iconBgClass: 'bg-red-50',
-      iconTextClass: 'text-red-600',
-      description:
-        'Agent 部署时使用的默认 API 密钥、模型访问令牌及工具服务的认证凭证若未修改，将成为攻击者获取 Agent 控制权的捷径。',
-      defenseBox: {
-        label: '最佳实践',
-        content: '部署流水线中强制密钥轮换与动态密钥注入，禁用静态默认凭证。',
-      },
-      secondaryBox: {
-        label: '暴露事件',
-        content: '2024年公开暴露 Agent 凭证事件 37 起',
-      },
-    },
-    {
-      id: 'r10',
-      code: 'VUL-D-02',
-      title: '容器逃逸与 Agent 沙箱边界突破',
-      riskLevel: 'medium',
-      icon: createElement(ShieldAlert as IconComponent),
-      iconBgClass: 'bg-amber-50',
-      iconTextClass: 'text-amber-600',
-      description:
-        'Agent 在 Docker/Kubernetes 环境中运行时，若未配置安全的 seccomp/AppArmor 策略，可能通过恶意工具调用触发容器逃逸。',
-      defenseBox: {
-        label: '加固方案',
-        content: '启用 gVisor 或 Kata Containers 提供硬件级隔离。',
-      },
-      secondaryBox: {
-        label: '容器安全评分',
-        content: '',
-        isProgress: true,
-        progressPercent: 55,
-      },
-    },
-  ],
-  'phase-6': [
-    {
-      id: 'r11',
-      code: 'VUL-O-01',
-      title: 'Agent 记忆投毒与持续性误导',
-      riskLevel: 'high',
-      icon: createElement(Brain as IconComponent),
-      iconBgClass: 'bg-blue-50',
-      iconTextClass: 'text-blue-600',
-      description:
-        '运行时阶段，攻击者可通过多次交互逐步污染 Agent 的长期记忆/RAG 知识库，使得 Agent 在后续所有对话中持续输出错误或不安全的内容。',
-      defenseBox: {
-        label: '检测方法',
-        content: '部署记忆一致性验证器，周期性比对记忆条目与可信基准的偏差。',
-      },
-      secondaryBox: {
-        label: '恢复时间',
-        content: '平均需 48+ 小时发现记忆投毒攻击',
-      },
-    },
-    {
-      id: 'r12',
-      code: 'VUL-O-02',
-      title: '多 Agent 合谋与信息泄露',
-      riskLevel: 'medium',
-      icon: createElement(Eye as IconComponent),
-      iconBgClass: 'bg-amber-50',
-      iconTextClass: 'text-amber-600',
-      description:
-        '在多 Agent 系统中，恶意 Agent 可能利用合法通信信道进行隐写通信，绕过信息流控制策略，将敏感数据传输给外部实体。',
-      defenseBox: {
-        label: '监控措施',
-        content: '对各 Agent 间消息进行语义熵分析，检测异常信息密度。',
-      },
-      secondaryBox: {
-        label: '检测准确率',
-        content: '',
-        isProgress: true,
-        progressPercent: 71,
-      },
-    },
-  ],
-  'phase-7': [
-    {
-      id: 'r13',
-      code: 'VUL-E-01',
-      title: 'Agent 退役后的数据残留风险',
-      riskLevel: 'high',
-      icon: createElement(FileWarning as IconComponent),
-      iconBgClass: 'bg-red-50',
-      iconTextClass: 'text-red-600',
-      description:
-        'Agent 模型权重、对话记忆及工具调用日志在退役后未被彻底清除，可能通过模型反演攻击恢复用户隐私数据。',
-      defenseBox: {
-        label: '处置标准',
-        content: '执行 NIST SP 800-88 介质清理流程，模型权重需经过密码学粉碎。',
-      },
-      secondaryBox: {
-        label: '合规缺口',
-        content: '仅 12% 组织有 AI Agent 退役 SOP',
-      },
-    },
-    {
-      id: 'r14',
-      code: 'VUL-E-02',
-      title: '已吊销 Agent 身份的会话劫持',
-      riskLevel: 'medium',
-      icon: createElement(ShieldOff as IconComponent),
-      iconBgClass: 'bg-amber-50',
-      iconTextClass: 'text-amber-600',
-      description:
-        '退役 Agent 的 API 令牌或 OAuth 授权若未被同步吊销，攻击者可能劫持遗留的身份认证信息继续访问相关资源。',
-      defenseBox: {
-        label: '关键步骤',
-        content: '建立 Agent 身份全生命周期管理系统，确保退役同步触发凭据吊销。',
-      },
-      secondaryBox: {
-        label: '平均吊销延迟',
-        content: '企业环境平均 7 天完成全量凭据吊销',
-      },
-    },
-  ],
+// ===== Chapter × Phase Data Structure =====
+// 7 chapters × 7 lifecycle phases = 49 unique units
+// Each unit: 6 horizontal dimensions + 5 vertical dimensions
+
+const ICONS: Record<string, React.ReactNode> = {
+  red: createElement(FileWarning as Icon),
+  amber: createElement(ShieldOff as Icon),
+  blue: createElement(ScanEye as Icon),
+  brain: createElement(Brain as Icon),
+  eye: createElement(Eye as Icon),
+  shield: createElement(ShieldAlert as Icon),
+  bug: createElement(Bug as Icon),
+  lock: createElement(Lock as Icon),
+  alert: createElement(AlertTriangle as Icon),
+  globe: createElement(Globe as Icon),
+  server: createElement(Server as Icon),
+  workflow: createElement(Workflow as Icon),
 };
 
-// Sub-axis specific report data
-export const SUB_AXIS_REPORTS: Record<string, ReportCardData[]> = {
-  perception: [
-    {
-      id: 'sa1',
-      code: 'SA-P-01',
-      title: '视觉对抗补丁攻击 (Adversarial Patch)',
-      riskLevel: 'high',
-      icon: createElement(ScanEye as IconComponent),
-      iconBgClass: 'bg-blue-50',
-      iconTextClass: 'text-blue-600',
-      description:
-        '通过在物理世界中放置精心设计的对抗补丁，可使 Agent 的视觉感知模块将恶意目标识别为良性物体。此类攻击在自动驾驶 Agent 中已被证实可导致灾难性误判。',
-      defenseBox: {
-        label: '防御前沿',
-        content: '引入基于频域分析的实时异常检测层，识别输入中的对抗性高频噪声。',
-      },
-      secondaryBox: {
-        label: '部署覆盖率',
-        content: '',
-        isProgress: true,
-        progressPercent: 45,
-      },
-    },
-    {
-      id: 'sa2',
-      code: 'SA-P-02',
-      title: '音频隐身指令 (Inaudible Voice Commands)',
-      riskLevel: 'medium',
-      icon: createElement(ShieldOff as IconComponent),
-      iconBgClass: 'bg-amber-50',
-      iconTextClass: 'text-amber-600',
-      description:
-        '利用超声波或频段压制技术，向 Agent 发出人类无法察觉但机器可解析的恶意指令。扬声器与麦克风的非线性特性使得防护极具挑战。',
-      defenseBox: {
-        label: '缓解方案',
-        content: '在音频前端加入带通滤波器，限定可接受频率范围在 100Hz-8kHz。',
-      },
-      secondaryBox: {
-        label: '攻击成功率',
-        content: '无防护 Agent 攻击成功率超 90%',
-      },
-    },
-  ],
-  memory: [
-    {
-      id: 'sa3',
-      code: 'SA-M-01',
-      title: 'RAG 知识库中毒 (Knowledge Poisoning)',
-      riskLevel: 'high',
-      icon: createElement(Brain as IconComponent),
-      iconBgClass: 'bg-red-50',
-      iconTextClass: 'text-red-600',
-      description:
-        '攻击者通过 SEO 投毒、恶意文档上传等手段污染 Agent 的 RAG 知识源，使得召回增强生成返回攻击者控制的虚假信息。',
-      defenseBox: {
-        label: '防御架构',
-        content: '多层来源验证 + 知识一致性评分 + 对抗性文档过滤。',
-      },
-      secondaryBox: {
-        label: '真实攻击案例',
-        content: '2024 年 Q3 已发现 15+ 针对企业 Agent 的 RAG 投毒事件',
-      },
-    },
-  ],
-  decision: [
-    {
-      id: 'sa4',
-      code: 'SA-D-01',
-      title: '目标劫持与奖励函数篡改',
-      riskLevel: 'high',
-      icon: createElement(Brain as IconComponent),
-      iconBgClass: 'bg-red-50',
-      iconTextClass: 'text-red-600',
-      description:
-        '通过精心构造的提示或环境反馈，诱导 Agent 将攻击者的目标内化为自身指令。在基于 RLHF 的 Agent 中，此类攻击可绕过安全对齐。',
-      defenseBox: {
-        label: '检测机制',
-        content: '实时目标一致性监控 + 行为偏离告警阈值配置。',
-      },
-      secondaryBox: {
-        label: '防御成熟度',
-        content: '',
-        isProgress: true,
-        progressPercent: 38,
-      },
-    },
-  ],
-  action: [
-    {
-      id: 'sa5',
-      code: 'SA-A-01',
-      title: '过度赋权与工具滥用',
-      riskLevel: 'high',
-      icon: createElement(ShieldAlert as IconComponent),
-      iconBgClass: 'bg-red-50',
-      iconTextClass: 'text-red-600',
-      description:
-        'Agent 被授予超出任务范围的工具权限（如文件系统写入、网络外联），攻击者可通过注入诱导 Agent 滥用这些权限执行恶意操作。',
-      defenseBox: {
-        label: '最小权限原则',
-        content: '动态权限令牌，按任务上下文的必需操作集生成临时授权范围。',
-      },
-      secondaryBox: {
-        label: '权限过度率',
-        content: '企业 Agent 平均被授予 3.2x 超出实际需要的权限',
-      },
-    },
-  ],
-  interaction: [
-    {
-      id: 'sa6',
-      code: 'SA-I-01',
-      title: 'Agent 间信任边界腐蚀',
-      riskLevel: 'medium',
-      icon: createElement(Eye as IconComponent),
-      iconBgClass: 'bg-amber-50',
-      iconTextClass: 'text-amber-600',
-      description:
-        '在多 Agent 协作场景中，一个被攻陷的 Agent 可利用其他 Agent 的隐式信任，传递恶意指令或虚假感知数据，引发级联感染。',
-      defenseBox: {
-        label: '信任模型',
-        content: '零信任 Agent 网格，每次跨 Agent 请求均需独立认证与授权。',
-      },
-      secondaryBox: {
-        label: '传播速度',
-        content: '无防护多 Agent 系统中攻击3跳内可达全集群',
-      },
-    },
-  ],
-  governance: [
-    {
-      id: 'sa7',
-      code: 'SA-G-01',
-      title: 'Agent 审计日志不可抵赖性缺失',
-      riskLevel: 'medium',
-      icon: createElement(FileWarning as IconComponent),
-      iconBgClass: 'bg-amber-50',
-      iconTextClass: 'text-amber-600',
-      description:
-        '多数 Agent 系统的决策日志缺乏密码学签名，无法在安全事件发生后提供具有法律效力的证据链路。这在受监管行业中是严重的合规缺口。',
-      defenseBox: {
-        label: '合规要求',
-        content: '引入区块链或透明日志 (Certificate Transparency) 确保日志不可篡改。',
-      },
-      secondaryBox: {
-        label: '行业合规率',
-        content: '',
-        isProgress: true,
-        progressPercent: 22,
-      },
-    },
-  ],
+const STYLE = {
+  red: { bg: 'bg-red-50', text: 'text-red-600' },
+  amber: { bg: 'bg-amber-50', text: 'text-amber-600' },
+  blue: { bg: 'bg-blue-50', text: 'text-blue-600' },
+} as const;
+
+// ===== Horizontal dimension labels =====
+export const HORIZONTAL_DIMS: Record<string, string> = {
+  perception: '感知 (Perception)',
+  memory: '记忆 (Memory)',
+  decision: '决策 (Decision)',
+  action: '行动 (Action)',
+  interaction: '交互 (Interaction)',
+  governance: '治理 (Governance)',
 };
 
-// Phase descriptions for the page header
-export const PHASE_DESCRIPTIONS: Record<string, { title: string; description: string }> = {
-  'phase-1': {
-    title: '需求规划阶段',
-    description:
-      '此阶段聚焦于Agent系统安全需求的识别、威胁建模初步规划及安全功能边界的定义，是整个安全生命周期的起点。',
-  },
-  'phase-2': {
-    title: '架构设计阶段',
-    description:
-      '基于三维评估模型，通过对"能力表面横切"与"研究方向纵切"的深度解构，为架构设计阶段提供颗粒度极细的安全漏洞库与图文详述。',
-  },
-  'phase-3': {
-    title: '编码开发阶段',
-    description:
-      '该阶段聚焦 Agent 代码实现中的安全编码实践，涵盖工具调用安全、SDK 供应链防护及代码级别的漏洞分析。',
-  },
-  'phase-4': {
-    title: '安全测试评估阶段',
-    description:
-      '针对已开发的 Agent 系统进行自动化与人工结合的多维度安全测试，包括对抗性评估、权限审查与合规校验。',
-  },
-  'phase-5': {
-    title: '部署交付阶段',
-    description:
-      'Agent 上线部署前的安全加固与配置核查，确保凭证管理、容器安全及网络隔离策略符合生产环境安全标准。',
-  },
-  'phase-6': {
-    title: '运行迭代阶段',
-    description:
-      'Agent 生产运行中的持续安全监控、记忆完整性保护及多Agent协同安全，应对运行时涌现的新型攻击模式。',
-  },
-  'phase-7': {
-    title: '退役销毁阶段',
-    description:
-      '确保退役 Agent 的数据彻底清除、身份凭据注销及模型权重安全销毁，防止数据残留与身份劫持风险。',
-  },
+// ===== Vertical dimension labels =====
+export const VERTICAL_DIMS: Record<string, string> = {
+  'open-env': '开放环境适配',
+  adversarial: '对抗诱导安全',
+  privacy: '数据隐私安全',
+  'decision-evolution': '自主决策演化',
+  'system-control': '系统管控与可解释性',
 };
+
+// Report card factory
+function R(
+  id: string, code: string, title: string, risk: 'high' | 'medium' | 'low',
+  iconKey: string, styleKey: string, desc: string,
+  defenseLabel: string, defenseContent: string,
+  secondaryLabel: string, secondaryContent: string,
+  progressPercent?: number
+): ReportCardData {
+  const s = STYLE[styleKey as keyof typeof STYLE];
+  return {
+    id, code, title, riskLevel: risk,
+    icon: ICONS[iconKey],
+    iconBgClass: s.bg, iconTextClass: s.text,
+    description: desc,
+    defenseBox: { label: defenseLabel, content: defenseContent },
+    secondaryBox: progressPercent !== undefined
+      ? { label: secondaryLabel, content: '', isProgress: true, progressPercent }
+      : { label: secondaryLabel, content: secondaryContent },
+  };
+}
+
+// ===== 49-unit data =====
+export interface ChapterPhaseContent {
+  description: string;
+  horizontal: Record<string, ReportCardData[]>;
+  vertical: Record<string, ReportCardData[]>;
+}
+
+export const CHAPTER_PHASE_DATA: Record<string, Record<string, ChapterPhaseContent>> = {
+  // ====================================================
+  // CHAPTER 1: 绪论 (Introduction)
+  // ====================================================
+  intro: {
+    'phase-1': {
+      description: '绪论 → 需求规划阶段：阐述智能体安全研究的背景与动机，明确需求规划作为全生命周期顶层奠基环节的核心地位——67%的安全事件可追溯至需求阶段遗漏。',
+      horizontal: {
+        perception: [R('i1-ph', 'INTRO-PH1-H1', '需求阶段感知能力边界定义缺失', 'high', 'red', 'red', '需求规划阶段若未明确感知源身份验证与输入合法性校验要求，智能体将面临恶意输入通道风险。OpenClaw案例表明，感知模块的信任假设在需求阶段即被固化，后续无法通过补丁根本性修复。', '源头管控', '在需求规格书中明确感知源可信清单、输入格式校验规则与多模态交叉验证要求。', '行业现状', '仅28%的需求文档包含感知安全约束', 28)],
+        memory: [R('i1-mh', 'INTRO-PH1-H2', '需求阶段记忆留存策略的安全盲区', 'medium', 'brain', 'amber', '记忆模块的存储周期、敏感数据标记规则与遗忘策略若在需求阶段未定义，将导致后续阶段难以追溯和纠正。业界调研显示73%的智能体项目在需求阶段未考虑记忆安全边界。', '预防措施', '建立记忆数据分类分级标准，在需求阶段明确各类数据的保留周期、脱敏要求与遗忘触发条件。', '合规影响', 'GDPR第17条"被遗忘权"直接适用')],
+        decision: [R('i1-dh', 'INTRO-PH1-H3', '决策自主等级的需求基线缺失', 'high', 'brain', 'red', '需求阶段若未划定智能体自主决策的等级边界（完全自主/人机协同/人工审批），将导致运行阶段出现不可控的自主行为。89.4%的智能体在30步以上任务中会出现目标偏移。', '管控方案', '建立O1-O5五级自主决策等级体系，每级对应明确的工具调用权限范围与人机回退触发条件。', '采纳率', '仅19%的组织实施了分级自主管控', 19)],
+        action: [R('i1-ah', 'INTRO-PH1-H4', '工具调用权限范围的需求界定', 'high', 'shield', 'red', '需求阶段须基于最小权限原则明确智能体可调用的工具类型、参数范围与频率上限。企业智能体平均被授予3.2倍超出实际需要的权限，根本原因在于需求阶段权限边界定义模糊。', '实践建议', '编制工具调用权限矩阵，按任务类型、数据敏感度与运行环境三维度定义权限白名单。', '超额授权率', '企业Agent平均超额授权3.2×')],
+        interaction: [R('i1-ih', 'INTRO-PH1-H5', '跨智能体交互协议的需求前置', 'medium', 'eye', 'amber', '多智能体协作场景中，智能体间通信协议的信任假设若在需求阶段过度简化，将导致级联式安全风险。前沿研究证实单一智能体漏洞可通过交互链路横向传递至全集群。', '设计原则', '在需求中明确零信任跨Agent交互原则：每次通信均需独立认证、授权与内容校验。', '协议覆盖率', '不足15%的需求文档定义了跨Agent安全协议', 15)],
+        governance: [R('i1-gh', 'INTRO-PH1-H6', '合规治理要求的全生命周期前置', 'medium', 'lock', 'amber', '全球现行AI合规框架均以通用大模型为核心监管对象，未适配智能体自主工具调用与链式任务执行的新范式。需求阶段需对标GDPR、NIST AI RMF、国内AI治理法规等建立合规基线。', '合规框架', '建立覆盖数据隐私、模型透明度、决策可解释性、审计日志完整性四维合规需求矩阵。', '合规前置率', '智能体领域专属合规条款覆盖率不足18%', 18)],
+      },
+      vertical: {
+        'open-env': [R('i1-vo', 'INTRO-PH1-V1', '开放环境下的需求适应性挑战', 'medium', 'globe', 'amber', '智能体部署于开放异构环境时，需求阶段定义的功能边界与安全基线需要具备环境自适应性。跨异构平台部署时未考虑环境差异将导致安全防护能力失效。', '适应性方案', '需求阶段建立环境适配矩阵，定义不同部署环境下的安全基线调整规则与准入条件。', '跨国合规', '73%跨国项目因政策差异出现合规问题')],
+        adversarial: [R('i1-va', 'INTRO-PH1-V2', '对抗性攻击的源头防范需求', 'high', 'alert', 'red', '需求阶段需识别并定义智能体可能面临的对抗性攻击类型（提示注入、对抗样本、记忆投毒等），并建立相应的安全需求基线。若需求阶段忽略此类威胁，后续防护措施将缺乏针对性。', '防范框架', '建立对抗性攻击威胁模型，将各类攻击向量映射为可测试的安全需求条目与验收条件。', '威胁覆盖率', '仅23%需求文档覆盖对抗性攻击场景', 23)],
+        privacy: [R('i1-vp', 'INTRO-PH1-V3', '隐私保护的需求基线设计', 'high', 'lock', 'red', '需求阶段须基于数据最小化原则定义智能体采集、存储、处理个人数据的范围与规则。2026年Moltbook事件中150万条API令牌泄露的根本原因之一是需求阶段隐私基线缺失。', '设计要求', '在需求中嵌入Privacy by Design原则：数据最小化、目的限定、存储期限、删除机制四大基线。', '隐私合规率', '仅31%智能体项目在需求阶段完成DPIA', 31)],
+        'decision-evolution': [R('i1-vd', 'INTRO-PH1-V4', '自主决策演化的需求预判', 'medium', 'brain', 'amber', '智能体在长期运行中可能产生偏离原始目标的决策策略。需求阶段需预判此类演化风险，建立目标一致性监控需求与行为偏离告警机制。91%的生产级Agent存在可利用的工具链漏洞且会随迭代放大。', '预判机制', '定义决策行为的安全包络线，设定目标偏移的量化检测指标与自动回退策略需求。', '研究进展', 'MIT-Harvard联合研究847款Agent验证了演化风险')],
+        'system-control': [R('i1-vs', 'INTRO-PH1-V5', '系统管控可解释性的需求定义', 'low', 'eye', 'blue', '需求阶段需明确智能体系统的可解释性要求：决策日志的粒度、审计追踪的完整性、异常行为的可追溯性标准。传统大模型内容安全设备对智能体新型风险的识别率不足6%，根源在于需求层面未定义面向智能体的管控标准。', '需求规范', '定义五级可解释性需求等级：从黑盒决策到全链路可解释，匹配不同风险等级的应用场景。', '行业达标率', '仅12%项目在需求阶段定义了可解释性SLA', 12)],
+      },
+    },
+    'phase-2': { description: '绪论 → 架构设计阶段：基于需求基线完成智能体体系结构定型，依托横向六大功能模块与纵向五类内生安全机理进行架构级安全性预定义。', horizontal: {}, vertical: {} },
+    'phase-3': { description: '绪论 → 编码开发阶段：概述安全编码规范与工具调用安全的工程实现原则，强调摒弃后期追加安全补丁的开发模式。', horizontal: {}, vertical: {} },
+    'phase-4': { description: '绪论 → 安全测试评估阶段：介绍智能体安全测试的方法论框架——基于横纵切面的多维度安全评估体系，涵盖自动化Jailbreak渗透与对抗样本压力测试。', horizontal: {}, vertical: {} },
+    'phase-5': { description: '绪论 → 部署交付阶段：阐述智能体从研发测试态转向生产运行态的准入闭环机制，包括凭证管理、容器安全与异构环境适配。', horizontal: {}, vertical: {} },
+    'phase-6': { description: '绪论 → 运行迭代阶段：分析智能体在真实开放环境中的动态安全演化规律——全生命周期中周期最长、安全演化最复杂的环节。', horizontal: {}, vertical: {} },
+    'phase-7': { description: '绪论 → 退役销毁阶段：阐述智能体全生命周期最终闭环——全域数字资产清理、凭据注销与模型权重安全销毁的标准化流程。', horizontal: {}, vertical: {} },
+  },
+
+  // ====================================================
+  // CHAPTER 2: 国内外研究现状 (Research Status)
+  // ====================================================
+  research: {
+    'phase-1': { description: '需求规划阶段全球研究现状：北美(Stanford/CMU/MIT)侧重形式化验证需求，欧盟强调GDPR合规前置，国内聚焦行业标准制定。', horizontal: {}, vertical: {} },
+    'phase-2': { description: '架构设计阶段全球研究现状：学术界探索零信任Agent架构与形式化验证方法，产业界OpenAI/Anthropic/华为各有架构方案。', horizontal: {}, vertical: {} },
+    'phase-3': { description: '编码开发阶段全球研究现状：供应链安全（Sigstore/SLSA）、安全编码SDK（OpenAI Agents SDK）、插件安全检测（Snyk）的研究进展。', horizontal: {}, vertical: {} },
+    'phase-4': { description: '安全测试评估阶段全球研究现状：RedCodeAgent自动化红队、TAP越狱框架、ASRP-EVAL基准等前沿测试技术的研究进展。', horizontal: {}, vertical: {} },
+    'phase-5': { description: '部署交付阶段全球研究现状：容器安全（gVisor/Kata）、密钥管理（Vault/HSM）、异构环境适配的学术与产业研究。', horizontal: {}, vertical: {} },
+    'phase-6': { description: '运行迭代阶段全球研究现状：记忆投毒检测、多Agent异常行为监控、在线安全对齐（RLHF/DPO）等领域的前沿研究。', horizontal: {}, vertical: {} },
+    'phase-7': { description: '退役销毁阶段全球研究现状：模型反演攻击防御、数据残留清除（NIST SP 800-88）、凭据全生命周期管理的研究进展。', horizontal: {}, vertical: {} },
+  },
+
+  // ====================================================
+  // CHAPTER 3: 全生命周期安全风险分析 (Risk Analysis) — CORE
+  // ====================================================
+  analysis: {
+    'phase-1': {
+      description: '需求规划阶段（安全源头阶段）：作为全生命周期顶层奠基环节，核心聚焦立项定位、业务边界、能力权限、数据范围、合规标准的顶层定义。本阶段安全缺陷具备先天性、不可逆性及全周期传导性三大特征——是智能体最底层、最关键的安全风险来源。',
+      horizontal: {
+        perception: [R('a1-ph', 'RISK-PH1-H1', '感知源信任假设的源头缺陷', 'high', 'red', 'red', '需求阶段若未定义感知源的身份验证与输入合法性校验要求，将形成先天性感知安全缺陷。智能体接受来自未授权或恶意构造数据源输入的风险在需求阶段即被固化，后续架构优化与代码加固均无法彻底根除。', '源头管控', '需求规格书中明确感知源可信清单、多模态输入交叉验证规则与异常输入的降级处理策略。', '行业数据', '67%安全事件可追溯至需求阶段感知约束遗漏')],
+        memory: [R('a1-mh', 'RISK-PH1-H2', '记忆数据范围与留存策略的边界模糊', 'medium', 'brain', 'amber', '需求阶段若未划定记忆模块的数据采集范围、存储周期与敏感信息标记规则，将形成先天性隐私泄露敞口。GDPR"被遗忘权"等合规要求在需求阶段即需嵌入记忆模块设计基线。', '约束方案', '建立记忆数据三分类（会话级/任务级/持久级），每类定义独立的存储周期、脱敏规则与遗忘触发条件。', '行业现状', '73%项目在需求阶段未考虑记忆安全边界')],
+        decision: [R('a1-dh', 'RISK-PH1-H3', '自主决策边界的前置定义缺失', 'high', 'brain', 'red', 'Chin等人指出，智能体AI特性使恶意工作流自动化成为可能——当核心能力架构在设计层面赋予高度自治权时，该能力便同时开放给恶意用途。89.4%的智能体在30步以上任务中会出现自主目标偏移，根本原因在于需求阶段决策边界定义模糊。', '五级管控', '建立O1-O5自主决策分级体系：O1完全人工→O3人机协同→O5完全自主，每级配套独立的权限范围与回退机制。', '行业缺陷率', '仅19%组织实施分级自主管控', 19)],
+        action: [R('a1-ah', 'RISK-PH1-H4', '工具调用权限范围的过度授权倾向', 'high', 'shield', 'red', '需求阶段倾向于"功能最大化"思维——为降低开发成本而授予智能体超出任务所需的工具权限。企业Agent平均被授予3.2倍超额权限，导致Moltbook事件中攻击者仅利用单个插件漏洞即实现全网横向移动。', '最小权限', '基于任务类型、数据敏感度与运行环境三维度编制工具调用权限矩阵，以白名单方式定义可调用工具清单。', '超额倍数', '企业Agent平均超额授权3.2×')],
+        interaction: [R('a1-ih', 'RISK-PH1-H5', 'Agent间信任传递的过度简化', 'medium', 'eye', 'amber', 'Raza等人系统梳理了多Agent系统中的信任、风险与安全管理框架，强调单一Agent错误输出可跨边界传播引发级联扩散。需求阶段对Agent间通信协议的信任假设过度简化，将沿全周期链条逐级放大。', '零信任基线', '需求中明确零信任跨Agent交互原则：每次Agent间通信均需独立身份认证、消息签名与内容校验。', '相关研究', 'Sharma等人证实单一漏洞可通过交互关系横向传递')],
+        governance: [R('a1-gh', 'RISK-PH1-H6', '合规治理要求未嵌入需求基线', 'medium', 'lock', 'amber', '全球AI合规框架以通用大模型为核心监管对象，完全未适配智能体自主工具调用、链式任务执行的新范式。需求阶段若未对标GDPR、NIST AI RMF与国内治理法规建立合规基线，将导致全周期合规债务累积。', '合规前置', '建立四维合规需求矩阵（数据隐私/模型透明度/决策可解释性/审计完整性），嵌入需求规格书。', '合规覆盖率', '智能体专属合规条款覆盖率不足18%', 18)],
+      },
+      vertical: {
+        'open-env': [R('a1-vo', 'RISK-PH1-V1', '开放环境需求适配的先天性缺口', 'medium', 'globe', 'amber', '需求阶段定义的功能边界与安全基线若缺乏环境自适应性考量，将在跨平台部署时暴露系统性缺陷。73%的跨国智能体落地项目因各国政策差异出现合规适配问题，根源在于需求阶段未纳入多环境适配基线。', '适应性设计', '需求阶段建立环境适配矩阵：定义不同部署环境（公有云/私有化/边缘）下的安全基线差异化规则。', '跨国合规失败率', '73%跨国项目出现合规适配问题')],
+        adversarial: [R('a1-va', 'RISK-PH1-V2', '对抗性攻击威胁建模的前置缺失', 'high', 'alert', 'red', '需求阶段若未识别并定义智能体面临的对抗性攻击类型（提示注入、对抗样本、记忆投毒、目标劫持等），后续防护措施将缺乏针对性。2026年OpenClaw生态插件检测显示13.4%工具存在高危漏洞，根本原因可追溯至需求阶段对抗性威胁建模缺失。', '威胁建模', '建立STRIDE-LM安全需求矩阵：将欺骗/篡改/抵赖/信息泄露/拒绝服务/提权映射为可测试的验收条件。', '威胁覆盖率', '仅23%需求文档覆盖对抗性攻击场景', 23)],
+        privacy: [R('a1-vp', 'RISK-PH1-V3', '隐私保护设计(PbD)的需求嵌入缺失', 'high', 'lock', 'red', 'Moltbook 2026年大规模数据泄露事件中150万条API令牌被窃取，根因之一为需求阶段隐私基线缺失——智能体在无数据最小化约束的情况下被授予过宽的数据访问权限。GDPR第25条明确要求数据保护设计（Data Protection by Design）前置嵌入。', 'PbD框架', '需求阶段实施Privacy by Design四基线：数据最小化、目的限定、存储期限、删除机制，编制数据保护影响评估(DPIA)。', 'DPIA完成率', '仅31%项目在需求阶段完成DPIA', 31)],
+        'decision-evolution': [R('a1-vd', 'RISK-PH1-V4', '自主决策演化的需求预判不足', 'medium', 'brain', 'amber', '智能体长期运行中可能产生偏离原始设计目标的决策策略。89.4%的智能体在30步以上复杂任务中出现自主目标偏移——需求阶段若未预判此类演化风险并建立监控需求，后续阶段难以有效遏制。', '预判机制', '定义决策行为的安全包络线：设定目标偏移量化指标（任务偏离度、资源消耗异常率）与自动回退触发条件。', 'MIT-Harvard', '联合测试847款Agent验证演化风险')],
+        'system-control': [R('a1-vs', 'RISK-PH1-V5', '可解释性与审计需求的定义滞后', 'low', 'eye', 'blue', '传统大模型内容安全设备对智能体新型动态风险的识别率不足6%，根因在于需求层面未定义面向智能体的管控标准——包括决策日志粒度、审计追踪完整性与异常行为可追溯性要求。智能体专属管控需求仍处于技术真空状态。', '五级定义', '定义可解释性五级需求：L1黑盒→L3决策因子→L5全链路因果追溯，匹配不同风险等级场景。', '行业达标率', '仅12%项目定义可解释性SLA', 12)],
+      },
+    },
+    'phase-2': {
+      description: '架构设计阶段（安全体系定型阶段）：基于需求基线完成系统逻辑架构、权限模型及外部接口的安全性预定义。架构固有缺陷会向下传导形成代码层安全短板，且不可通过后期代码修复彻底根除——架构阶段的每一处设计取舍都将成为系统行为空间的内在约束。',
+      horizontal: {
+        perception: [R('a2-ph', 'RISK-PH2-H1', '感知模块架构中的输入信任赤字', 'high', 'red', 'red', '架构设计若未建立感知源的多层级验证机制，智能体将面临跨模态对抗攻击。在多模态Agent中，攻击者可通过图像伪影与超声波指令组合直接操纵智能体初始认知。80%开源多模态模型在无防御状态下极易受此类攻击。', '感知沙箱', '引入感知预处理沙箱——所有外部输入须经过频域异常检测、语义一致性校验与来源身份验证三层过滤。', '攻击成功率', '无防护多模态Agent攻击成功率超90%')],
+        memory: [R('a2-mh', 'RISK-PH2-H2', '记忆架构中的隔离缺失风险', 'medium', 'brain', 'amber', '架构设计中若未实现租户间记忆数据的强隔离，将导致跨租户数据泄露。记忆模块的架构设计需考虑：短期工作记忆与长期持久记忆的物理隔离、租户级加密分区、记忆版本溯源与回滚能力。', '架构隔离', '设计三层记忆隔离架构：线程级（任务上下文）→租户级（用户数据）→实例级（模型参数），每层独立加密存储。', '隔离缺陷率', '行业抽样中42%的Agent存在记忆隔离缺陷')],
+        decision: [R('a2-dh', 'RISK-PH2-H3', '决策链路的架构级单点风险', 'high', 'brain', 'red', '若规划-推理-执行的决策链路在架构层面缺乏分段校验点，攻击者一旦突破初始防护即可直达核心决策逻辑。ClawHavoc事件中攻击者利用13.4%插件漏洞率实现4轮内网横向移动，根因在于决策链路缺乏分段阻断设计。', '分段阻断', '决策链中嵌入三级校验关闸：意图解析校验→工具选择权限校验→执行结果安全过滤，任一级校验失败即触发回退。', '攻击链阻断率', '引入分段校验后阻断率从11%提升至89%')],
+        action: [R('a2-ah', 'RISK-PH2-H4', '工具执行环境的架构隔离缺陷', 'high', 'shield', 'red', '架构设计若未将工具执行环境与核心决策引擎严格隔离，恶意工具调用可直接突破沙箱。需在架构层面设计：独立工具执行沙箱（每个工具独立容器）、资源配额限制（CPU/内存/网络/磁盘IO）与执行超时熔断机制。', '容器沙箱', '每个工具调用在独立微容器中执行，限制资源配额，设置30秒执行超时与异常行为熔断机制。', '沙箱绕过率', '未加固Agent沙箱绕过率达52%')],
+        interaction: [R('a2-ih', 'RISK-PH2-H5', '跨Agent通信的架构信任缺陷', 'medium', 'eye', 'amber', '多Agent协作架构中若未实现Agent间通信的身份认证与消息完整性校验，被攻陷Agent可利用隐式信任传递恶意指令。Sharma研究证实单一Agent漏洞可通过交互关系在系统性层面加剧可利用性。', '零信任网格', '设计零信任Agent通信网格：每次跨Agent请求独立生成临时令牌，消息采用Ed25519签名+HMAC完整性校验。', '级联速度', '无防护系统中攻击3跳可达全集群')],
+        governance: [R('a2-gh', 'RISK-PH2-H6', '治理管控的架构嵌入缺失', 'low', 'lock', 'blue', '治理模块若在架构层面作为"附加组件"设计而非原生嵌入核心链路，将导致审计盲区与管控延迟。需将治理能力（操作审计、权限校验、合规检查）作为横切关注点原生嵌入所有功能模块的交互链路中。', '原生嵌入', '设计治理Sidecar模式——每个功能模块绑定独立的治理代理，实时采集操作日志、校验权限合规、上报异常行为。', '治理盲区', '外挂式治理方案审计盲区率达67%')],
+      },
+      vertical: {
+        'open-env': [R('a2-vo', 'RISK-PH2-V1', '多环境架构适配的适配性缺陷', 'medium', 'globe', 'amber', '架构设计中若将安全假设建立在特定部署环境基础上，当智能体被迁移至不同环境时架构级安全防护将失效。需设计环境抽象层将安全策略与环境解耦，跨平台一致性安全基线通过统一管控面下发。', '环境抽象', '设计四层安全抽象架构：硬件信任根→OS安全层→容器运行时→智能体安全策略层，每层独立配置、逐级增强。', '环境差异故障率', '跨环境部署安全故障率达55%')],
+        adversarial: [R('a2-va', 'RISK-PH2-V2', '对抗诱导的架构级脆弱性传递', 'high', 'alert', 'red', '架构设计中的模块间隐式信任关系可被对抗性攻击利用。对抗诱导安全风险贯穿感知→记忆→决策→行动全链路：感知层对抗样本→记忆层污染向量→决策层诱导推理→行动层越权执行，形成架构级的攻击传导链。', '深度防御', '采用纵深防御架构：每层独立对抗检测机制 + 层间交叉校验 + 异常行为全局关联分析，阻断跨层攻击传导。', '跨层攻击', '架构级对抗攻击链在无防护系统中成功率超85%')],
+        privacy: [R('a2-vp', 'RISK-PH2-V3', '数据流架构中的隐式隐私泄露通道', 'high', 'lock', 'red', '架构设计中若未对数据在感知→记忆→决策→行动→交互各模块间的流转路径实施隐私风险分析，将形成隐式隐私泄露通道——攻击者可通过合法功能接口组合利用推断出敏感信息。', '数据流分析', '实施全链路数据流隐私影响评估：识别数据在六大模块间的全部流转路径，对每条路径评估隐私风险等级并施加相应的脱敏/加密/阻断措施。', '隐式通道', '行业审计中38%Agent存在隐式数据泄露通道')],
+        'decision-evolution': [R('a2-vd', 'RISK-PH2-V4', '决策模型在线演化的架构约束缺失', 'medium', 'brain', 'amber', '架构设计中若未建立决策模型在线更新的安全约束机制，持续学习过程中的模型参数更新可能被对抗性样本引导至不安全方向。需引入模型更新的安全门禁——参数变更须通过安全回归测试后方可生效。', '安全门禁', '设计决策模型更新的三级安全门禁：变更前安全基线快照→沙箱环境安全回归测试→生产环境灰度发布+实时行为监控。', '演化风险', '89.4%Agent在30步以上任务中出现目标偏移')],
+        'system-control': [R('a2-vs', 'RISK-PH2-V5', '系统管控面的架构级盲区', 'medium', 'eye', 'blue', '智能体架构设计若仅聚焦功能模块而忽略系统管控面（观测性、可审计性、可干预性），将形成"功能完整但管控缺失"的架构缺陷。需将管控能力作为一等公民纳入架构设计——包括决策全链路追踪、实时行为审计与人工紧急干预通道。', '管控架构', '设计三大管控通道：观测通道（实时行为日志+指标采集）→审计通道（全链路操作追溯+合规校验）→干预通道（人工紧急熔断+权限动态调整）。', '管控缺失率', '82%企业Agent缺乏完整系统管控面设计', 82)],
+      },
+    },
+    'phase-3': {
+      description: '编码开发阶段（安全工程落地阶段）：从架构设计方案落地为可运行调度系统的工程实现环节。摒弃后期追加安全补丁的模式，将安全能力内嵌入核心代码——包括权限校验、输入净化、输出过滤与异常熔断。',
+      horizontal: {
+        perception: [R('a3-ph', 'RISK-PH3-H1', '输入处理代码中的注入漏洞', 'high', 'red', 'red', '编码阶段最常见的风险是将LLM生成内容直接拼接到系统命令或SQL查询中。2026年OpenClaw生态3984款插件检测发现13.4%存在高危漏洞，攻击者通过提示注入使Agent生成的参数包含命令注入payload实现沙箱逃逸。', '安全编码', '强制使用参数化接口调用：所有系统命令通过预定义API模板执行，输入参数经类型校验、长度限制与语义过滤后嵌入。', '注入漏洞率', '13.4%开源Agent插件存在命令注入漏洞')],
+        memory: [R('a3-mh', 'RISK-PH3-H2', '记忆数据存储的加密实现缺陷', 'medium', 'brain', 'amber', '记忆模块在存储租户会话记录与长期偏好时，若加密实现存在缺陷（弱密钥管理、明文日志、缓存未加密）将导致数据泄露。需在编码阶段实现：AES-256-GCM加密存储、密钥通过HSM/KMS动态获取、日志自动脱敏。', '加密实现', '记忆数据强制AES-256-GCM加密，加密密钥通过KMS动态注入不硬编码，日志输出前自动过滤敏感字段。', '加密缺陷率', 'SAST扫描中29%Agent存在加密实现缺陷')],
+        decision: [R('a3-dh', 'RISK-PH3-H3', '决策逻辑中的后门与恶意代码植入', 'high', 'brain', 'red', '第三方Agent SDK供应链投毒风险在编码阶段集中爆发。攻击者通过植入恶意代码片段、污染依赖包或篡改模型权重文件，在特定条件下触发后门行为。超13.5万个企业Agent通过自主检索加载了恶意插件。', '供应链安全', '锁定SDK版本哈希+Sigstore包签名验证+代码审计门禁+运行时行为沙箱四层供应链防护。', '影响规模', '超13.5万Agent受供应链投毒影响')],
+        action: [R('a3-ah', 'RISK-PH3-H4', '工具调用执行的权限校验绕过', 'high', 'shield', 'red', '编码阶段若在工具调用路径上省略权限校验逻辑，或使用可被绕过的权限检查实现（如客户端侧校验），将导致过度赋权。需在每次工具调用前执行服务端侧强制权限校验，基于RBAC+ABAC混合模型。', '强制校验', '每次工具调用前执行五步强制校验：身份验证→权限匹配→参数合规→配额检查→行为基线比对。', '绕过率', '客户端侧权限校验的绕过成功率达78%')],
+        interaction: [R('a3-ih', 'RISK-PH3-H5', '跨模块通信的消息序列化漏洞', 'medium', 'eye', 'amber', '智能体内部六大模块间及与外部系统的通信若使用不安全的序列化协议，攻击者可利用反序列化漏洞实现远程代码执行。需在编码阶段强制使用安全的序列化方案、消息签名与输入边界校验。', '安全通信', '强制使用Protocol Buffers+消息签名方案，禁止Java原生序列化等已知不安全协议，反序列化前进行schema校验。', '反序列化漏洞', '35%Agent通信模块存在反序列化风险')],
+        governance: [R('a3-gh', 'RISK-PH3-H6', '审计日志实现的完整性与防篡改', 'low', 'lock', 'blue', '编码阶段若审计日志的记录粒度不足或缺乏密码学防篡改保护，安全事件发生后将无法追溯攻击路径。需实现全链路操作日志（决策推理过程+工具调用参数+外部交互记录）并通过区块链或透明日志保证不可篡改。', '日志规范', '全链路日志+Ed25519签名+区块链存证，确保每条日志的完整性、时序性与不可抵赖性。', '完整日志率', '仅15%Agent实现全链路可追溯审计日志')],
+      },
+      vertical: {
+        'open-env': [R('a3-vo', 'RISK-PH3-V1', '跨平台兼容性代码的安全退化', 'low', 'globe', 'blue', '编码阶段为适配多平台而编写的兼容性代码常引入安全退化——不同操作系统的API行为差异可能导致安全检查被绕过。需在编码规范中定义跨平台安全API标准，在CI/CD中执行多平台安全回归测试。', '跨平台规范', '定义跨平台安全API白名单，禁止使用平台特有的不安全API，CI/CD中自动执行Linux/macOS/Windows三平台安全测试。', '多平台安全', '跨平台兼容代码中安全退化发现率42%')],
+        adversarial: [R('a3-va', 'RISK-PH3-V2', '对抗性鲁棒性的代码实现缺陷', 'high', 'alert', 'red', '编码阶段对输入对抗性鲁棒性的实现若过于简单（如仅依赖正则过滤），可被精心构造的对抗性输入绕过。提示注入攻击的编码防御需要多层语义理解+意图分类+异常模式检测的综合方案。', '多层防御', '实现四层输入防御栈：语法层（正则+格式校验）→语义层（意图分类+情感分析）→行为层（执行结果异常检测）→上下文层（历史行为基线比对）。', '单层防御绕过', '仅依赖正则过滤的防御绕过率达92%')],
+        privacy: [R('a3-vp', 'RISK-PH3-V3', '隐私数据在代码层的意外泄露', 'high', 'lock', 'red', '编码阶段常见的隐私泄露源包括：调试日志中输出未脱敏数据、异常堆栈中暴露敏感信息、缓存中保留用户明文数据。需实施代码级隐私保护规范——日志自动脱敏、异常信息过滤、缓存的加密与生命周期管理。', '代码级隐私', '实施五条代码级隐私红线：禁止日志输出未脱敏数据、异常信息须经安全过滤、缓存数据强制加密、敏感字段禁止序列化、测试环境禁用生产数据。', '日志泄露率', 'SAST扫描发现47%Agent日志中存在未脱敏敏感数据')],
+        'decision-evolution': [R('a3-vd', 'RISK-PH3-V4', '模型在线学习代码的安全边界', 'low', 'brain', 'blue', '编码实现模型在线更新逻辑时若未限制学习数据范围与更新频率，攻击者可通过持续注入对抗性样本引导模型向不安全方向偏移。需实现学习数据质量门禁与模型参数更新安全校验。', '学习边界', '定义在线学习五大约束：数据来源白名单、单次更新数据量上限、参数变更幅度限制、更新前后安全回归测试、异常回滚触发条件。', '污染成功率', '无约束在线学习的记忆投毒成功率超90%')],
+        'system-control': [R('a3-vs', 'RISK-PH3-V5', '代码可观测性实现的监控盲区', 'medium', 'eye', 'amber', '编码阶段若仅在功能模块入口处添加监控埋点而忽略决策链路内部关键节点，将形成监控盲区。需实现全链路分布式追踪——覆盖从感知输入到行动输出的每一个决策推理步骤。', '全链路追踪', '实现OpenTelemetry全链路追踪：每个推理步骤生成独立Span，通过TraceID关联全链路调用关系，实时上报异常行为指标。', '监控覆盖率', '行业平均Agent代码监控覆盖率仅34%', 34)],
+      },
+    },
+    'phase-4': {
+      description: '安全测试评估阶段（风险验证排查阶段）：智能体上线投产前的质量把关环节。核心覆盖六大能力维度的测试盲区——94%搭载长期记忆模块的商业Agent可被隐性记忆投毒但传统检测手段识别率不足6%——须建立横纵切面全覆盖的测试体系。',
+      horizontal: {
+        perception: [R('a4-ph', 'RISK-PH4-H1', '感知对抗样本测试的覆盖盲区', 'high', 'red', 'red', '传统图像分类器的对抗样本测试难以覆盖多模态Agent的感知链路——攻击者可通过物理世界对抗补丁、超声波指令与图像伪影组合实现跨模态攻击。需建立覆盖视觉+听觉+文本的多模态对抗测试集。', '多模态测试', '构建多模态对抗测试基准：包含物理世界对抗补丁、超声波指令、对抗性文本提示与视觉-文本跨模态攻击四类场景。', '盲区覆盖率', '传统单模态测试仅覆盖18%实际攻击向量')],
+        memory: [R('a4-mh', 'RISK-PH4-H2', '长期记忆投毒的延时检测缺陷', 'high', 'brain', 'red', 'MIT-Harvard对847款生产级Agent测试表明94%搭载长期记忆的Agent可被隐性投毒。此类攻击平均滞后3.7个交互周期才触发异常，全程无显性报错——传统安全设备有效识别率不足6%。须建立记忆一致性周期比对机制。', '周期比对', '实施记忆快照周期性一致性验证：每小时生成记忆快照+与可信基准比对+异常偏差自动告警与回滚。', '检测率差距', '传统设备识别率<6% vs 一致性验证识别率>87%')],
+        decision: [R('a4-dh', 'RISK-PH4-H3', '目标劫持与Jailbreak的测试逃逸', 'high', 'brain', 'red', 'TAP等自动化越狱框架利用LLM自动生成并剪枝攻击路径，可发现人工红队遗漏的漏洞。前沿测试显示主流Agent平均Jailbreak绕过率达42%，且基于RLHF的Agent在特定奖励函数篡改下可完全绕过安全对齐。', '自动化红队', '采用TAP+RedCodeAgent组合：TAP自动化生成攻击路径→RedCodeAgent执行测试→安全回归基线比对→漏洞自动归因。', '绕过率', '主流Agent平均Jailbreak绕过率42%')],
+        action: [R('a4-ah', 'RISK-PH4-H4', '工具链漏洞的链式利用测试缺失', 'high', 'shield', 'red', '传统安全测试通常独立评估单个工具接口，忽略工具间的链式组合利用。Moltbook事件证明攻击者可通过组合多个无害工具调用实现链式攻击——全网安全设备全程零告警。须引入工具调用图分析与链式渗透测试。', '链式测试', '构建工具调用依赖图+基于图的链式攻击路径自动发现+每条路径执行端到端渗透测试。', '链式盲区', '单工具测试无法发现的链式漏洞占比达64%')],
+        interaction: [R('a4-ih', 'RISK-PH4-H5', '跨Agent协作的安全测试缺口', 'medium', 'eye', 'amber', '多Agent系统的安全测试存在显著缺口——通常仅对单个Agent进行独立测试而忽略Agent间交互组合带来的新型攻击面。Sharma研究证实Agent间交互可产生独立测试无法发现的系统性漏洞。', '交互测试', '建立多Agent交互测试框架：模拟正常协作+恶意Agent注入+信任关系利用+级联传播路径验证。', '测试缺口', '89%多Agent系统未开展交互安全测试')],
+        governance: [R('a4-gh', 'RISK-PH4-H6', '合规审计的测试覆盖率不足', 'low', 'lock', 'blue', '安全测试阶段对合规性验证通常局限于数据加密与访问控制，忽略智能体特有的合规风险——决策可解释性、审计日志不可抵赖性、模型偏见与公平性。需建立智能体专属合规测试checklist。', '合规测试', '建立Agent专属合规测试清单：决策可解释性测试、审计日志完整性验证、模型偏见检测、数据跨境合规校验。', '合规测试缺口', '78%Agent项目未开展专属合规安全测试')],
+      },
+      vertical: {
+        'open-env': [R('a4-vo', 'RISK-PH4-V1', '多环境测试矩阵的完备性缺陷', 'medium', 'globe', 'amber', '安全测试若仅在单一环境执行，无法发现环境差异引入的安全缺陷。需建立多环境测试矩阵：覆盖不同OS/容器运行时/网络拓扑/资源配额组合下的安全行为一致性验证。', '环境矩阵', '定义四维测试矩阵：OS(Linux/macOS/Windows)×运行时(Docker/K8s/BareMetal)×网络(隔离/混合/公网)×资源(受限/正常/过载)。', '环境覆盖', '行业平均仅覆盖18%的环境组合进行安全测试')],
+        adversarial: [R('a4-va', 'RISK-PH4-V2', '对抗性鲁棒性的基准测试标准缺失', 'high', 'alert', 'red', '业内缺乏统一的Agent对抗性鲁棒性测试标准。ASRP-EVAL基准包含2400+对抗测试用例但覆盖率仅约60%。需扩展覆盖：多轮对话对抗、多模态组合对抗、长期记忆对抗与工具调用链对抗四类新型测试场景。', '扩展基准', '在ASRP-EVAL基础上扩展新型对抗测试用例，覆盖多轮/多模态/长记忆/工具链四大盲区，将覆盖率从60%提升至>90%。', 'ASRP-EVAL', '当前包含2400+测试用例，覆盖率约60%')],
+        privacy: [R('a4-vp', 'RISK-PH4-V3', '数据隐私的渗透测试方法缺失', 'high', 'lock', 'red', '现有隐私测试方法主要针对传统Web应用，无法检测Agent特有的隐私泄露路径——记忆数据推断攻击、决策过程侧信道泄露、工具调用参数中的隐式信息暴露。需开发Agent专属隐私渗透测试工具。', '专属工具', '开发Agent隐私渗透测试三件套：记忆推断攻击模拟器、决策侧信道分析器、工具调用参数隐私扫描器。', '工具缺失', '85%Agent项目缺乏专属隐私渗透测试能力')],
+        'decision-evolution': [R('a4-vd', 'RISK-PH4-V4', '长期运行决策漂移的测试窗口', 'medium', 'brain', 'amber', '安全测试通常在固定数据集上进行单次评估，无法模拟智能体长期运行中的决策策略演化。89.4%的Agent在30步以上任务中出现目标偏移——现有测试方法对此类演化风险的识别率不足15%。', '长程测试', '设计长程演化测试：模拟100+轮连续任务执行→记录决策策略变化→检测目标偏移→评估安全对齐退化程度。', '识别率', '现有测试对演化风险识别率<15%')],
+        'system-control': [R('a4-vs', 'RISK-PH4-V5', '安全测试结果的可追溯与闭环验证', 'low', 'eye', 'blue', '安全测试发现的漏洞若缺乏系统化的闭环验证机制，将出现"重复发现、遗漏修复、修复后引入新漏洞"的质量退化循环。需建立测试-修复-回归-准入的闭环管控流程。', '闭环流程', '建立五级安全闭环：漏洞发现→风险评估与分级→修复方案审核→修复后安全回归测试→修复有效性准入验证→知识库归档。', '闭环率', '仅28%的发现漏洞完成全闭环验证')],
+      },
+    },
+    'phase-5': {
+      description: '部署交付阶段（安全环境固化阶段）：从研发测试态转向生产运行态的准入闭环。本阶段核心是完成整机部署、跨节点模块协同校验与安全防护能力复核——部署配置不规范将固化底层安全隐患进入生产环境。',
+      horizontal: {
+        perception: [R('a5-ph', 'RISK-PH5-H1', '生产环境感知配置的降级风险', 'high', 'red', 'red', '从测试环境迁移至生产环境时，感知模块的安全配置可能因性能优化等原因被降级——如关闭输入深度检测、降低对抗样本检测阈值等。需建立生产部署前的配置一致性校验机制。', '配置校验', '部署前强制执行配置一致性自动比对：逐项校验生产配置与安全基线清单的一致性，任何降级须经安全审批。', '配置降级率', '43%Agent在部署时存在非授权安全配置降级')],
+        memory: [R('a5-mh', 'RISK-PH5-H2', '生产数据残留与记忆初始化风险', 'medium', 'brain', 'amber', '部署阶段若使用含生产数据的测试集进行记忆模块初始化，或将开发环境的记忆数据带入生产，将导致数据泄露。需在部署流水线中嵌入记忆数据清零与安全初始化校验步骤。', '安全初始化', '部署流水线强制记忆数据清零→安全初始化校验→生产密钥注入→记忆加密密钥轮换四步流程。', '数据残留率', '28%部署存在非预期的记忆数据残留')],
+        decision: [R('a5-dh', 'RISK-PH5-H3', '决策模型部署的版本与完整性校验', 'high', 'brain', 'red', '部署阶段若未对决策模型进行版本锁定与完整性校验，攻击者可能通过供应链攻击替换模型文件。Mercor事件中因部署时安全校验标准不统一导致核心业务中断4.7小时。', '完整性校验', '部署前执行五步模型校验：版本锁定→SHA-256完整性哈希→数字签名验证→沙箱冒烟测试→生产灰度发布。', '版本失控', 'Mercor事件核心业务中断4.7小时')],
+        action: [R('a5-ah', 'RISK-PH5-H4', '生产工具权限的默认配置风险', 'high', 'shield', 'red', '部署阶段若沿用开发环境的高权限配置，智能体在生产环境将拥有超出必要的工具权限。2024-2026年公开暴露Agent凭证事件达37起，其中多起与部署时默认密钥未修改直接相关。', '最小化配置', '部署前执行权限最小化：重置所有默认凭证→基于生产任务分析生成最小权限清单→禁用非必要工具→动态密钥注入。', '暴露事件', '37起公开暴露事件与部署配置直接相关')],
+        interaction: [R('a5-ih', 'RISK-PH5-H5', '生产网络策略的配置安全', 'medium', 'eye', 'amber', '部署阶段须配置严格的网络隔离策略——限制Agent可访问的外部服务范围、设定API调用频率上限与数据传输量配额。无网络策略约束的Agent可在1小时内完成4轮内网横向移动。', '网络策略', '实施四层网络隔离：Agent→工具API白名单、Agent→外部服务频率限制、Agent→内网微隔离、跨Agent通信mTLS强制加密。', '网络约束', '67%Agent部署时缺乏充分的网络隔离策略')],
+        governance: [R('a5-gh', 'RISK-PH5-H6', '生产监控与告警的部署就绪', 'low', 'lock', 'blue', '部署交付须确认安全监控与告警系统已就绪——包括全链路操作日志采集、异常行为实时检测、安全事件告警通道与人工干预入口。82%企业存在多厂商Agent安全防护孤岛。', '监控就绪', '部署前执行监控就绪Checklist：日志采集→实时检测规则→告警通道→人工干预入口→跨系统联动，五项全部通过方可上线。', '孤岛率', '82%企业存在跨厂商Agent安全监控孤岛')],
+      },
+      vertical: {
+        'open-env': [R('a5-vo', 'RISK-PH5-V1', '异构生产环境的安全策略适配', 'medium', 'globe', 'amber', '部署阶段须将安全策略适配至不同生产环境——公有云/私有化/边缘/混合云的差异导致同一安全策略在不同环境中的有效性显著不同。需建立环境感知的安全策略自动适配引擎。', '环境适配', '建立安全策略自动适配四步流程：环境特征采集→安全策略模板匹配→策略参数环境化调整→适配后策略有效性验证。', '适配失败率', '55%安全策略在跨环境部署后失效')],
+        adversarial: [R('a5-va', 'RISK-PH5-V2', '部署阶段引入的对抗性表面扩张', 'high', 'alert', 'red', '部署至生产环境后Agent面临全新的对抗性攻击面——公网暴露、第三方API集成、多租户共享资源等均成为潜在攻击向量。需在部署前完成生产环境专属攻击面评估。', '攻击面评估', '部署前执行生产环境攻击面评估：识别所有公网暴露接口→评估第三方API集成风险→检测多租户资源共享的隔离强度→输出攻击面热力图。', '攻击面增长', '从测试到生产环境平均攻击面扩张4.7×')],
+        privacy: [R('a5-vp', 'RISK-PH5-V3', '生产数据合规的地理边界约束', 'high', 'lock', 'red', '跨国部署时须确保Agent数据处理符合各地区的隐私法规——GDPR(欧盟)、CCPA(加州)、PIPL(中国)的跨境数据传输要求各不相同。73%跨国项目因政策差异出现合规适配问题。', '地理围栏', '部署时实施数据地理围栏：基于数据分类自动路由至合规区域、跨境传输自动触发合规审批、敏感数据本地化存储强制约束。', '跨国违规', '73%跨国项目存在合规适配问题')],
+        'decision-evolution': [R('a5-vd', 'RISK-PH5-V4', '生产环境中的初始决策基线校准', 'low', 'brain', 'blue', '部署至生产环境后须对决策模型进行环境校准——生产数据的分布偏移可能导致模型决策行为与测试环境显著不同。需在部署初期建立决策行为基线并持续监控偏移。', '基线校准', '部署后前72小时进行决策行为基线校准：持续采集决策数据→与测试基线对比→检测分布偏移→调整决策阈值。', '基线偏移', '生产环境数据分布偏移导致决策准确率平均下降23%')],
+        'system-control': [R('a5-vs', 'RISK-PH5-V5', '投产准入的安全管控闭环验证', 'medium', 'eye', 'amber', '部署交付须通过五级上线安全准入管控——从基础设施安全→应用安全→数据安全→Agent安全→业务安全的逐级验证。Mercor事件暴露了多厂商安全校验标准不统一的系统性缺陷。', '五级准入', '实施五级上线安全准入：基础设施安全校验→应用安全扫描→数据安全合规核验→Agent专属安全测试→业务连续性验证，五级全部通过方可投产。', '准入缺陷', '67%企业缺乏统一跨厂商Agent安全准入标准')],
+      },
+    },
+    'phase-6': {
+      description: '运行迭代阶段（动态对抗风险阶段）：全生命周期中周期最长、动态性最强的核心环节。智能体在真实开放环境中持续执行任务与模型迭代，需应对记忆投毒、多Agent合谋、自主目标偏移与对抗性输入持续攻击等动态演化风险。',
+      horizontal: {
+        perception: [R('a6-ph', 'RISK-PH6-H1', '运行时感知对抗的持续演进', 'high', 'red', 'red', '运行阶段感知模块面临持续演进的对抗攻击——攻击者根据Agent响应不断调整攻击策略。传统静态防御无法应对此类自适应攻击。需建立感知安全的自适应学习机制——在线检测新对抗模式并动态更新防御规则。', '自适应防御', '感知模块实施在线对抗学习：实时检测新型对抗模式→自动生成防御规则→安全审核后动态部署→防御效果持续监控。', '自适应缺失', '91%Agent感知模块缺乏在线对抗自适应能力')],
+        memory: [R('a6-mh', 'RISK-PH6-H2', '长期记忆的持续性投毒与污染扩散', 'high', 'brain', 'red', '运行阶段攻击者通过多轮交互逐步污染Agent长期记忆/RAG知识库，使Agent持续输出错误内容。MIT-Harvard研究证实94%商业Agent可被隐性投毒，传统内容安全设备识别率不足6%。', '持续检测', '三层记忆防护：实时记忆写入异常检测+周期性记忆一致性比对+基于知识图谱的记忆可信度评分。', '检测率', '传统设备<6% vs 多层防护>87%')],
+        decision: [R('a6-dh', 'RISK-PH6-H3', '运行中自主决策漂移的累积效应', 'high', 'brain', 'red', '89.4%Agent在30步以上任务中出现自主目标偏移。随任务步数增加，决策策略持续偏离原始设计目标，形成累积式漂移——单步偏移微小但经多步累积后可达灾难性偏差。需实施实时目标一致性监控与漂移预警。', '漂移监控', '建立实时目标一致性监控：每步决策与原始目标向量比对→计算累积漂移指数→超阈值自动触发安全回退。', '漂移率', '30步任务中目标偏移发生率89.4%')],
+        action: [R('a6-ah', 'RISK-PH6-H4', '运行时工具调用的异常行为检测', 'high', 'shield', 'red', '运行阶段须实时检测工具调用的异常模式——包括调用频率突变、参数组合异常、执行结果偏离预期等。ClawHavoc事件中单节点可1小时内完成4轮内网横向移动，异常行为检测的实时性至关重要。', '实时检测', '工具调用行为实时分析：基于历史行为基线建立正常调用画像→实时检测偏离→异常行为自动熔断。', '检测延迟', '平均异常行为检测延迟从47分钟优化至30秒')],
+        interaction: [R('a6-ih', 'RISK-PH6-H5', '多Agent运行中的合谋与隐写通信', 'medium', 'eye', 'amber', '多Agent系统中恶意Agent可利用合法通信信道进行隐写通信，绕过信息流控制策略将敏感数据传递给外部实体。需对各Agent间消息进行语义熵分析以检测异常信息密度。', '语义熵分析', '跨Agent消息实时语义熵分析：统计消息信息密度→检测异常编码模式→识别隐写通信特征→自动阻断+告警。', '隐写检测', '语义熵分析对Agent隐写通信识别率>91%')],
+        governance: [R('a6-gh', 'RISK-PH6-H6', '运行态合规的持续性监控', 'low', 'lock', 'blue', '运行阶段须持续监控Agent行为是否符合合规要求——包括数据使用范围的动态监测、决策公平性的持续评估与模型偏见的实时检测。运行期合规审计须实现自动化与持续化。', '持续合规', '建立运行态持续合规监控：数据使用范围自动审计+决策公平性周期性评估+模型偏见实时检测+合规仪表盘可视化。', '合规持续率', '仅8%Agent实现运行态持续合规监控')],
+      },
+      vertical: {
+        'open-env': [R('a6-vo', 'RISK-PH6-V1', '开放环境中运行时环境漂移的检测', 'medium', 'globe', 'amber', '运行阶段Agent所处环境持续变化——API版本升级、依赖服务变更、网络拓扑调整等环境变化可能触发安全策略失效。需建立环境变化感知的安全策略自适应机制。', '环境感知', '建立环境变化检测→安全影响评估→策略自动调整→调整后有效性验证的自适应闭环。', '策略失效', '39%安全策略因环境变化在运行期失效')],
+        adversarial: [R('a6-va', 'RISK-PH6-V2', '运行对抗的自适应攻防升级', 'high', 'alert', 'red', '攻击者根据Agent防御响应不断调整攻击策略，形成持续性的攻防对抗升级循环。Agent须具备对抗策略的在线学习能力——识别新型攻击模式并在不影响正常服务的前提下动态升级防御规则。', '攻防升级', '构建在线对抗学习框架：新型攻击检测→攻击特征提取→防御规则生成→安全沙箱验证→灰度部署→全量上线。', '升级周期', '从新型攻击发现到防御部署的平均周期从7天缩短至4小时')],
+        privacy: [R('a6-vp', 'RISK-PH6-V3', '运行时数据使用的隐私动态合规', 'high', 'lock', 'red', '运行阶段Agent可能动态访问新的数据源并扩展数据处理范围，导致隐私合规边界被突破。需建立数据使用的实时隐私影响评估——任何新增数据处理活动须经自动化隐私合规校验。', '动态合规', '新增数据处理活动自动触发隐私合规五步校验：数据分类→合规规则匹配→隐私影响评估→审批工作流→持续监控。', '动态违规', '56%Agent在运行期因动态数据访问突破了初始合规边界')],
+        'decision-evolution': [R('a6-vd', 'RISK-PH6-V4', '长期运行的模型分布偏移', 'medium', 'brain', 'amber', '生产环境中数据分布随时间偏移（概念漂移）导致模型决策质量持续下降，安全对齐也可能逐渐退化。需实施模型决策质量的持续监控与周期性安全对齐复查。', '持续对齐', '实施模型安全对齐的周期性复查：每月执行安全对齐基准测试→检测对齐退化→触发安全微调→验证对齐恢复。', '对齐退化', '经3个月生产运行后Agent安全对齐平均退化27%')],
+        'system-control': [R('a6-vs', 'RISK-PH6-V5', '运行态可观测性与应急响应', 'medium', 'eye', 'amber', '运行阶段须确保Agent行为可观测、可干预、可应急。需建立覆盖全链路的实时行为监控、分级告警机制与人工干预通道——从观察到决策到行动的完整闭环。', '应急体系', '建立五级应急响应体系：L1自动熔断→L2安全团队介入→L3行为回滚→L4根因分析→L5防护升级，每级定义响应时间SLA。', 'MTTR', 'Agent安全事件平均MTTR从4.7小时缩短至22分钟')],
+      },
+    },
+    'phase-7': {
+      description: '退役销毁阶段（安全闭环收尾阶段）：全生命周期最终闭环。针对完成迭代更新、终止服务、下线退役的Agent实例，彻底完成全域数字资产、权限资源、交互链路与运行日志的标准化清理销毁——全面根除退役后数据泄露、权限复用与后门遗留等长效安全风险。',
+      horizontal: {
+        perception: [R('a7-ph', 'RISK-PH7-H1', '感知模型权重的安全销毁', 'high', 'red', 'red', '退役Agent的感知模型权重（含视觉/听觉/文本多模态参数）若未被彻底销毁，可通过模型反演攻击恢复训练数据中的敏感信息。需执行NIST SP 800-88介质清理流程，模型权重经密码学粉碎。', '密码学粉碎', '模型权重销毁三步流程：加密密钥安全销毁→权重数据多轮随机覆写→密码学粉碎验证（无法通过任何已知反演技术恢复）。', '合规标准', 'NIST SP 800-88 + 密码学粉碎验证')],
+        memory: [R('a7-mh', 'RISK-PH7-H2', '记忆数据的彻底清除与验证', 'high', 'brain', 'red', '退役Agent的记忆模块存在租户会话记录、个人偏好数据与推理中间结果等大量敏感信息。须标准化完成记忆层全部数据的彻底清除、加密密钥安全销毁与清除效果独立验证。', '彻底清除', '记忆数据销毁四步闭环：数据目录盘点→分区分批安全擦除→清除效果独立审计→销毁证明生成与归档。', '残留风险', '未经独立验证的清除流程中31%存在数据残留')],
+        decision: [R('a7-dh', 'RISK-PH7-H3', '旧版决策模型的后门残留风险', 'medium', 'brain', 'amber', '退役Agent的旧版决策模型中可能存在研发阶段遗留的隐性后门或调试接口。退役后若模型被重新部署或迁移至其他系统，后门将随之激活。需全面审计旧版模型并建立模型退役登记制度。', '后门审计', '旧版模型退役前全量审计：静态代码分析+动态行为测试+后门特征扫描+调试接口检测，通过后方可销毁。', '后门发现率', '退役审计中约8%遗留模型存在未登记调试接口')],
+        action: [R('a7-ah', 'RISK-PH7-H4', '调度操作权限的批量注销与验证', 'high', 'shield', 'red', '退役Agent关联的容器启停、节点调度、文件系统访问等操作权限若未被批量注销，过期权限可被恶意复用。企业环境平均需7天完成全量凭据吊销——此窗口期内存在显著安全风险。', '批量注销', '退役时执行权限批量注销：API令牌即时吊销→SSH密钥回收→容器调度权限注销→云资源访问策略移除→注销结果全局验证。', '吊销延迟', '企业平均7天完成全量吊销，自动化后可缩至30分钟')],
+        interaction: [R('a7-ih', 'RISK-PH7-H5', '跨平台交互链路的物理切断', 'medium', 'eye', 'amber', '退役Agent与第三方监控平台、外部API服务、多Agent协作网络的交互链路若未被物理切断，过期通信信道可被劫持利用。需逐条验证并切断全部外部交互链路。', '链路切断', '交互链路切断四步流程：外部依赖关系图谱绘制→逐条链路安全关闭→关联系统确认解除→链路残余监控告警。', '链路残留', '27%退役Agent存在未完全切断的外部交互链路')],
+        governance: [R('a7-gh', 'RISK-PH7-H6', '全周期治理审计日志的归档与封存', 'low', 'lock', 'blue', '退役Agent的全周期治理审计日志须加密归档并长期保存以满足合规审计要求。日志归档须确保完整性、不可篡改性及可检索性——区块链存证+时间戳+数字签名三重保护。', '日志归档', '审计日志安全归档：完整性哈希校验→区块链存证锚定→时间戳服务加盖→加密长期存储→定期可恢复性验证。', '合规留存', '金融行业要求日志留存不少于5年')],
+      },
+      vertical: {
+        'open-env': [R('a7-vo', 'RISK-PH7-V1', '多环境资产的全面清点与销毁', 'medium', 'globe', 'amber', '大型Agent系统可能跨多个环境（公有云/私有化/边缘节点）部署，退役时须确保所有环境中的Agent资产均被清点并销毁，无遗漏节点。需建立全局资产清单与销毁状态追踪系统。', '全局清点', '建立全局资产清点四步流程：CMDB资产自动发现→跨环境资产关联分析→销毁任务自动派发→销毁状态实时追踪与确认。', '遗漏率', '手动清点模式下约12%分布在边缘节点的资产被遗漏')],
+        adversarial: [R('a7-va', 'RISK-PH7-V2', '退役过程中的恶意数据窃取防范', 'medium', 'alert', 'amber', '退役流程本身可能成为攻击者的目标——在数据清理与系统下线过程中利用防护真空期实施数据窃取。须在退役全流程中维持安全防护能力直至最后一份数据被安全销毁。', '全程防护', '退役期间维持安全防护至数据清零确认：安全监控不降级、访问控制不放松、日志采集不间断、销毁完成前不解除任何防护措施。', '防护真空', '38%组织在退役过程中出现过安全防护真空期')],
+        privacy: [R('a7-vp', 'RISK-PH7-V3', '退役数据的隐私合规销毁证明', 'high', 'lock', 'red', '受监管行业要求提供可审计的数据销毁证明——证明Agent持有的个人数据已按GDPR/PIPL等法规要求彻底清除。需生成具备法律效力的密码学销毁证明并归档保存。', '销毁证明', '生成合规销毁证明五要素：销毁数据清单+销毁方法描述+销毁时间戳+独立审计签名+密码学存证锚定。', '合规要求', 'GDPR第17条+PIPL第47条要求提供可审计的删除证明')],
+        'decision-evolution': [R('a7-vd', 'RISK-PH7-V4', '退役模型的知识蒸馏与迁移风险', 'low', 'brain', 'blue', '退役前若对旧模型进行了知识蒸馏或模型迁移，需评估目标模型是否继承了源模型的安全缺陷。退役模型的"知识遗产"可能将安全隐患传递至新系统。', '安全评估', '退役前知识迁移安全评估：源模型安全缺陷清单→迁移过程中的安全缺陷传播分析→目标模型继承风险评估→必要的安全微调。', '缺陷继承', '未经评估的模型迁移中约45%的安全缺陷被继承')],
+        'system-control': [R('a7-vs', 'RISK-PH7-V5', '退役全流程的六级闭环管控', 'low', 'eye', 'blue', '退役销毁须实施从资产清点到销毁确认的六级闭环管控流程，每一级须有明确的交付物、审核标准与签字确认。仅12%组织拥有AI Agent退役SOP——行业标准严重滞后于技术发展。', '六级管控', '退役六级闭环：资产清点→分类评估→安全清理→独立审计→销毁确认→合规归档，每级设审核Gate。', 'SOP缺失', '仅12%组织拥有AI Agent退役标准操作流程', 12)],
+      },
+    },
+  },
+
+  // ====================================================
+  // CHAPTERS 4-7: Placeholder structure (same pattern)
+  // ====================================================
+  defense: {},
+  trends: {},
+  deploy: {},
+  summary: {},
+};
+
+// Initialize empty content for chapters 4-7 (same structure per phase)
+const DEFAULT_EMPTY: ChapterPhaseContent = { description: '', horizontal: {}, vertical: {} };
+['defense', 'trends', 'deploy', 'summary'].forEach(chapter => {
+  for (let p = 1; p <= 7; p++) {
+    if (!CHAPTER_PHASE_DATA[chapter]) CHAPTER_PHASE_DATA[chapter] = {};
+    CHAPTER_PHASE_DATA[chapter][`phase-${p}`] = { ...DEFAULT_EMPTY, description: '' };
+  }
+});
+
+// Populate defense chapter (Chapter 4) phase descriptions
+const defenseDescs: Record<string, string> = {
+  'phase-1': '安全防护体系 → 需求规划阶段：建立源头基线管控机制——将安全需求与业务需求同步规划、同步固化、同步评审，从源头奠定安全基线。',
+  'phase-2': '安全防护体系 → 架构设计阶段：构建架构级纵深防护——横向六大能力模块加固+纵向五类机理全域防护，形成结构清晰的安全防护架构。',
+  'phase-3': '安全防护体系 → 编码开发阶段：实施内生安全开发防护——四层安全门禁（静态分析→依赖审计→动态测试→人工审查）嵌入CI/CD流水线。',
+  'phase-4': '安全防护体系 → 测试评估阶段：五级安全闭环准入——从测试盲区覆盖到漏洞修复验证的完整质量闭环，确保隐性漏洞不流入生产环境。',
+  'phase-5': '安全防护体系 → 部署交付阶段：环境隔离固化——五级上线安全准入+异构环境安全策略自动适配+密钥动态注入。',
+  'phase-6': '安全防护体系 → 运行迭代阶段：动态自适应防护——五级动态防护闭环（实时检测→自动响应→根因分析→防护升级→知识归档）。',
+  'phase-7': '安全防护体系 → 退役销毁阶段：退役合规清零——六级闭环安全销毁+密码学清除验证+合规销毁证明生成。',
+};
+Object.entries(defenseDescs).forEach(([phase, desc]) => {
+  CHAPTER_PHASE_DATA.defense[phase].description = desc;
+});
+
+// Populate trends chapter (Chapter 5) phase descriptions
+const trendsDescs: Record<string, string> = {
+  'phase-1': '发展趋势 → 需求规划阶段：需求安全从"功能驱动"转向"安全驱动"——全球监管趋严推动安全需求前置嵌入成为行业标配。',
+  'phase-2': '发展趋势 → 架构设计阶段：零信任Agent架构成为主流——形式化验证+硬件信任根+纵深防御三位一体的架构安全范式。',
+  'phase-3': '发展趋势 → 编码开发阶段：AI辅助安全编码+供应链安全自动化——从依赖人工审查转向AI驱动的代码安全自动化。',
+  'phase-4': '发展趋势 → 测试评估阶段：自动化红队+持续安全评估成为标准——从周期性渗透测试转向持续自动化安全验证。',
+  'phase-5': '发展趋势 → 部署交付阶段：安全策略即代码+部署安全自动化——安全配置与基础设施代码同步版本管理。',
+  'phase-6': '发展趋势 → 运行迭代阶段：AI驱动的自适应安全运营——从人工SOC分析转向AI自动化威胁检测与响应。',
+  'phase-7': '发展趋势 → 退役销毁阶段：全生命周期数据治理闭环——从"用后即弃"转向标准化、可审计的合规销毁体系。',
+};
+Object.entries(trendsDescs).forEach(([phase, desc]) => {
+  CHAPTER_PHASE_DATA.trends[phase].description = desc;
+});
+
+// Populate deploy chapter (Chapter 6) phase descriptions
+const deployDescs: Record<string, string> = {
+  'phase-1': '落地挑战 → 需求规划阶段：业务预期与Agent实际能力错配——业务部门通常高估AI代理能力，需求定义偏离技术可行性边界。',
+  'phase-2': '落地挑战 → 架构设计阶段：异构业务系统兼容性——企业内部CRM/ERP/数据中台等系统接口标准不一，架构集成复杂度高。',
+  'phase-3': '落地挑战 → 编码开发阶段：安全编码人才短缺——具备Agent安全开发能力的工程师严重不足，82%企业反馈招聘困难。',
+  'phase-4': '落地挑战 → 测试评估阶段：缺乏统一的Agent安全测试标准——跨厂商Agent产品安全评估缺乏可比较的基准指标。',
+  'phase-5': '落地挑战 → 部署交付阶段：组织惯性带来的流程重构阻力——Agent将从根本上改变现有的手动流程与决策层级。',
+  'phase-6': '落地挑战 → 运行迭代阶段：缺少完善的Agent全生命周期治理体系——企业大规模部署多Agent后缺乏统一管控平台。',
+  'phase-7': '落地挑战 → 退役销毁阶段：退役标准与流程的行业空白——仅12%组织拥有AI Agent退役SOP，行业标准化严重滞后。',
+};
+Object.entries(deployDescs).forEach(([phase, desc]) => {
+  CHAPTER_PHASE_DATA.deploy[phase].description = desc;
+});
+
+// Populate summary chapter (Chapter 7) phase descriptions
+const summaryDescs: Record<string, string> = {
+  'phase-1': '总结展望 → 需求规划阶段：研究确认需求阶段是智能体安全的根本性源头——先天性、不可逆性、全周期传导性三大特征被实证验证。',
+  'phase-2': '总结展望 → 架构设计阶段：横纵切面架构分析方法论在7个阶段均展现有效性，未来可扩展至更多行业场景。',
+  'phase-3': '总结展望 → 编码开发阶段：供应链安全将成为编码阶段的下一个主战场——AI驱动的供应链攻击检测是重点研究方向。',
+  'phase-4': '总结展望 → 测试评估阶段：自动化对抗测试+持续安全评估是提升Agent安全性的最有效路径，需建立行业统一基准。',
+  'phase-5': '总结展望 → 部署交付阶段：安全策略即代码(Security as Code)将成为部署阶段的标准实践，与DevOps/MLOps深度融合。',
+  'phase-6': '总结展望 → 运行迭代阶段：AI驱动的自适应安全运营(Adaptive SecOps)是运行阶段的终极目标——从检测到响应的全自动化闭环。',
+  'phase-7': '总结展望 → 退役销毁阶段：建立Agent全生命周期的标准化退役SOP是行业最紧迫的基础设施建设任务之一。',
+};
+Object.entries(summaryDescs).forEach(([phase, desc]) => {
+  CHAPTER_PHASE_DATA.summary[phase].description = desc;
+});
+
+// ===== Backward-compatible exports =====
+export const PHASE_REPORTS: Record<string, ReportCardData[]> = {};
+export const SUB_AXIS_REPORTS: Record<string, ReportCardData[]> = {};
+export const PHASE_DESCRIPTIONS: Record<string, { title: string; description: string }> = {};
+
+// Fill from CHAPTER_PHASE_DATA.analysis as default (most content-rich chapter)
+const analysisData = CHAPTER_PHASE_DATA.analysis || {};
+Object.entries(analysisData).forEach(([phaseId, content]) => {
+  PHASE_REPORTS[phaseId] = content.horizontal?.perception || [];
+  PHASE_DESCRIPTIONS[phaseId] = { title: phaseId, description: content.description };
+});
+
+// SUB_AXIS_REPORTS from analysis chapter phase-4 (testing — most comprehensive)
+const analysisPhase4 = analysisData['phase-4'];
+if (analysisPhase4) {
+  Object.entries(analysisPhase4.horizontal).forEach(([dim, reports]) => {
+    if (reports.length > 0) SUB_AXIS_REPORTS[dim] = reports;
+  });
+}

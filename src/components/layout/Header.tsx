@@ -1,20 +1,16 @@
 import { NavLink, useLocation, Link } from 'react-router-dom';
-import { ShieldCheck, Download, ExternalLink, Globe } from 'lucide-react';
+import { ShieldCheck, Download, ExternalLink } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const NAV_ITEMS = [
-  { id: 'summary', label: 'Summary', path: '/' },
-  { id: 'vulnerability', label: 'Vulnerability', path: '/vulnerability' },
-  { id: 'protocol', label: 'Protocol', path: '/protocol' },
-  { id: 'product', label: 'Product', path: '/product' },
-  { id: 'team', label: 'Team', path: '/team' },
-  { id: 'policy', label: 'Policy', path: '/policy' },
+  { id: 'survey', label: 'Survey', path: '/vulnerability' },
+  { id: 'appendix', label: 'Appendix', path: '/appendix' },
   { id: 'incidents', label: 'Incidents', path: '/incidents' },
 ];
 
 export default function Header() {
   const location = useLocation();
-  const [activeNav, setActiveNav] = useState('summary');
+  const [activeNav, setActiveNav] = useState('');
 
   useEffect(() => {
     const current = NAV_ITEMS.find(item => item.path === location.pathname);
@@ -50,10 +46,6 @@ export default function Header() {
 
       {/* Action Buttons */}
       <div className="flex items-center gap-4 pl-8 border-l border-slate-700 h-10">
-        <div className="hidden lg:flex items-center gap-2 mr-4 text-xs font-medium text-slate-400">
-          <Globe size={14} />
-          <span>ZH / EN</span>
-        </div>
         <a
           href="#"
           onClick={(e) => { e.preventDefault(); alert('报告下载功能即将上线'); }}
@@ -67,7 +59,7 @@ export default function Header() {
           className="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-500 text-xs font-bold uppercase tracking-widest rounded transition-colors"
         >
           <ExternalLink size={14} className="mr-2" />
-          Secondary Page
+          Survey
         </Link>
       </div>
     </header>

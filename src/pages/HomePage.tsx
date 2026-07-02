@@ -65,7 +65,7 @@ export default function HomePage() {
               title="Agent 安全交互协议"
               description="旨在规范 Agent 与工具、Agent 与用户、Agent 与 Agent 之间的通讯标准，建立可信的权限握手机制。"
               linkText="Access Protocols"
-              onExplore={() => navigate('/protocol')}
+              onExplore={() => navigate('/appendix')}
             />
           </div>
 

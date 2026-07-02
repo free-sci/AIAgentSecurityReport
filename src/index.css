@@ -151,6 +151,18 @@ body {
   z-index: 0;
 }
 
+.year-marker {
+  z-index: 10;
+  position: relative;
+  cursor: pointer;
+}
+
+.month-dot {
+  z-index: 10;
+  position: relative;
+  cursor: pointer;
+}
+
 .incident-card {
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
 }
@@ -163,6 +175,25 @@ body {
 .month-marker {
   z-index: 10;
   position: relative;
+}
+
+/* ===== Timeline Expand Animation ===== */
+@keyframes timeline-expand {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    max-height: 3000px;
+    transform: translateY(0);
+  }
+}
+
+.animate-timeline-expand {
+  animation: timeline-expand 0.5s ease-out forwards;
+  overflow: hidden;
 }
 
 /* ===== Custom Scrollbar for Sidebar ===== */

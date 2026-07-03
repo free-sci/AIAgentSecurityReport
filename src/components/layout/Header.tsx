@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 const NAV_ITEMS = [
   { id: 'survey', label: 'Survey', path: '/vulnerability' },
   { id: 'appendix', label: 'Appendix', path: '/appendix' },
+  { id: 'tables', label: 'Tables', path: '/tables' },
   { id: 'incidents', label: 'Incidents', path: '/incidents' },
 ];
 

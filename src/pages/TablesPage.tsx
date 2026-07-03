@@ -1,23 +1,23 @@
 import { useMemo, useState } from 'react';
-import { BookOpen, FileText } from 'lucide-react';
+import { BookOpen, Table2 } from 'lucide-react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import { APPENDIX_FILTERS, APPENDIX_TEXTS } from '../data/appendixContent';
+import { APPENDIX_FILTERS, APPENDIX_TABLES } from '../data/appendixContent';
 
-export default function AppendixPage() {
+export default function TablesPage() {
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filters = useMemo(() => {
-    const available = new Set(APPENDIX_TEXTS.flatMap((item) => item.keywords));
+    const available = new Set(APPENDIX_TABLES.flatMap((table) => table.keywords));
     return APPENDIX_FILTERS.filter((filter) => filter.id === 'all' || available.has(filter.id));
   }, []);
 
-  const visibleTexts = useMemo(() => {
-    if (activeFilter === 'all') return APPENDIX_TEXTS;
-    return APPENDIX_TEXTS.filter((item) => item.keywords.includes(activeFilter));
+  const visibleTables = useMemo(() => {
+    if (activeFilter === 'all') return APPENDIX_TABLES;
+    return APPENDIX_TABLES.filter((table) => table.keywords.includes(activeFilter));
   }, [activeFilter]);
 
-  const paragraphCount = visibleTexts.reduce((sum, item) => sum + item.paragraphs.length, 0);
+  const rowCount = visibleTables.reduce((sum, table) => sum + table.rows.length, 0);
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -28,17 +28,17 @@ export default function AppendixPage() {
           <div className="max-w-7xl mx-auto px-8 md:px-12 lg:px-16 py-12">
             <div className="flex items-start gap-5">
               <div className="w-14 h-14 rounded-lg bg-blue-600 text-white flex items-center justify-center flex-shrink-0">
-                <FileText size={28} />
+                <Table2 size={28} />
               </div>
               <div>
                 <div className="text-[10px] font-bold uppercase tracking-[0.22em] text-blue-600 mb-3">
-                  PDF Appendix Text
+                  PDF Appendix Tables
                 </div>
                 <h1 className="text-3xl md:text-4xl font-bold text-slate-950 tracking-tight">
-                  Appendix
+                  Tables
                 </h1>
                 <p className="mt-4 text-slate-600 max-w-3xl leading-relaxed">
-                  展示 PDF 附录中的说明性正文内容。结构化表格已迁移到 Tables 页面独立查看。
+                  汇总 PDF 附录中的结构化表格，按数据集、产品、攻击、事件等关键词筛选查看。
                 </p>
               </div>
             </div>
@@ -66,25 +66,25 @@ export default function AppendixPage() {
             </div>
 
             <div className="mt-6 text-xs font-bold uppercase tracking-widest text-slate-400">
-              当前显示 {visibleTexts.length} 个附录文本 / {paragraphCount} 行原文
+              当前显示 {visibleTables.length} 张表 / {rowCount} 行原文
             </div>
           </div>
         </section>
 
-        <section className="max-w-5xl mx-auto px-8 md:px-12 lg:px-16 py-10 space-y-10">
-          {visibleTexts.map((item) => (
-            <section key={item.title} className="space-y-4">
+        <section className="max-w-7xl mx-auto px-8 md:px-12 lg:px-16 py-10 space-y-10">
+          {visibleTables.map((table) => (
+            <section key={`${table.appendix}-${table.title}`} className="space-y-4">
               <div className="flex items-start gap-3">
                 <div className="w-9 h-9 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center flex-shrink-0">
                   <BookOpen size={18} />
                 </div>
                 <div>
                   <div className="text-[10px] font-bold uppercase tracking-widest text-blue-600 mb-1">
-                    {item.appendix}
+                    {table.appendix}
                   </div>
-                  <h2 className="text-2xl font-bold text-slate-900">{item.title}</h2>
+                  <h2 className="text-2xl font-bold text-slate-900">{table.title}</h2>
                   <div className="mt-2 flex flex-wrap gap-2">
-                    {item.keywords.map((keyword) => (
+                    {table.keywords.map((keyword) => (
                       <span key={keyword} className="px-2 py-1 rounded bg-slate-100 text-[10px] font-bold uppercase tracking-wider text-slate-500">
                         {keyword}
                       </span>
@@ -93,12 +93,34 @@ export default function AppendixPage() {
                 </div>
               </div>
 
-              <div className="border-l-4 border-blue-600 pl-6 space-y-3">
-                {item.paragraphs.map((paragraph, index) => (
-                  <p key={`${item.title}-${index}`} className="text-sm leading-7 text-slate-700">
-                    {paragraph}
-                  </p>
-                ))}
+              <div className="border border-slate-200 rounded-lg overflow-hidden bg-white">
+                <div className="overflow-x-auto">
+                  <table
+                    className="w-full text-left text-sm"
+                    style={{ minWidth: `${Math.max(760, table.columns.length * 180)}px` }}
+                  >
+                    <thead className="bg-slate-100 text-slate-600">
+                      <tr>
+                        {table.columns.map((column) => (
+                          <th key={column} className="px-4 py-3 font-bold whitespace-nowrap border-b border-slate-200">
+                            {column}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {table.rows.map((row, rowIndex) => (
+                        <tr key={`${table.title}-${rowIndex}`} className="odd:bg-white even:bg-slate-50/70">
+                          {table.columns.map((_, cellIndex) => (
+                            <td key={`${table.title}-${rowIndex}-${cellIndex}`} className="px-4 py-3 align-top text-slate-700 border-b border-slate-100 leading-relaxed whitespace-pre-wrap">
+                              {row[cellIndex] || ''}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </section>
           ))}

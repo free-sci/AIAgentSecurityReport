@@ -1,0 +1,248 @@
+% 依赖项（必须放在主文档导言区，即 \begin{document} 之前）：
+% \usepackage{tabularray}
+% \UseTblrLibrary{varwidth}
+% \usepackage{enumitem}
+\begingroup
+% \nopagebreak[4]
+\enlargethispage{1cm}
+\footnotesize
+\centering
+
+\DefTblrTemplate{conthead-text}{default}{（续表）}
+\DefTblrTemplate{contfoot-text}{default}{续下页}
+
+\begin{longtblr}[
+  caption = {北美主流AI智能体安全产品与落地方向},
+  label   = {tab:north-america-agent-security-products},
+]{
+  width   = \linewidth,
+  colspec = {
+    |Q[wd=0.8cm,l,m]
+    |Q[wd=1.2cm,l,m]
+    |Q[wd=2.8cm,l,m]
+    |Q[wd=0.45\linewidth,l,m]
+    |X[1,l,m]|
+  },
+  cells   = {l,m},
+  colsep  = 3pt,
+  row{1}  = {font=\bfseries},
+  rowhead = 1,
+  % 每行内容与上下边框之间各保留 5pt 空间。
+  rowsep  = 5pt,
+  measure = vbox,
+  stretch = -1,
+}
+\hline
+\textbf{国家} & \textbf{企业} & \textbf{所属产业领域} & \textbf{安全研究方向} & \textbf{产品/成果} \\
+\hline
+\SetCell[r=7]{l,m} 美国
+& OpenAI
+&
+\begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 通用基础大模型与ChatGPT终端应用
+    \item 面向开发者的智能体API与软件开发套件
+    \item 企业级智能体构建框架与标准化评测基准
+    \item 智能体对齐技术与安全防护体系研究
+\end{itemize}
+& 
+% \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+%     \item \textbf{终端用户自主任务智能体的网页、文件、连接器与代码执行风险控制。}
+%     未来趋势是从“是否拒答”转向“能否在真实行动链中控制风险”：浏览器、连接器、文件和终端会成为统一任务环境，提示注入、敏感数据外泄、误购买/误发送、越权访问会成为核心风险面。研究重点应放在上下文级权限最小化、敏感动作显式确认、连接器数据隔离、任务过程可中断/可接管，以及对网页与文件中恶意指令的持续检测。
+%     \item \textbf{开发者智能体的工具编排、状态管理、可观测性与数据隔离。}
+%     开发者智能体会走向并行、多代理、长周期后台执行，安全边界不能只靠模型本身，而要依赖沙箱、工作区隔离、网络策略、工具调用审计、测试证据和可回放轨迹。未来研究应关注工具仿真与部署仿真、代码仓库状态一致性、跨任务状态污染、供应链/README 注入、以及从终端日志和测试结果中构建可验证的智能体行为证据链。
+%     \item \textbf{企业低代码智能体的流程治理、护栏配置、评测闭环与连接器管理。}
+%     企业场景会更强调“可配置、可审计、可分级授权”的治理能力：不同部门、用户、数据源和业务流程需要不同的护栏策略，而不是统一的全局拒绝规则。未来趋势是把安全能力产品化为策略编排、连接器权限分层、客户自主管控、隐私保护检测、部署前仿真评测和上线后监测闭环，让低代码智能体既能接入真实业务系统，又能把高风险动作锁在可追责、可回滚、可验证的流程里。
+%     \end{itemize}
+    \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 终端用户自主任务智能体的网页、文件、连接器与代码执行风险控制。
+
+    \item 开发者智能体的工具编排、状态管理、可观测性与数据隔离。
+   
+    \item 企业低代码智能体的流程治理、护栏配置、评测闭环与连接器管理。
+
+    未来研究方向趋势：
+    \item 智能体安全评测与部署仿真：未来需要构建更接近真实业务流程的评测体系，用历史任务、真实工具调用轨迹和模拟部署环境提前发现智能体在上线后的越权、误操作与数据泄露风险。~\cite{openaideploymentsimulation2026}
+    % \item 提示注入与跨上下文攻击防护：随着智能体频繁读取网页、邮件、文档和代码仓库，外部内容中的恶意指令会成为核心攻击面，需要研究跨来源内容隔离、指令可信度判定和上下文污染检测机制。~\cite{openaichatgptagent2025,ma2026autodojo}
+    % \item 高风险能力的分级访问与持续监控：对于网络安全、生物安全、代码执行等高风险能力，未来重点不只是模型拒答，而是建立用户分级、场景分级、工具权限分级和上线后异常行为监测体系。~\cite{openaipreparedness2025,openairosalind2026}
+    % \item 智能体行为可解释与责任追踪：长链路任务中，系统需要记录智能体为何调用某个工具、使用了哪些数据、产生了哪些外部影响，从而支持审计、复盘、合规和责任划分。~\cite{openaitoolsagents2025,openaiagentkit2025}
+    \item 多智能体协作中的安全边界：未来企业和开发场景会出现多个智能体并行协作，需要研究智能体之间的权限传递、任务拆分、共享状态污染、结果互信和冲突仲裁机制。~\cite{openaitoolsagents2025,xu2025trustparadox}
+    \item 面向连接器生态的数据治理：智能体连接企业 SaaS、知识库、代码库和本地文件后，连接器会成为新的安全边界，需要重点研究细粒度授权、最小可见数据、敏感字段脱敏和跨系统数据流追踪。~\cite{openaiagentkit2025,hou2025mcp,wang2025mcptox}
+
+    \end{itemize}
+& 
+    \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+        \item ChatGPT‑Agent及其系统安全白皮书，落实用户确认、运行监督、连接器权限管控以及提示注入防御机制~\cite{openaichatgptagent2025,openaichatgptagentsystemcard2025}
+        \item Responses API与Agents‑SDK，提供工具调用、运行追踪、智能体任务转交、安全约束以及人工审批能力~\cite{openaiagentssdk2026,openaiobservability2026}
+        \item AgentKit套件，涵盖可视化编排Agent‑Builder、前端对话组件ChatKit、评测工具Evals和安全防护模块~\cite{openaiagentkit2025,openaiagentssdk2026}
+    \end{itemize}\\
+\cline{2-5}
+& Anth-\newline ropic
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item Claude 基础模型与企业协作应用
+    \item 工具调用、计算机使用与代码智能体
+    \item AI安全、对齐与开放协议生态
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 模型内生对齐、宪法式约束与前沿能力分级治理
+    \item 工具型智能体的 schema约束、沙箱化计算机使用与人类授权
+    \item 企业数据源接入、代码智能体插件化与连接器权限边界
+    \item 将安全重心从模型对齐转向智能体运行时控制平面。 未来安全架构将围绕沙箱、出站网络策略、边界凭据注入、MCP 私网隧道和全链路审计展开，使智能体的“推理大脑”与“执行环境”解耦，并由企业掌握代码、文件、网络和数据边界。~\cite{anthropicmanagedagentsinfra2026,anthropicsandboxing2025}
+    \item 让智能体成为具有独立身份的非人主体。 权限模型将由“智能体继承用户全部权限”转向独立智能体身份、任务级临时授权和双重鉴权，即只有智能体自身权限与请求者权限同时满足时才允许执行敏感操作。~\cite{claudeagentidentity2026,debenedetti2025camel}、
+    % \item 将提示注入防护演化为信息流与能力流隔离。 单纯依靠模型识别恶意文本难以提供稳定安全保证，未来系统将显式区分可信指令与不可信数据，并在工具调用层实施数据来源标记、能力约束、敏感信息流检查和执行前策略验证。~\cite{anthropicpromptinjection2025,debenedetti2025camel}
+    % \item 将持久记忆成为新的安全数据平面。 智能体记忆需要具备来源证明、分级读写权限、版本控制、回滚、删除和跨智能体隔离能力，同时防范恶意网页或文件植入休眠信息、在后续会话中触发敏感行为的延迟记忆投毒。~\cite{claudememory2026,claudedreaming2026,pulipaka2026sleepermemory}
+    \item 多智能体安全将围绕委派图和信任传播展开。 每个子智能体应获得独立上下文、最小必要信息和任务限定工具权限，并对共享文件、跨智能体消息、权限转授和结果合并建立来源追踪，避免单个智能体受攻击后沿协作链横向扩散。~\cite{anthropicmultiagent2025,claudedreaming2026,xu2025trustparadox}
+    %  
+    % \item 网络安全将进入自主攻防速度竞争。 漏洞发现、利用、分诊和修复周期会明显缩短，防御体系将逐步采用隔离运行的安全智能体持续扫描代码与资产、生成并验证补丁，但高风险利用验证和生产变更仍需要独立检查与人工决策点。~\cite{claudeaicyberoffense2026}
+    \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item Constitutional AI、Claude Constitution、Claude系统卡与 Responsible Scaling Policy ~\cite{anthropicclaudeconstitution2025,anthropicresponsiblescaling2025}
+    \item Claude Tool Use、Computer Use、Messages API工具调用机制 ~\cite{anthropictooluse2026,anthropiccomputeruse2026}
+    \item Model Context Protocol、Claude Code 与企业级 MCP治理实践 ~\cite{anthropicclaudecode2025,mcpsafetyaudit2025}
+    \end{itemize} \\
+\cline{2-5}
+& Google \newline  Google DeepMind \newline  Google Cloud
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 搜索、网页与云原生企业应用
+    \item Gemini智能体平台与云安全治理
+    \item 科学智能体与漏洞攻防研究
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 云原生智能体的构建、部署、观测、评测与生命周期治理
+    \item 企业工具/API注册、Agent身份、最小权限与跨服务访问控制
+    \item 科学推理与安全攻防智能体的受控实验、漏洞发现和结果可复现
+    未来研究方向趋势：
+    % \item 智能体控制平面与系统级防御：Google 的趋势不是只依赖模型对齐或拒答，而是把智能体当作可能失误甚至不完全可信的内部执行者，围绕沙箱、权限分级、行为监控、同步阻断和响应时延构建 AI Control 控制平面。~\cite{googleaicontrolroadmap2026,deepmindagentsecurityblog2026,xiang2026systemdefenses}
+
+    \item 面向真实部署轨迹的智能体安全评测：未来评测将从静态问答转向真实任务轨迹、工具调用链和上线监控数据，重点发现智能体在编码、检索、企业流程和高权限操作中的误删、越权、过度执行与异常行为。~\cite{googleaicontrolroadmap2026,deepmindagentsecurityblog2026,debenedetti2024agentdojo}
+
+    \item 多层智能体生态安全：Google 将 agent security 拆成单体智能体、多智能体系统和社会/产业级网络三层，说明未来研究会更关注智能体间权限传递、身份认证、跨组织协作协议、信誉机制和生态级韧性。~\cite{googlethreelayersagentsecurity2026,habler2025securea2a}
+
+    % \item 提示注入与外部内容隔离：当智能体频繁读取网页、邮件、文档、代码仓库和检索结果时，安全重点会从“识别恶意文本”转向系统架构层面的来源隔离、可信指令判定、上下文污染检测和高风险工具调用前的强制校验。~\cite{googlegeminicomputeruse2025,debenedetti2024agentdojo,xiang2026systemdefenses}
+
+    % \item Agentic RAG 的可信检索与可审计知识治理：Google Research 的 Agentic RAG 方向显示，企业智能体安全不只是回答准确率问题，而是要判断检索上下文是否充分、来源是否可信、答案是否可追溯，并把知识库更新、遗忘、审计纳入治理闭环。~\cite{googleresearchagenticrag2026,googleresearchsufficientcontext2025,joren2024sufficientcontext,googleunlearningaudit2026}
+
+    \item 高能力科研与编码智能体的边界控制：AlphaEvolve 和 AI co-scientist 代表了 Google 对自主发现、自动编程和科学假设生成的推进，未来安全研究需要关注这类智能体的实验权限、代码执行边界、结果验证、错误传播和人类专家复核机制。~\cite{deepmindalphaevolve2025,gottweis2025coscientist,googleaicontrolroadmap2026}
+
+    % \item 高风险能力的实时监控与分级阻断：随着智能体具备更强的网络安全、代码修改和系统操作能力，未来防护会按危害等级从异步审计升级到实时预防，对高风险动作实施 supervisor 复核、阻断、回滚和人工升级。~\cite{googleaicontrolroadmap2026,deepmindagentsecurityblog2026,googlegeminicomputeruse2025}
+    \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item Vertex AI Agent Builder、Agent Development Kit、Agent Engine 与 Agent Search ~\cite{googlevertexagentbuilder2026,googleadk2026,googleagentsearch2026}
+    \item Cloud API Registry 工具治理、Agent Identity、IAM 条件与 Agent Gateway ~\cite{googletoolgovernance2025,googleagentidentity2026}
+    \item AI co-scientist、AlphaEvolve、Project Naptime、Big Sleep/CodeMender ~\cite{googlecoscientist2025,googlealphaevolve2025,googlecodemender2025}
+    \end{itemize} \\
+\cline{2-5}
+& Meta
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 开源/开放权重基础模型
+    \item 开源安全护栏与安全评测
+    \item 端侧部署与开发者生态
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 开源模型输入/输出内容安全分类与多语种安全策略适配
+    \item 代码生成、网络安全能力与提示注入风险的开放评测
+    \item 智能体运行时安全监控、间接提示注入和危险代码风险拦截
+\end{itemize}
+
+\vspace{0.5em}
+2026重点研究方向\cite{meta_risk_review_2026,meta_support_safety_ai_2026,meta_anti_scam_tools_2026}：
+\vspace{1.5em}
+
+
+\begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 以 AI 驱动的持续风险审查覆盖产品全生命周期，在上线前识别隐私、安全、合规风险，并在运行中持续监测
+    \item 研究 AI 辅助的内容执法、诈骗识别与身份真实性验证，在提高严重违规识别率的同时减少过度执法
+    \item 强化私密 AI 交互、敏感数据隔离和用户可控授权，重点处理 AI 接入私人数据及跨应用服务时的隐私边界
+    % \item 将风险治理从单项隐私评审扩展为跨公司的统一风险审查，使安全标准、法律要求和专家判断能够一致应用
+\end{itemize}
+
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item Llama Guard、Prompt Guard 与 Llama Responsible Use Guide ~\cite{metapurplellama2026}
+    \item CyberSecEval、Code Shield（用于不安全代码过滤与网络安全风险测试）~\cite{metapurplellama2026}
+    \item LlamaFirewall、集成 PromptGuard 2、Agent Alignment Checks 与 CodeShield ~\cite{metallamaprotections2026,metallamafirewall2026}
+    \end{itemize} \\
+\cline{2-5}
+& NVIDIA
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item AI算力基础设施与GPU软件栈
+    \item 企业级智能体编排与护栏框架
+    \item 工业、机器人与物理AI仿真
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 生产级多智能体工作流的编排、工具连接、评测与性能剖析
+    \item 对话式AI与RAG智能体的输入/输出内容护栏和策略约束
+    \item 可信算力、模型/数据在用保护与物理AI安全仿真
+\end{itemize}
+
+\vspace{0.5em}
+2026重点研究方向\cite{nvidia_trustworthy_ai_cybersecurity_2026}：
+\vspace{1.5em}
+
+\begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 面向长期运行、自主进化智能体，研究沙箱隔离、最小权限、网络与文件访问控制以及受策略约束的运行环境\cite{nvidia_sandboxing_agentic_workflows_2026}
+    \item 防御代码仓库、AGENTS.md、MCP 响应等外部内容引发的间接提示注入，建立不可信内容传播跟踪和执行前检查机制
+    \item 将安全边界下沉至 AI 工厂基础设施，以硬件信任根、机密计算、零信任网络和 DPU 隔离保护模型、数据、软件供应链与智能体\cite{nvidia_doca_agentic_ai_security_2026}
+    \item 推进智能体技能与工具的能力治理，包括来源证明、安全扫描、机器可读技能卡、加密签名及发布审核\cite{nvidia_verified_agent_skills_2026}
+    \item 研究 AI 生成代码和命令的安全执行，通过语法约束、执行隔离、敏感操作审批及可审计日志限制破坏范围
+    \item 面向机器人智能体，研究新技能和控制原语的安全提出、验证与纳入，以及仿真到现实迁移和长期记忆安全\cite{nvidia_aspire_2026}
+\end{itemize}
+
+
+
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item NVIDIA NeMo Agent Toolkit，支持MCP/A2A、workflow、evaluation 与 profiler ~\cite{nvidiaagenttoolkit2026}
+    \item NVIDIA NeMo Guardrails、NIM与安全RAG部署参考 ~\cite{nvidianemoguardrails2026}
+    \item NVIDIA Confidential Computing、Isaac Sim/Isaac Lab、Cosmos World Foundation Models ~\cite{nvidiaconfidentialcomputing2026,nvidiaisaacsim2026,nvidiaisaaclab2026,nvidiacosmos2025}
+    \end{itemize} \\
+\cline{2-5}
+& Perple-\newline xity
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 搜索原生问答与实时联网检索
+    \item 浏览器智能体与网页任务自动化
+    \item 企业研究智能体与API平台
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 联网检索型智能体的来源可信、引用溯源与搜索范围控制
+    \item 浏览器智能体的网页上下文处理、跨站任务代理与提示注入风险防护
+    \item 企业级多步任务智能体的连接器、访问边界、数据留存和网络策略治理
+\end{itemize}
+
+\vspace{0.5em}
+2026重点研究方向\cite{perplexity_secure_intelligence_institute_announcement_2026,perplexity_enterprise_security_2026}：
+\vspace{1.5em}
+
+\begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 重点研究自主智能体的认证、授权和权限治理，确定工具使用、高风险操作、数据访问及用户确认的安全边界
+    \item 推进可用隐私与安全、应用密码学、鲁棒机器学习和可信 AI，并与高校建立长期联合研究网络
+    \item 研究大规模多模型智能系统的安全，使模型路由、上下文传递及多模型协作过程具备隔离、可追踪与一致策略执行能力\cite{perplexity_secure_intelligence_institute_2026}
+\end{itemize}
+% • 以 Secure Intelligence Institute 为核心，开展前沿 AI 系统的安全、隐私、可信度和实用防御研究，并把成果直接转化到 Perplexity 系统
+% • 重点研究自主智能体的认证、授权和权限治理，确定工具使用、高风险操作、数据访问及用户确认的安全边界
+% • 持续研究浏览器智能体在开放网页环境中的提示注入、恶意网页内容、跨站操作及敏感会话风险
+% • 推进可用隐私与安全、应用密码学、鲁棒机器学习和可信 AI，并与高校建立长期联合研究网络
+% • 加强智能体及开发者环境的软件供应链防御，包括只读终端扫描、依赖与本地文件检查以及快速事件响应
+% • 研究大规模多模型智能系统的安全，使模型路由、上下文传递及多模型协作过程具备隔离、可追踪与一致策略执行能力
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item Perplexity Sonar API、Search API、Pro Search与引用型答案机制 ~\cite{perplexitysonar2026,perplexitysearchapi2026,perplexityprivacysecurity2026}
+    \item Comet Browser/Comet Assistant（结合网页智能体安全评测研究）~\cite{perplexitycomet2025,bravecometpromptinjection2025}
+    \item Perplexity Enterprise、Perplexity Computer、Enterprise connectors 与 Computer Network Firewall Policy ~\cite{perplexityenterprise2026,perplexitycomputerenterprise2026}
+    \end{itemize} \\
+\cline{2-5}
+& Cursor / Anysphere
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item AI IDE与代码智能体
+    \item 云端/本地软件工程自动化
+    \item 企业研发安全与MCP工具接入
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item IDE内代码智能体的本地工程访问、终端/浏览器操作与命令审查
+    \item 云端代码智能体的隔离执行环境、PR产物验证与企业内网部署
+    \item 企业级代码数据保护、模型/MCP/网络访问控制和审计合规
+    \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item Cursor Agent、Plan Mode、Browser Controls、Hooks（用于计划、审计、命令阻断与上下文控制）~\cite{cursor17changelog2025,cursorplanmode2025,cursorhooks2025}
+    \item Cursor Cloud Agents、Bugbot、Self-hosted Cloud Agents ~\cite{cursorcloudagents2025,cursorbugbot2025,cursorselfhostedcloudagents2026}
+    \item Cursor Enterprise、Privacy Mode、SSO/SAML、RBAC、SCIM、audit logs、repository/model/MCP controls ~\cite{cursorsecurity2026,cursorenterprise2026}
+    \end{itemize} \\
+\hline
+\end{longtblr}
+\endgroup

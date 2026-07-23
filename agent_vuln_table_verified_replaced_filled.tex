@@ -1,0 +1,225 @@
+\begin{table}[htbp]
+\centering
+\caption{AI智能体主要安全漏洞（按严重级别降序、同等级发现日期倒序排列，2025--2026）}
+\label{tab:agent_vulns}
+
+\footnotesize
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{3pt}
+\setlength{\extrarowheight}{1pt}
+\renewcommand{\arrayrulewidth}{0.45pt}
+
+% 让 tabularx 的 X 列也变成 m 列，实现垂直居中
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+\begin{tabularx}{\textwidth}{
+|>{\centering\arraybackslash}m{1.55cm}
+|>{\raggedright\arraybackslash}m{2.05cm}
+|>{\raggedright\arraybackslash}m{1.95cm}
+|>{\centering\arraybackslash}m{0.85cm}
+|>{\centering\arraybackslash}m{1.55cm}
+|>{\raggedright\arraybackslash}X|
+}
+\hline
+\textbf{\shortstack{发现精确\\日期}} &
+\textbf{\shortstack{漏洞名称\\事件}} &
+\textbf{\shortstack{影响产品\\框架}} &
+\textbf{\shortstack{CVSS\\评分}} &
+\textbf{\shortstack{CVE\\编号}} &
+\centering\arraybackslash\textbf{漏洞影响简述（3点）} \\
+\hline
+
+\multicolumn{6}{|c|}{\textbf{Critical（严重，CVSS $\geq$ 9.0）}} \\
+\hline
+
+2026-05-06 & OpenClaw OpenShell 沙箱文件写入 TOCTOU / symlink swap & OpenClaw $<$ 2026.4.22 & 9.6 & CVE-2026-44112 &
+\begin{itemize}[tabitem]
+\item OpenShell 沙箱文件系统写入存在 time-of-check/time-of-use 竞态
+\item 攻击者可通过 symlink swap 将写入重定向到预期 mount root 之外
+\item 应升级到 2026.4.22 或包含修复提交的版本
+\end{itemize}
+\\
+\hline
+
+2026-04-29 & DocsGPT MCP test 绕过导致远程代码执行 & DocsGPT $\geq$ 0.15.0, $<$ 0.16.0 & 9.8 & CVE-2026-26015 &
+\begin{itemize}[tabitem]
+\item 攻击者可构造恶意 payload 绕过 ``MCP test'' 行为
+\item 可在官方 DocsGPT 网站或本地/公开部署中触发任意远程代码执行
+\item 已在 DocsGPT 0.16.0 修复
+\end{itemize}
+\\
+\hline
+
+2026-04-21 & Flowise MCP stdio 命令注入 / allowlist 绕过 & Flowise / flowise-components $<$ 3.1.0 & 9.9 & CVE-2026-40933 &
+\begin{itemize}[tabitem]
+\item 认证攻击者可在 Custom MCP 配置中添加 stdio MCP server 并指定任意命令
+\item 既有 npx 等允许命令可被组合危险参数绕过输入校验，实现 OS 命令执行
+\item 已在 Flowise 3.1.0 修复
+\end{itemize}
+\\
+\hline
+
+2026-04-15 & Upsonic MCP task 命令注入 & Upsonic 0.71.6 & 9.8 & CVE-2026-30625 &
+\begin{itemize}[tabitem]
+\item MCP server/task 创建功能允许用户定义 command 和 args
+\item npm、npx 等 allowlist 命令可通过参数触发任意 OS 命令执行
+\item 0.72.0 起增加 Stdio server 可直接执行本机命令的风险提示
+\end{itemize}
+\\
+\hline
+
+2026-04-07 & Langflow 未认证代码注入 / RCE & Langflow $<$ 1.3.0 & 9.8 & CVE-2025-3248 &
+\begin{itemize}[tabitem]
+\item \texttt{/api/v1/validate/code} 端点存在代码注入漏洞
+\item 远程未认证攻击者可发送构造 HTTP 请求执行任意代码
+\item 该漏洞已进入 CISA KEV 目录，建议升级到 1.3.0 或更高版本
+\end{itemize}
+\\
+\hline
+
+2026-04-03 & PraisonAI Gateway 未授权 WebSocket / info 访问 & PraisonAI Gateway $<$ 4.5.97 & 9.1 & CVE-2026-34952 &
+\begin{itemize}[tabitem]
+\item Gateway server 在 \texttt{/ws} 接受 WebSocket 连接且 \texttt{/info} 暴露 agent topology，均缺少认证
+\item 任意网络客户端可枚举已注册 agents，并向 agents 及其 tool sets 发送任意消息
+\item 已在 4.5.97 修复，应升级并对网关入口加认证与网络隔离
+\end{itemize}
+\\
+\hline
+
+2026-04-02 & Azure MCP Server 关键功能缺失认证 & Azure MCP Server / Azure Web Apps hosted service & 9.1 & CVE-2026-32211 &
+\begin{itemize}[tabitem]
+\item 关键功能缺少认证，未授权攻击者可经网络访问受影响服务
+\item 可造成信息泄露；Microsoft CNA 评分还计入完整性影响
+\item 以 Microsoft MSRC / NVD 记录为准，CVSS 9.1 为 Microsoft CNA 评分
+\end{itemize}
+\\
+\hline
+
+2026-01-12 & LibreChat MCP stdio 任意命令执行 & LibreChat $<$ v0.8.2-rc2 & 9.9 & CVE-2026-22252 &
+\begin{itemize}[tabitem]
+\item MCP stdio transport 接受任意命令且缺少有效校验
+\item 任意认证用户可通过单个 API 请求在容器内以 root 执行 shell 命令
+\item 已在 v0.8.2-rc2 修复
+\end{itemize}
+\\
+\hline
+
+2025-12-23 & LangChain dumps/dumpd 序列化注入 & LangChain $<$ 0.3.81 and $<$ 1.2.5 & 9.3 & CVE-2025-68664 &
+\begin{itemize}[tabitem]
+\item \texttt{dumps()} / \texttt{dumpd()} 未转义自由字典中的 \texttt{lc} 键结构
+\item 用户可控数据在反序列化时可能被当作 LangChain 对象处理，而非普通数据
+\item 已在 0.3.81 和 1.2.5 修复，应避免反序列化不可信配置
+\end{itemize}
+\\
+\hline
+
+2025-12-17 & MCP server git 复合漏洞 & Model Context Protocol Servers / \texttt{mcp-server-git} & 8.8 / 7.1 / 9.1 & CVE-2025-68143/4/5 &
+\begin{itemize}[tabitem]
+\item \texttt{git\_init} 可在任意可访问路径创建仓库，使后续 Git 操作越出预期范围
+\item \texttt{git\_diff} / \texttt{git\_checkout} 对用户参数缺少校验，flag-like 参数可导致任意文件覆盖
+\item \texttt{--repository} 限制下未校验后续 \texttt{repo\_path} 是否仍在允许仓库内，可操作其他可访问仓库
+\end{itemize}
+\\
+\hline
+
+2025-09-22 & Flowise CustomMCP 远程代码执行 & Flowise 3.0.5 & 10.0 & CVE-2025-59528 &
+\begin{itemize}[tabitem]
+\item CustomMCP 节点解析 \texttt{mcpServerConfig} 时将用户输入传入 \texttt{Function()} 构造器执行
+\item 代码在 Node.js 运行时权限下执行，可访问 \texttt{child\_process}、\texttt{fs} 等危险模块
+\item 已在 Flowise 3.0.6 修复
+\end{itemize}
+\\
+\hline
+
+2025-07-09 & mcp-remote OAuth authorization endpoint 命令注入 & \texttt{mcp-remote} npm package 0.0.5--0.1.15 & 9.6 & CVE-2025-6514 &
+\begin{itemize}[tabitem]
+\item 连接不可信 MCP server 时，authorization endpoint 响应 URL 中的构造输入可触发 OS 命令注入
+\item 攻击需要用户交互但无需攻击者具备权限，成功后影响机密性、完整性和可用性
+\item 已通过 \texttt{mcp-remote} 修复提交处置，应升级到不受影响版本
+\end{itemize}
+\\
+\hline
+
+2025-06-13 & MCP Inspector 缺失认证导致远程代码执行 & MCP Inspector $<$ 0.14.1 & 9.4 & CVE-2025-49596 &
+\begin{itemize}[tabitem]
+\item Inspector client 与 proxy 之间缺少认证
+\item 未认证请求可经 proxy 启动 MCP stdio 命令，造成远程代码执行
+\item 已在 MCP Inspector 0.14.1 修复
+\end{itemize}
+\\
+\hline
+
+2025-06-11 & EchoLeak / M365 Copilot AI command injection & Microsoft 365 Copilot & 9.3 & CVE-2025-32711 &
+\begin{itemize}[tabitem]
+\item M365 Copilot 存在 AI command injection，未授权攻击者可经网络触发信息泄露
+\item 该漏洞被公开命名为 EchoLeak，NVD 同时引用 Microsoft MSRC 与 Aim Security 页面
+\item CVSS 9.3 为 Microsoft CNA 评分；NVD 自身评分为 7.5
+\end{itemize}
+\\
+\hline
+
+\multicolumn{6}{|c|}{\textbf{High（高危，7.0 $\leq$ CVSS $\leq$ 8.9）}} \\
+\hline
+
+2026-05-08 & PraisonAI legacy Flask API 默认禁用认证 & PraisonAI 2.5.6 to $<$ 4.6.34 & 7.3 & CVE-2026-44338 &
+\begin{itemize}[tabitem]
+\item legacy Flask API server 默认禁用认证
+\item 任意可达调用方可访问 \texttt{/agents} 并通过 \texttt{/chat} 触发 \texttt{agents.yaml} 工作流
+\item 已在 4.6.34 修复，应升级并限制 API 暴露面
+\end{itemize}
+\\
+\hline
+
+2026-04-15 & Agent Zero External MCP Servers 远程代码执行 & Agent Zero 0.9.8 & 8.6 & CVE-2026-30624 &
+\begin{itemize}[tabitem]
+\item External MCP Servers 配置允许通过 JSON 指定 command 和 args
+\item 配置应用时这些值会被执行，缺少充分校验或限制
+\item 攻击者可提交恶意 MCP 配置，以 Agent Zero 进程权限执行 OS 命令
+\end{itemize}
+\\
+\hline
+
+2026-04-15 & Windsurf Prompt Injection to MCP 配置命令执行 & Windsurf 1.9544.26 & 8.0 & CVE-2026-30615 &
+\begin{itemize}[tabitem]
+\item 处理攻击者控制的 HTML 内容时，提示注入可修改本地 MCP 配置
+\item 可自动注册恶意 MCP STDIO server 并在无进一步交互下执行任意命令
+\item 成功利用可持久化恶意 MCP 配置并访问应用暴露的敏感信息
+\end{itemize}
+\\
+\hline
+
+2026-03-30 & LangChain prompt loading 路径遍历 & LangChain / langchain-core $<$ 1.2.22 & 7.5 & CVE-2026-34070 &
+\begin{itemize}[tabitem]
+\item \texttt{langchain\_core.prompts.loading} 多个函数未充分校验配置字典中的路径
+\item 当应用把用户可影响的 prompt 配置传入 \texttt{load\_prompt()} 或 \texttt{load\_prompt\_from\_config()} 时，攻击者可读取主机文件
+\item 读取受模板/示例文件扩展名检查限制；已在 1.2.22 修复
+\end{itemize}
+\\
+\hline
+
+2026-01-09 & WeKnora MCP stdio 命令注入 & Tencent WeKnora $<$ 0.2.5 & 8.8 & CVE-2026-22688 &
+\begin{itemize}[tabitem]
+\item 认证用户可向 MCP stdio 设置注入 \texttt{stdio\_config.command} / \texttt{args}
+\item 服务端会基于注入值启动 subprocess，造成命令执行
+\item 已在 WeKnora 0.2.5 修复
+\end{itemize}
+\\
+\hline
+
+2025-11-07 & Open WebUI Direct Connections SSE 代码注入 & Open WebUI $<$ 0.6.35 & 8.0 & CVE-2025-64496 &
+\begin{itemize}[tabitem]
+\item Direct Connections 功能允许恶意外部模型服务器通过 SSE execute events 在受害者浏览器执行 JavaScript
+\item 可导致认证 token 窃取和账户接管；与 Functions API 链接时可造成后端 RCE
+\item 攻击需受害者启用 Direct Connections 并添加恶意模型 URL；0.6.35 已修复
+\end{itemize}
+\\
+\hline
+
+\multicolumn{6}{|c|}{\textbf{Medium（中危，4.0 $\leq$ CVSS $\leq$ 6.9）}} \\
+\hline
+
+\multicolumn{6}{|c|}{本表核验条目无中危漏洞。} \\
+\hline
+
+\end{tabularx}
+\end{table}

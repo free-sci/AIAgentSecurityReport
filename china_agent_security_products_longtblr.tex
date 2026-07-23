@@ -1,0 +1,330 @@
+% 依赖项（必须放在主文档导言区，即 \begin{document} 之前）：
+% \usepackage{tabularray}
+% \UseTblrLibrary{varwidth}
+% \usepackage{enumitem}
+\begingroup
+% \nopagebreak[4]
+\enlargethispage{1cm}
+\footnotesize
+\centering
+
+\DefTblrTemplate{conthead-text}{default}{（续表）}
+\DefTblrTemplate{contfoot-text}{default}{续下页}
+
+\begin{longtblr}[
+  caption = {我国主流 AI 智能体安全产品与落地方向},
+  label   = {tab:china-agent-security-products-verified-cited},
+]{
+  width   = \linewidth,
+  colspec = {
+    |Q[wd=0.8cm,l,m]
+    |Q[wd=1cm,l,m]
+    |Q[wd=3cm,l,m]
+    |Q[wd=0.25\linewidth,l,m]
+    |X[1,l,m]|
+  },
+  cells   = {l,m},
+  colsep  = 3pt,
+  row{1}  = {font=\bfseries},
+  rowhead = 1,
+  % 每行内容与上下边框之间各保留 5pt 空间。
+  rowsep  = 5pt,
+  measure = vbox,
+  stretch = -1,
+}
+\hline
+\textbf{国家} & \textbf{企业} & \textbf{所属产业领域} & \textbf{安全研究方向} & \textbf{产品/成果} \\
+\hline
+\SetCell[r=10]{l,m} 中国大陆
+& 百度
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 搜索增强大模型
+    \item 智能云智能体开发平台
+    \item 飞桨与国产AI生态
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 企业智能体构建、RAG、工具/MCP接入与模型服务治理
+    % \item 企业智能体任务执行、Skill生态与消息平台集成
+    \item 国产AI框架生态、模型开发与工程化部署基础
+  \end{itemize}
+
+\vspace{0.5em}
+2026重点研究方向：
+\vspace{1.5em}
+
+\begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 面向智能体复杂任务推理，研究更高效的强化学习、长上下文奖励分配与推理能力优化\cite{baidu_acl_ai_safety_2026}
+    \item 构建覆盖数据、身份权限、记忆、工具调用和外部系统连接的智能体全链路安全基础设施\cite{baidu_agent_security_center_2026}
+    \item 加强 Skill/MCP 供应链安全，研究恶意指令、过度权限、凭证泄露与高风险工具调用的准入检测和持续巡检\cite{baidu_ai_security_solution_2026,baidu_qianfan_platform_2026}
+    \item 推进策略即代码、输入输出安全策略和语义干预，使企业能够按业务场景定义、执行并审计智能体行为规则\cite{baidu_qianfan_security_policy_2026,baidu_qianfan_intervention_policy_2026}
+  \end{itemize}
+
+% • 面向智能体复杂任务推理，研究更高效的强化学习、长上下文奖励分配与推理能力优化
+% • 推进精细化模型安全对齐，通过参数级风险诊断和局部微调，降低安全对齐对模型通用能力的损耗
+% • 构建覆盖数据、身份权限、记忆、工具调用和外部系统连接的智能体全链路安全基础设施
+% • 加强 Skill/MCP 供应链安全，研究恶意指令、过度权限、凭证泄露与高风险工具调用的准入检测和持续巡检
+% • 推进策略即代码、输入输出安全策略和语义干预，使企业能够按业务场景定义、执行并审计智能体行为规则
+
+
+
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 百度千帆智能体开发平台：Agent引擎、工具/MCP、模型服务与企业服务能力 ~\cite{baiduqianfanagent2026}
+    \item 百度DuClaw：AI智能体服务、Skill 系统、SkillMarket与消息平台配置 ~\cite{baiduduclaw2026,baiduduclawskillmarket2026}
+    \item 飞桨PaddlePaddle与百度智能云千帆工程生态 ~\cite{paddlepaddle2026,baiduqianfanagent2026}
+  \end{itemize} \\
+\cline{2-5}
+& 阿里巴巴/阿里云
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 通义/Qwen模型与百炼智能体应用
+    \item 云原生Workflow、RAG与插件编排
+    \item OpenClaw运行时与AI应用安全护栏
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 输入输出安全护栏、Prompt注入检测、敏感信息和恶意链接识别
+    \item 智能体运行时防护、工具调用审计、Skill检测与密钥托管
+    \item RAG/插件/代码解释器边界治理与企业应用编排
+  \end{itemize}
+
+\vspace{0.5em}
+2026重点研究方向：
+\vspace{1.5em}
+
+\begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 构建覆盖智能体开发期与运行期的全生命周期防护，统一管理模型、知识库、身份、工具、MCP及Skill资产关系\cite{alibaba_agent_security_center_2026}
+    \item 加强智能体身份和动态权限治理，研究人机身份映射、细粒度授权、凭证托管以及关键操作二次确认\cite{alibaba_hitl_agent_security_2026}
+    \item 面向Skill投毒、间接提示注入、工具投毒和恶意命令执行，发展运行时行为检测、阻断和AI红队测试\cite{alibaba_agent_risk_detection_2026}
+    \item 研究Agent原生API和网络安全，通过语义化敏感数据识别、动态脱敏、外联访问控制与全链路行为审计保护数据流\cite{alibaba_agentic_api_security_2026,alibaba_agent_firewall_2026}
+    \item 推进多智能体协同安全运营，以专业Agent集群完成威胁感知、攻击链推理、协同调查及闭环响应\cite{alibaba_agentic_soc_2026}
+\end{itemize}
+  
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 阿里云AI安全护栏/OpenClaw运行时防护方案 ~\cite{aliyunaiguardrails2026,aliyunopenclawdocs2026}
+    \item openclaw-security-assistant 与 OpenClaw runtime security 插件 ~\cite{aliyunopenclawassistant2026,aliyunopenclawdocs2026}
+    \item 阿里云百炼Model Studio智能体应用/工作流、Assistant API代码解释器 ~\cite{aliyunbailian2026,aliyunopenclawdocs2026}
+  \end{itemize} \\
+\cline{2-5}
+& 腾讯
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 混元大模型与腾讯云ADP
+    \item LLM+RAG、Workflow与Multi-Agent 应用
+    \item CodeBuddy代码智能体与MCP工具生态
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item MCP/智能体接入网关防护、检测规则、限流、鉴权与脱敏
+    \item 租户隔离、内容风控、权限审计、监控告警与日志分析
+    \item 代码智能体的本地工程访问、MCP工具调用和命令执行安全
+  \end{itemize}
+
+\vspace{0.5em}
+2026重点研究方向：
+\vspace{1.5em}
+
+\begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 加强Agent Skills与MCP供应链安全研究，重点评估恶意指令、硬编码凭证、危险依赖、权限滥用及命令注入\cite{tencent_agent_skills_security_2026}
+    \item 建设面向真实Skill生态的标准化安全评测基准，同时衡量Skill自身可信度和外部扫描器的检测效果、误报及漏报\cite{tencent_skilltrustbench_2026}
+    \item 持续研究价值对齐、隐私保护、深度伪造检测、智能体安全和AI生成内容检测等从模型内生安全到系统防御的综合安全体系\cite{tencent_esg_report_2025_published_2026}
+\end{itemize}
+
+% • 加强Agent Skills与MCP供应链安全研究，重点评估恶意指令、硬编码凭证、危险依赖、权限滥用及命令注入
+% • 建设面向真实Skill生态的标准化安全评测基准，同时衡量Skill自身可信度和外部扫描器的检测效果、误报及漏报
+% • 推进“Agent扫描Agent”的自动化安全研究，由安全智能体理解技能语义、比对功能描述与实际行为，并验证风险路径
+% • 建立覆盖基础设施、代码、模型、RAG、工作流和运行时行为的智能体红队演习与上线前安全基线
+% • 发展以AI Agent安全网关为核心的统一控制面，对模型、API和MCP实施身份认证、限流、注入检测、敏感数据脱敏及行为审计
+% • 持续研究价值对齐、隐私保护、深度伪造检测、智能体安全和AI生成内容检测等从模型内生安全到系统防御的综合安全体系
+  
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 腾讯云AI智能体安全网关：MCP Server封装、检测规则配置、Prompt注入/脱敏/访问鉴权等防护 ~\cite{tencentagentgateway2026,tencentagentgatewayquickstart2026}
+    \item 腾讯云智能体开发平台（Tencent Cloud ADP）多租户隔离、内容安全、权限与操作审计、监控告警 ~\cite{tencentadp2026,tencenthunyuan2026}
+    \item 腾讯云代码助手CodeBuddy：默认只读、命令/修改审批、MCP本地服务器与安全配置 ~\cite{tencentcodebuddysecurity2026,tencentcodebuddymcp2026}
+  \end{itemize} \\
+\cline{2-5}
+& 智谱
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item GLM大模型
+    \item 长时程Coding Agent与应用级智能体
+    \item GUI/手机智能体与多模态工具调用
+    \item 企业大模型API、模型精调、推理与评测平台
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 长时程代码智能体训练与评测中的反奖励作弊，检测并阻断智能体读取隐藏测试数据、复制参考答案及绕过任务的工具调
+    \item 长上下文、高并发智能体服务的稳定性与可靠性研究，重点解决乱码、重复、罕见字符生成及长任务运行异常\cite{zhipu_coding_agent_serving_reliability_2026,zhipu_glm51_process_quality_2026}
+    \item GUI/手机智能体的敏感操作确认、人工接管和受控执行，避免智能体在登录、验证码、支付等高风险场景中自主越权\cite{zhipu_open_autoglm_2026}
+    \item 模型输入输出及多模态内容安全审核，实现风险分级、违规内容定位、输入拦截、输出限制和生成终止\cite{zhipu_security_audit_2026}
+    \item 面向开放式机器学习系统的稳健性、公平性、隐私与可追溯治理，建设可审核、可监督、可追溯的模型服务\cite{zhipu_security_risk_notice_2026}
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item GLM-5.2、GLM-5.1：面向长时程任务、工具调用和Agentic Engineering的旗舰模型\cite{zhipu_autoglm_phone_documentation_2026,zhipu_glm52_2026,glm5team2026glm5,liu2024autoglm} %最后一篇是有关GUI自主智能体的技术基础
+    \item Z.ai Agent Mode、ZCode：支持内置Skills、多轮协作、长任务、远程开发及移动设备控制
+    \item Open-AutoGLM、AutoGLM-Phone-9B：开源手机GUI智能体模型与框架，内置敏感操作确认和人工接管\cite{zhipu_open_autoglm_2026}
+    \item 智谱大模型开放平台：模型API、智能体开发、模型精调、推理、评测及多层安全防护\cite{zhipu_bigmodel_platform_2026}
+    \item Content Moderation API：支持文本、图片、音频和视频内容安全检测\cite{zhipu_content_moderation_api_2026,zhipu_security_audit_2026}
+  \end{itemize} \\
+\cline{2-5}
+% & \multirow{3}{=}{华为}
+% & \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+%     \item AgentArts企业智能体平台与OfficeAce
+%     \item 盘古大模型、ModelArts Studio与云端智能体运行时
+%     \item CodeArts代码智能体与昇腾/鲲鹏工程生态
+%   \end{itemize}
+% & \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+%     \item 身份鉴权、API Key 认证、沙箱工具与MCP网关接入控制
+%     \item 高危动作审批护栏与PC端安全审批管理
+%     \item 代码数据边界、文件保护、权限控制和隔离执行
+%   \end{itemize}
+% & \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+%     \item 华为云AgentArts/AgentIdentity/Sand b\allowbreak -ox Tool：API Key认证、代码执行与文件管理沙箱、MCP Gateway   %\allowbreak允许断行 否则华为云这几个字的间距会被拉的很大
+%     ~\cite{huaweiagentarts2026,huaweiagentidentity2026,huaweiagentartssandbox2026}
+%     \item OfficeAce/AgentArts PC安全审批管理、对敏感操作进行审批拦截和授权确认 ~\cite{huaweiofficeaceapproval2026}
+%     \item 华为云码道（CodeArts）：dotfile保护、读写边界、沙箱执行、高危命令阻断与风险提示 ~\cite{huaweicodearts2026,huaweicodeartssandbox2026}
+%   \end{itemize} \\
+% \cline{2-5}
+& 字节跳动
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 豆包大模型与火山方舟AI云
+    \item 扣子Coze智能体、工作流与Skill生态
+    \item 飞书aily/智能伙伴与组织协同Agent
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 大模型应用防火墙、Prompt攻击拦截、模型滥用和敏感数据泄露防护
+    \item Skill最小授权、凭证保护、OAuth PKCE与企业成员权限管理
+    \item 权限继承、数据保护、模型输入控制策略与组织协同治理
+    未来研究方向趋势：
+    % \item 智能体安全评测与部署仿真：未来需要面向真实长时任务、工具调用轨迹和模拟部署环境，提前评估智能体上线后的越权、误操作和数据泄露风险。~\cite{bytedanceseedpublicpapers2026,zhu2026edgebench}
+    % \item 工具调用与非可信内容隔离：未来需要在系统层面隔离任务指令、外部网页/文档内容和工具权限，降低搜索、浏览器、代码仓库等工具型 Agent 的间接提示注入风险。~\cite{he2025pasa}
+    % \item 长期记忆的安全治理：未来需要研究 Agent 记忆的选择、遗忘、权限控制和隐私保护，避免多模态长期记忆积累敏感信息或被跨任务滥用。~\cite{zou2026taskmem,zhang2025functiontokens}
+    \item 多模态/具身 Agent 的误操作风险控制：未来需要从离线成功率评测转向在线干预、异常检测、动作约束和人类接管机制，降低 VLA 与机器人 Agent 的真实环境风险。~\cite{zhang2026uam,li2026handitloop}
+    \item 面向科研与专业知识工作的可信 Agent：未来需要强化引用可验证性、证据链追踪、幻觉检测和抗操纵排序，避免科研 Agent 在高知识密度场景中放大错误信息。~\cite{he2025pasa}
+    \item 从 Responsible AI 到 Agent Security 的机制化转化：未来可将评测基准、红队样例、运行时监控、权限策略和记忆治理整合为统一的 Agent 安全工程体系。~\cite{bytedanceseedresponsibleai2026,he2025pasa,zou2026taskmem,zhang2025functiontokens}
+
+
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 火山引擎大模型应用防火墙（覆盖输入/输出防护、Prompt攻击、恶意链接、敏感数据和模型滥用风险）~\cite{volcenginellmfirewall2026,volcenginesecuritywhitepaper2026}
+    \item 扣子Coze技能安全指南、OAuth PKCE授权流程和企业版权限管理 ~\cite{cozeskillsecurity2026,cozeoauthpkce2026,volcenginecozepro2026}
+    \item 飞书智能伙伴/aily数据保护与策略管理，支持敏感数据分级、模型输入控制与组织级权限一致性 ~\cite{feishuaily2026,feishuailydataprotection2026}
+  \end{itemize} \\
+\cline{2-5}
+
+& 月之暗面 Kimi
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item Kimi K2/K2.7 Code 的工具调用、长上下文与 Agentic Coding
+    \item Kimi Code、Claude Code、Cline、RooCode 等开发者工作流接入
+    \item Web Search、官方工具、MCP Server 与多智能体/长时任务执行
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 工具调用参数、外部网页内容与用户指令边界
+    \item MCP Server、官方工具、代码执行器与文件/网络权限配置
+    \item 长时编码、多智能体协作与上下文压缩过程中的越权和误操作
+    未来研究方向趋势：
+    \item 工具调用与 MCP 最小权限治理：未来 Kimi 需要围绕 Tool Calls、官方工具和 MCP Server 建立细粒度授权、参数校验、调用审计与可回滚机制。~\cite{kimiapi_toolcalls2026,kimiapi_officialtools2026,kimiapi_mcp2026}
+    \item 长时编码 Agent 的沙箱化执行：面向 Kimi Code 和 K2.7 Code 的长程编程任务，应强化代码执行、文件修改、依赖安装和网络访问的隔离验证。~\cite{kimiapi_k27code2026,kimik26release2026}
+    \item Web Search 与外部内容的间接提示注入防御：Kimi 的搜索、抓取和网页阅读能力需要区分可信指令与非可信内容，并配套动态攻击评测。~\cite{kimiapi_websearch2026}
+    \item 多智能体协作的监督与责任归因：面向 Swarm 和长时任务执行，应研究计划级监控、子智能体权限分层、结果归并审计和异常中止策略。~\cite{kimik26release2026,kimik2thinkingblog2025}
+    \item 记忆、上下文压缩与安全可解释性：未来 Kimi 可进一步研究长上下文压缩、持久记忆和工具反馈在跨任务复用时的隐私保护与可解释审计。~\cite{kimiapi_officialtools2026,kimiapi_k27code2026}
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item Kimi K2 面向工具使用、推理和自主问题求解优化，并在技术报告中强调 agentic data synthesis 与环境交互训练~\cite{kimik2technicalreport2025,moonshotkimik2github2025}
+    \item Kimi K2.7 Code 支持 256K 上下文、长程编码、多步工具调用和主流 Agent 编程工具接入~\cite{kimiapi_k27code2026}
+    \item Kimi API 提供 tool calls、Web Search、官方工具和 ModelScope MCP Server 接入能力，涉及搜索、抓取、代码执行、记忆和外部服务同步等安全边界~\cite{kimiapi_toolcalls2026,kimiapi_websearch2026,kimiapi_officialtools2026,kimiapi_mcp2026}
+  \end{itemize} \\
+\cline{2-5}
+
+& MiniMax
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 通用大模型、Agentic Coding 与长上下文生产力智能体
+    \item 多模态生成、语音/音乐/视频与角色陪伴式 Agent
+    \item 开放平台 API、工具调用、MCP 与企业级智能体应用
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 长程 Agent 任务中的工具调用、浏览搜索、代码执行与权限边界
+    \item 多智能体协作、长上下文记忆压缩与任务状态继承的可审计性
+    \item 语音复刻、视频生成、角色扮演 Agent 的身份滥用、内容安全与隐私治理
+    未来研究方向趋势：
+    \item 长程任务 Agent 的可审计执行：MiniMax Agent/Mavis 和 M 系列模型面向长时间、多步骤任务，未来需要强化任务计划、工具调用、状态继承和最终交付物的全链路审计。~\cite{minimaxagentteam2026,minimaxm25blog2026}
+
+    % \item 工具调用与 MCP 权限治理：随着 Function Call、MCP 和 Server-side Tools 接入增多，未来需要细粒度授权、参数校验、调用回放和最小权限沙箱。~\cite{minimaxfunctioncall2026,minimaxmcp2026,minimaxservertools2026}
+
+    \item Agent 强化学习的安全奖励建模：Forge 将 RL 推向真实世界 Agent，未来需要把越权调用、错误执行、隐私泄露和不可逆操作纳入 reward/verifier 体系。~\cite{minimaxforge2026}
+
+    % \item 编程 Agent 的代码执行安全：MiniMax Code 与 M 系列编码模型需要围绕仓库修改、依赖安装、测试执行和终端操作建立隔离环境与风险分级审批。~\cite{minimaxm2blog2025,minimaxm3blog2026,jimenez2024swebench}
+
+    \item 多模态与角色 Agent 的身份安全：MiniMax 在语音、视频、音乐和 Role-Play Agent 上布局较深，未来需要加强语音复刻授权、合成内容标识、人格越界和未成年人保护。~\cite{minimaxvoiceclone2026,minimaxm2her2026}
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item MiniMax M2/M2.5/M3 面向代码、工具调用、搜索、办公和智能体任务优化，覆盖 SWE-Bench、BrowseComp 等真实任务基准~\cite{minimaxm2blog2025,minimaxm25blog2026,minimaxm3blog2026}
+    \item MiniMax Agent Team/Mavis、Forge Agent RL 框架面向长程任务、持续进化和真实世界 Agent 强化学习~\cite{minimaxagentteam2026,minimaxforge2026}
+    \item MiniMax 开放平台提供 Function Call、MCP、Server-side Tools、Mini-Agent 与语音复刻等能力，形成工具接入和多模态 Agent 产品底座~\cite{minimaxfunctioncall2026,minimaxmcp2026,minimaxservertools2026,minimaxminiagent2026,minimaxvoiceclone2026}
+  \end{itemize} \\
+\cline{1-4}
+
+
+& Deep- Seek
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 开放权重基础模型与推理模型
+    \item API 服务与开发者工具调用生态
+    \item 开源模型二次开发、本地部署与安全评测
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item API / 模型输入输出治理、JSON 输出与兼容式调用
+    \item 工具调用边界、JSON Schema 校验与严格函数调用
+    \item 开源权重供应链、推理模型透明度与安全评测基础
+    未来研究方向趋势：
+    % \item 推理型智能体的安全评测与过程监督：DeepSeek-R1 展示了强化学习驱动的长链路推理能力，但未来安全研究需要评测推理轨迹中的目标偏移、隐性越权、错误自洽和高风险任务放大效应，而不只是看最终回答是否安全。~\cite{deepseekr12025,zhou2025hiddenrisksr1,marjanovic2025thoughtology}
+
+    % \item 工具调用智能体的权限边界与调用审计：随着 DeepSeek API 支持 tool calls，未来重点会转向函数调用前的意图校验、参数约束、最小权限授权、调用日志审计和失败回滚，防止模型把普通推理错误转化为真实外部副作用。~\cite{deepseekToolCalls2026,debenedetti2024agentdojo,xiang2026systemdefenses}
+
+    % \item 代码智能体的执行隔离与供应链安全：DeepSeek-Coder 系列提升了代码生成和修复能力，也意味着未来需要重点研究代码执行沙箱、依赖安装约束、仓库权限隔离、自动补丁验证和恶意代码/后门检测。~\cite{deepseekcoderv22024,deepseekToolCalls2026,xiang2026systemdefenses}
+
+    % \item 长上下文与缓存机制下的数据隔离：DeepSeek 的 context caching 和高效推理基础设施会推动企业级长任务智能体落地，但也需要研究缓存命中隔离、跨会话数据残留、敏感上下文污染和租户级访问控制。~\cite{deepseekContextCaching2026,deepseekv32024,deepseekfyiFlashMLA2026}
+
+    \item 开源高能力模型的下游安全治理：DeepSeek 的开放模型路线降低了构建本地智能体和垂直智能体的门槛，未来安全重点会从模型发布前评测扩展到微调后评测、蒸馏模型监管、下游工具接入审计和行业场景风险分级。~\cite{deepseekr12025,deepseekv32024,zhang2025chisafetydeepseek}
+
+    \item 数学与形式化推理智能体的可验证安全：DeepSeekMath 和 DeepSeek-Prover-V2 表明形式化推理会成为智能体可靠性的核心路径，未来需要把形式证明、子目标分解验证和可执行检查器用于高风险工具调用、合约代码、策略配置和安全规则验证。~\cite{deepseekproverv22025,marjanovic2025thoughtology}
+
+    \item 高性能推理基础设施的安全可观测性：DeepSeek-V3、DualPipe 和 FlashMLA 代表了大规模低成本推理趋势，未来 agent 安全需要在高吞吐系统中实现细粒度日志、异常行为检测、速率隔离、资源滥用防护和多租户安全监控。~\cite{deepseekfyiDualPipe2026,deepseekRateIsolation2026}
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item DeepSeek API、JSON Output、OpenAI-compatible API 调用格式 ~\cite{deepseekapi2026,deepseekjsonoutput2026}
+    \item DeepSeek Tool Calls、Strict Mode / Strict Function Calling ~\cite{deepseektoolcalls2026}
+    \item DeepSeek-R1、DeepSeek-V3 系列技术报告和开源模型仓库 ~\cite{deepseekr12025,deepseekv3github2025}
+    
+  \end{itemize} \\
+  \cline{2-5}
+
+& 科大讯飞
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 星火大模型与语音多模态AI
+    \item 星火企业智能体平台与星辰智能体开发
+    \item 行业垂直智能体与智能编程助手
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 企业信源、知识库、工具调用与任务规划边界
+    \item 插件、MCP Server、知识库与工作流编排配置
+    \item 私域知识检索、企业级知识管理与行业问答治理
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 星火企业智能体平台：企业信源、知识库、工具/技能接入和智能任务规划 ~\cite{iflyteksparkenterpriseagent2026}
+    \item 讯飞星辰智能体开发平台及开发指南（支持插件、MCP Server、知识库和工作流节点配置）~\cite{iflytekxingchenagent2026,iflytekagentguide2026}
+    \item 星火知识库与星火智能体场景文档（可用于企业私域知识问答和低代码智能体构建）~\cite{iflyteksparkknowledgebase2026,iflyteksceneagent2026}
+  \end{itemize} \\
+\cline{2-5}
+
+& 360
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 大模型/Agent 安全防护与风险治理
+    \item 安全运营智能体与安全大模型
+    \item 企业智能体工厂与 Skill 供应链治理
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 大模型内容护栏、内容评测、模型漏洞检测与智能体行为管控
+    \item 智能体生命周期风险、Skill 入口、框架层、生态层和沙箱层安全分析
+    \item 安全运营自动化、告警研判、威胁狩猎与响应闭环
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 360 大模型卫士防护系统/大模型安全卫士：内容安全、模型漏洞检测、敏感问题代答、AI智能体安全智能体 ~\cite{threesixtymodelguard2026,threesixtywhitepaper2025}
+    \item 360《智能体安全实践报告》与《智能体安全报告》：攻击面、Skill 风险、行为审计与智能防御路线 ~\cite{threesixtyagentsafetyreport2025,threesixtyagentskillsreport2026}
+    \item 360 安全运营智能体：9大AI安全智能体矩阵、告警研判、威胁狩猎和响应处置 ~\cite{threesixtysecurityagent2026}
+  \end{itemize} \\
+\hline
+\end{longtblr}
+\endgroup

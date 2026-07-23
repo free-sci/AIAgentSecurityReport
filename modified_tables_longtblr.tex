@@ -1,0 +1,280 @@
+﻿\subsection{开源基础大模型与原生智能体安全底座}
+开源基础大模型是原生智能体安全的底层技术载体，其核心架构、安全护栏体系与研发主体更迭，直接决定智能体感知、决策、行动全链路的安全边界~\cite{nyuLeCun2026,googleGeminiEnterpriseAgentPlatform2026}。
+% 当前全球形成以Meta体系世界模型安全、Google体系云端企业智能体工程化、ETH‑CMU自动化攻防评测为核心的三类产学协同范式~\cite{metaLlamaFirewall2025,grayswanSeriesA2026}。
+本小节梳理了头部机构核心学者、自研项目与商用产品，聚焦原生底座架构演进、安全护栏部署、攻防基准构建，厘清基础层智能体安全从学术理论到产业工程化的转化逻辑，主要发现如下(详见表~\ref{tab:industry_academia_agent_security})：
+\begin{itemize}[tabitem]
+    \item \textbf{全球原生智能体安全底座形成二元技术路线分化。}Meta依托JEPA世界模型聚焦真实世界表征与预测安全，借助多模态世界模型预判动作执行后果，从感知底层降低智能体越界风险~\cite{nyuLeCun2026,vjepa2025}；Google基于Gemini生态侧重多智能体协同与企业运行时风控，依托IAM权限体系、全链路追踪实现企业环境下智能体权限管控，底层技术范式相互独立~\cite{googleADK2025,deepmindCoScientist2025}。
+
+    \item \textbf{核心人员流动重构产学研发分工。}FAIR核心学者人事变动之后，Meta内部团队承接Llama系列安全护栏工程化迭代工作，持续优化Llama‑Firewall适配Agent场景~\cite{pineauDeparture2025,metaLlamaFirewall2025}；AMI Labs依托Yann LeCun团队独立开展JEPA架构商业化落地，面向医疗机器人、工业智能体开展世界模型安全的产业化验证，形成企业工程落地与学术技术转化的分工格局~\cite{amiLabsFunding2026,lejepaIdentifiability2026}。
+
+    \item \textbf{攻防评测形成完整产学闭环。}学术界苏黎世联邦理工SPY‑Lab开源AgentDojo平台，把间接提示注入、工具劫持问题构建成标准化可复现评测环境，夯实攻防实验的研究基础~\cite{agentdojoGithub2026}；产业端Gray Swan AI基于卡内基梅隆大学团队理论成果落地Cygnal、Shade工业级红队平台，成果被Anthropic采纳用于Claude安全评估；核心学者Zico Kolter进入OpenAI董事会，将自动化红队研究成果上升为顶层治理规则，完成学术成果向企业安全规范的闭环落地~\cite{latentspaceGrayswan2026,kolterWikipedia2026}。
+\end{itemize}
+
+
+\begingroup
+
+\begin{center}
+\nopagebreak[4]
+\enlargethispage{1cm}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{longtblr}[
+caption = {开源基础底座、云端企业智能体与自动化攻防评测体系},
+label   = {tab:industry_academia_agent_security},
+]
+{
+colspec = {|m{0.07\textwidth}
+|m{0.12\textwidth}
+|m{\dimexpr\linewidth - 0.07\textwidth - 0.12\textwidth - 6\tabcolsep - 3\arrayrulewidth\relax}|},
+rowhead = 1,
+}
+\hline
+\textbf{研究方向} & \textbf{企业/机构 + 核心学者} & \textbf{自研项目、产学合作、商用安全产品} \\
+\hline
+
+\SetCell[r=6]{c} 开源基础大模型原生智能体安全底座
+& Meta FAIR；Yann LeCun, Joelle Pineau
+& \begin{itemize}[tabitem]
+\item \textbf{世界模型安全底座：}以JEPA、Image-JEPA、Video-JEPA、V-JEPA 2构成学术路线演进，支撑多模态智能体的状态表征、感知预测和行动后果建模~\cite{nyuLeCun2026,vjepa2025}；
+\item \textbf{开源安全护栏体系：}公开Llama Guard、Prompt Guard和LlamaFirewall，其中LlamaFirewall定位为面向安全AI Agent的开源护栏系统~\cite{metaLlamaFirewall2025}；
+\item \textbf{团队组织演进：}Joelle Pineau卸任FAIR负责人、LeCun离开Meta后，相关研发由公司新组建的Meta Superintelligence Labs承接~\cite{pineauDeparture2025,lecunDeparture2025}。
+\end{itemize} \\
+\cline{2-3}
+& 纽约大学、AMI Labs；Yann LeCun
+& \begin{itemize}[tabitem]
+\item \textbf{JEPA架构产业化：}LeCun离职后创办AMI Labs推动JEPA架构商业化，首批目标行业为医疗、机器人和工业自动化~\cite{amiLabsFunding2026,lecunMITTechReview2026}；
+\item \textbf{理论与基准验证：}2026年发表的JEPA相关论文证明该架构在特定条件下能够恢复真实世界底层结构，同时用配套基准指出当前模型面对细微视觉变化时仍较脆弱~\cite{lejepaIdentifiability2026}。
+\end{itemize} \\
+\hline
+
+\SetCell[r=9]{c} 云端原生企业级大模型智能体研发与风控
+& Google DeepMind；Demis Hassabis
+& \begin{itemize}[tabitem]
+\item \textbf{多智能体协同基础理论：}AlphaStar、RoboCat等研究成果支撑多智能体协同博弈和机器人任务规划的基础理论；
+\item \textbf{企业级智能体产品落地：}相关研究能力被工程化为Gemini Enterprise Agent Platform和Managed Agents，落实到API注册、IAM权限管控和运行日志审计~\cite{googleGeminiEnterpriseAgentPlatform2026,googleADK2025}；
+\item \textbf{科研智能体协作平台：}AI Co-Scientist基于Gemini构建，由一组专业化Agent协同完成科学假设的生成、辩论、排序和迭代~\cite{deepmindCoScientist2025,gottweisAICoScientist2025}。
+\end{itemize} \\
+\cline{2-3}
+& Google Research；Jeff Dean
+& \begin{itemize}[tabitem]
+\item \textbf{云端Agent风控机制：}分布式大规模机器学习与系统工程能力支撑Gemini Enterprise Agent Platform的API注册、IAM权限管控和运行日志审计~\cite{googleADK2025,googleGeminiEnterpriseAgentPlatform2026}；
+\item \textbf{托管式智能体治理：}Managed Agents将全链路Tracing审计、IAM权限管控等系统工程理论嵌入托管式智能体服务，对应企业Agent运行时风控需求~\cite{googleADK2025}。
+\end{itemize} \\
+\cline{2-3}
+& 斯坦福大学医学院、MIT；Gary Peltz, Ritu Raman
+& \begin{itemize}[tabitem]
+\item \textbf{产学研安全验证：}AI Co-Scientist于2025年2月首发时联合全球100多个科研机构共同开发和测试，Gary Peltz、Ritu Raman公开验证其科研任务能力~\cite{deepmindCoScientist2025}；
+\item \textbf{科研落地与企业试用：}Co-Scientist已产出抗菌素耐药性、植物免疫等湿实验验证成果，并被第一三共、拜耳作物科学等企业内部试用~\cite{labcriticsCoScientist2026}。
+\end{itemize} \\
+\hline
+
+\SetCell[r=5]{c} 智能体攻防评测基准与自动化红队体系
+& 苏黎世联邦理工SPY Lab；Florian Tramèr
+& \begin{itemize}[tabitem]
+\item \textbf{自动化攻防基准：}AgentDojo将间接提示注入、工具劫持等标准化攻防任务集统一到动态评测环境中，已由ETH SPY Lab开源部署、~\cite{agentdojoGithub2026}；
+\item \textbf{基准复现实验：}AgentDojo使邮件、日历、文件和工具调用场景中的提示注入攻击具备可复现、可比较的实验对象。
+\end{itemize} \\
+\cline{2-3}
+& CMU, Gray Swan AI；Zico Kolter, Matt Fredrikson, Andy Zou, Dawn Song
+& \begin{itemize}[tabitem]
+\item \textbf{工业级红队平台：}Gray Swan AI将模型鲁棒性、神经网络形式化验证理论转化为检测能力，代表性产品包括红队测试平台Cygnal和对抗性红队工具Shade~\cite{grayswanSeriesA2026}；
+\item \textbf{提示注入鲁棒性评测：}Shade已被Anthropic用于评估模型在代码环境中对提示注入攻击的鲁棒性，Gray Swan的间接提示注入研究也被Anthropic Claude Mythos的system card引用为权威研究依据~\cite{latentspaceGrayswan2026}；
+\item \textbf{模型风险治理嵌入：}Kolter已出任OpenAI董事会成员并兼任安全与安保委员会主席，使自动化红队研究与模型风险治理进入更高层级的产业治理流程~\cite{kolterWikipedia2026}。
+\end{itemize} 
+\end{longtblr}
+\end{center}
+\endgroup
+
+
+\subsection{通用商用智能体安全评估与治理规范}
+随着云端商用智能体与工具生态规模化落地，安全治理从模型鲁棒性延伸至协议交互、运行时管控、隐私计算、外部审计的全生命周期。海外形成“企业研发‑学界定标‑第三方核验”的成熟产学体系，覆盖通用智能体评估、MCP工具协议、端侧硬件隐私三大方向\cite{openaiRedTeamNetwork2025,mcpFormalFramework2026,nvidiaConfidentialComputingProduct2026}。本小节结合头部厂商、国家级安全机构与顶尖高校成果，归纳商用智能体的治理范式、协议漏洞矛盾与硬件隐私安全落地规律，主要发现如下（详见表~\ref{tab:commercial_mcp_edge_agent_security}）：
+\begin{itemize}[tabitem]
+    \item \textbf{头部厂商建立标准化商用治理范式。}OpenAI搭建外部专家红队测试网络、在Agents‑SDK内置多层安全护栏，配套全链路Tracing追踪与人在回路审批机制，并发布System‑Card公开安全评估报告，构建起完整闭环体系，成为全球商用智能体安全治理标杆范式\cite{openaiChatGPTAgentSystemCard2025,openaiAgentsSDK2025,openaiGuardrailsApprovalsDoc2026}；英国UK‑AISI、FAR.AI开展第三方独立安全审计，斯坦福CRFM提出HELM评测理论，从第三方与学术层面完善评估方法论，形成产学核验的治理格局\cite{venturebeatChatGPTAgent2025}。
+
+    \item \textbf{工具协议存在结构性权责矛盾。}Anthropic推出的MCP协议生态规模快速扩张，但OX‑Security发现协议原生存在RCE高危漏洞；出于生态灵活性考量，厂商拒绝在架构层面完成彻底修复，把输入校验、风险净化的安全责任转嫁至下游开发者。伯克利CHAI团队从目标对齐理论剖析该问题本质，学术界也意识到借助ProVerif、Tamarin对MCP开展形式化验证难度很高，充分暴露出协议生态扩张与安全约束之间的固有冲突\cite{oxSecurityMCP2026,berkeleyCHAI2026,mcpFormalFramework2026}。
+
+    \item \textbf{智能体隐私安全构建垂直产学链条。}产业端Apple依靠PCC端云分层架构实现数据最小化处理与可验证云端推理，NVIDIA依托GPU硬件信任根搭建机密计算环境；学术层面EPFL‑SPRING‑Lab的隐私工程理论、NYU针对GPU的侧信道分析成果，为硬件可信基座、端侧隐私智能体提供理论支撑，形成理论研究‑硬件实现‑产品落地的完整链条\cite{springLab2026,karriNYU2026}。
+\end{itemize}
+
+
+\begingroup
+
+\begin{center}
+\nopagebreak[4]
+\enlargethispage{1cm}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{longtblr}[
+caption = {通用商用智能体、MCP工具调用协议与端侧硬件隐私计算智能体},
+label   = {tab:commercial_mcp_edge_agent_security},
+]
+{
+colspec = {|m{0.07\textwidth}
+|m{0.12\textwidth}
+|m{\dimexpr\linewidth - 0.07\textwidth - 0.12\textwidth - 6\tabcolsep - 3\arrayrulewidth\relax}|},
+rowhead = 1,
+}
+\hline
+\textbf{研究方向} & \textbf{企业/机构 + 核心学者} & \textbf{自研项目、产学合作、商用安全产品} \\
+\hline
+
+\SetCell[r=6]{c} 通用商用智能体安全评估与治理规范
+& OpenAI：Sam Altman、Greg Brockman
+& \begin{itemize}[tabitem]
+\item \textbf{ChatGPT Agent交互智能体：}搭建外部多专家红队测试网络，Red Teaming Network由16位具备生物安全背景的博士研究员组成，共提交110次攻击尝试，其中16次超过内部风险阈值~\cite{openaiChatGPTAgentSystemCard2025,openaiRedTeamNetwork2025}。
+\item \textbf{开源安全护栏体系：}OpenAI Agents SDK内置三层输入/输出/工具护栏，支持检测风险时立即中止运行的tripwire机制，配合运行时Tracing审计与高风险动作的human-in-the-loop审批机制~\cite{openaiAgentsSDK2025,openaiGuardrailsDoc2026,openaiTracingDoc2026,openaiGuardrailsApprovalsDoc2026}。
+\item \textbf{全球统一风险披露体系：}System Card持续迭代智能体能力、风险与透明度评估指标，全产品线强制落地，并以公开白皮书系统阐述外部专家参与风险评估的方法论~\cite{openaiChatGPTAgentSystemCard2025,openaiExternalRedTeaming2025}。
+\end{itemize} \\
+\cline{2-3}
+& 英国AI安全研究所UK AISI、FAR.AI独立安全实验室
+& \begin{itemize}[tabitem]
+\item \textbf{深度访问链路漏洞审计：}UK AISI获得对ChatGPT Agent内部推理链和策略文本的深度访问权限，完成官方漏洞审计测试，测出7个通用漏洞~\cite{venturebeatChatGPTAgent2025}。
+\item \textbf{商用智能体安全缺陷批评：}FAR.AI经40小时独立测试发现3个部分漏洞，提出商用智能体过度依赖运行时监控的结构性安全缺陷~\cite{venturebeatChatGPTAgent2025}。
+\end{itemize} \\
+\cline{2-3}
+& 斯坦福CRFM：Percy Liang
+& \begin{itemize}[tabitem]
+\item \textbf{全链路可比较评测理论对齐：}HELM全链路可比较评测理论与OpenAI Agents SDK的Tracing架构在方法论上形成理论对应，共同强调把系统行为拆解为可追溯、可比较的具体环节~\cite{openaiTracingDoc2026}。
+\end{itemize} \\
+\hline
+
+\SetCell[r=7]{c} 智能体工具调用MCP协议与目标对齐安全
+& Anthropic：Dario Amodei、Jared Kaplan
+& \begin{itemize}[tabitem]
+\item \textbf{Agent全生态工具交互协议：}MCP工具通信协议基于JSON-RPC 2.0构建，支撑Claude Agent全生态工具交互，截至2026年初已形成超1万活跃服务器、17.7万注册工具、月均9700万次SDK下载的生态规模~\cite{mcpFormalFramework2026}。
+\item \textbf{高危分级智能体系统：}Claude Code代码智能体、Mythos高危分级智能体系统均采用分层行为约束护栏~\cite{anthropicClaudeCodeSecurity2026}。
+\item \textbf{协议架构安全责任取舍：}面对OX Security披露的架构级RCE漏洞，Anthropic确认该行为符合设计预期，以维持协议灵活性为由拒绝修复，将输入净化责任划给下游开发者~\cite{oxSecurityMCP2026}。
+\end{itemize} \\
+\cline{2-3}
+& 加州伯克利CHAI：Stuart Russell
+& \begin{itemize}[tabitem]
+\item \textbf{人类兼容AI理论与目标对齐：}Russell作为Berkeley CHAI创始主任，其人类兼容AI理论关注目标不确定性和系统可控性，与高自治Agent的目标漂移、价值对齐问题存在直接理论关联~\cite{berkeleyCHAI2026}。
+\end{itemize} \\
+\cline{2-3}
+& OX Security、Check Point安全厂商；密码学形式化验证学界
+& \begin{itemize}[tabitem]
+\item \textbf{MCP协议远程代码执行漏洞披露：}OX Security披露MCP协议"设计如此"的远程代码执行漏洞，影响超1.5亿次下载和20万台服务器，攻陷11个主流MCP市场中的9个，产生至少10个高危或严重级别CVE编号~\cite{oxSecurityMCP2026,thehackernewsMCP2026}。
+\item \textbf{Claude Code代码执行漏洞修复：}Check Point于2025年9至10月披露Claude Code三项漏洞（CVE-2025-59536，CVSS 8.7；CVE-2026-21852，CVSS 5.3），由厂商协同完整修复，分别在1.0.111版本和2.0.65版本发布安全补丁~\cite{checkpointClaudeCode2026,githubClaudeCodeAdvisory2026}。
+\item \textbf{MCP威胁分类与形式化验证：}学术界已提出MCP的威胁分类模型，并指出借鉴Tamarin、ProVerif等密码协议验证工具对MCP做形式化验证仍是开放且困难的研究方向~\cite{mcpFormalFramework2026,mcpSoK2026}。
+\end{itemize} \\
+\hline
+
+\SetCell[r=5]{c} 端侧与硬件机密计算隐私智能体安全技术
+& Apple：Craig Federighi 隐私安全实验室
+& \begin{itemize}[tabitem]
+\item \textbf{端云分层隐私架构：}Apple Intelligence移动端本地智能体采用端云分层数据最小化架构~\cite{applePCCSecurityGuide2026}。
+\item \textbf{可验证云端推理平台：}Private Cloud Compute（PCC）通过Virtual Research Environment向全球研究者开放本地复现能力，配合开源形式化验证工具、函数库与安全悬赏计划，构建透明可信推理体系~\cite{appleSecurityResearch2026}。
+\end{itemize} \\
+\cline{2-3}
+& EPFL SPRING Lab：Carmela Troncoso
+& \begin{itemize}[tabitem]
+\item \textbf{隐私工程理论支撑端侧架构：}Troncoso团队长期研究隐私工程、数据最小化和匿名化技术，相关理论与端侧/云端隐私智能体架构问题高度相关~\cite{springLab2026}。
+\end{itemize} \\
+\cline{2-3}
+& NVIDIA：Jensen Huang，NYU；Ramesh Karri
+& \begin{itemize}[tabitem]
+\item \textbf{GPU硬件机密计算平台：}Confidential Agent GPU硬件机密计算平台自H100起首次支持机密计算，通过片上硬件信任根实现安全启动和远程认证，在Blackwell架构上进一步延伸~\cite{nvidiaConfidentialComputingProduct2026}。
+\item \textbf{硬件侧信道安全研究支撑：}Karri教授长期研究硬件木马、芯片供应链安全和侧信道分析，与GPU侧信道信息泄露防护议题直接相关，学术界也已对TEE模式下大模型推理性能开销做独立评测~\cite{karriNYU2026}。
+\end{itemize} 
+
+\end{longtblr}
+\end{center}
+\endgroup
+
+
+
+
+\subsection{国产中文智能体评测基准与本土产学研安全体系}
+中文语义特征、合规要求与国产化算力生态，决定我国智能体安全无法直接复用海外技术体系。我国聚焦中文场景评测、安全对齐训练、垂直行业多智能体风控\cite{pandaguardCASIA2026}。本小节基于我国核心机构成果，系统归纳本土安全体系的差异化特征、技术能力与产业落地路径，主要发现如下（详见表~\ref{tab:chinese_agent_benchmark_security}）：
+\begin{itemize}[tabitem]
+    \item \textbf{我国高校建成差异化中文评测体系。}清华大学依托ToolBench、AgentBench搭建工具调用和综合任务评测基准，适配海量真实API与中文环境；上海交通大学提出R‑Judge评测体系，聚焦对话交互场景下智能体行为风险判定，二者形成互补的本土化基准，填补海外评测集对中文语境适配不足的短板。
+
+    \item \textbf{国产安全对齐形成开源可复现技术栈。}北京大学PKU‑Alignment团队提出Safe RLHF与PKU‑SafeRLHF算法，配套BeaverTails高质量中文偏好数据集和align‑anything全模态开源框架，为我国大模型智能体后训练安全对齐提供可落地的基础组件\cite{pkuAlignAnything2026}；浙江大学依托AIcert平台完成大量国产模型安全评估，进一步完善对齐效果的检验手段，共同构筑国产智能体安全对齐训练的核心开源底座\cite{aicertZJU2026}。
+
+    \item \textbf{国产安全具备强行业导向特征：}中科院自动化所打造PandaGuard攻防评测平台与JidiAI博弈环境，从科研层面开展多智能体风险推演\cite{pandaguardCASIA2026,jidiAI2026}；上海AI实验室推出Intern‑Shannon安全智能体操作系统和SafeWork‑R1模型，面向政企场景完成产业级落地\cite{intershannon2026,safework2025}；华为联合上交IPADS团队搭建SMARTS自动驾驶仿真平台并开展芯片可信环境研究，面向交通行业完成落地验证\cite{noahArkSMARTS2026,ipadsSJTU2026}。
+    % 整体摒弃海外通用智能体研发路线，形成科研验证、平台研发、行业场景落地的分层发展模式。
+\end{itemize}
+
+
+
+\begingroup
+
+\begin{center}
+\nopagebreak[4]
+\enlargethispage{1cm}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{longtblr}[
+caption = {国产中文智能体评测基准与本土产学研安全体系},
+label   = {tab:chinese_agent_benchmark_security},
+]
+{
+colspec = {|m{0.07\textwidth}
+|m{0.14\textwidth}
+|m{\dimexpr\linewidth - 0.07\textwidth - 0.14\textwidth - 6\tabcolsep - 3\arrayrulewidth\relax}|},
+rowhead = 1,
+}
+\hline
+\textbf{研究方向} & \textbf{企业/机构 + 核心学者} & \textbf{自研项目、产学合作、商用安全产品} \\
+\hline
+
+\SetCell[r=3]{c} 中文本土智能体评测与国产化标准体系
+& 清华大学THUNLP/AIR；朱军、唐杰、刘知远、孙茂松
+& \begin{itemize}[tabitem]
+\item \textbf{工具调用评测基准：}ToolBench工具调用评测基准，覆盖16000多个真实API中文工具场景~\cite{tsinghuaAIInstitute2026,tsinghuaAIR2026}。
+\item \textbf{全栈智能体综合评测：}AgentBench八场景全栈智能体综合评测基准，联合俄亥俄州立大学、加州大学伯克利分校共建。
+\end{itemize} \\
+\cline{2-3}
+& \mbox{北京大学}PKU-Alignment；杨耀东、刘健
+& \begin{itemize}[tabitem]
+\item \textbf{安全强化学习训练框架：}Safe RLHF、PKU-SafeRLHF训练框架，BeaverTails中文安全偏好数据集；
+\item \textbf{全模态对齐训练框架：}Aligner、ProgressGym等后训练对齐系列成果，开源align-anything全模态对齐训练、数据和测评框架~\cite{pkuAlignAnything2026}。
+\end{itemize} \\
+\cline{2-3}
+& 上海交通大学；谷大武（LoCCS）、张倬胜（AI安全实验室）
+& \begin{itemize}[tabitem]
+\item \textbf{密码学与系统安全底座：}谷大武团队围绕密码理论、软硬件与系统安全展开研究，为智能体运行环境提供底层安全基础~\cite{sjtuLoCCS2026}。
+\item \textbf{智能体行为安全评测基准：}张倬胜团队提出R-Judge智能体行为安全评测基准，覆盖5类应用场景、27个风险场景与10类风险类型~\cite{sjtuAISecLab2026}。
+\end{itemize} \\
+\hline
+
+\SetCell[r=3]{c} 我国顶尖高校开源智能体对齐安全体系
+& 浙江大学区块链与数据安全全国重点实验室；任奎
+& \begin{itemize}[tabitem]
+\item \textbf{通用AI安全评测平台：}AIcertAI安全评测平台，覆盖数据质量、算法安全、模型安全、框架安全与系统安全检测，已评测LLaMA、Gemma、Qwen等35个开源大模型，并在淘宝直播风控、中车株洲所等场景形成示范应用~\cite{aicertZJU2026}。
+\item \textbf{企业级安全联合实验室：}浙江大学--阿里巴巴集团AI安全联合实验室将智能体安全评测列为首期核心研究方向，支撑企业级大模型Agent红队测试与安全治理~\cite{zjuAlibabaAISafetyLab2025}。
+\end{itemize} \\
+\cline{2-3}
+& 北京大学PKU-Alignment；杨耀东、刘健
+& \begin{itemize}[tabitem]
+\item \textbf{后训练安全对齐生态：}维护Safe RLHF、PKU-SafeRLHF、BeaverTails等安全对齐训练与数据体系，构成我国较早的可复现安全强化学习框架~\cite{pkuAlignAnything2026}。
+\end{itemize} \\
+\cline{2-3}
+& 上海交通大学AI安全实验室；张倬胜
+& \begin{itemize}[tabitem]
+\item \textbf{自然语言处理与自主智能体安全：}专注自然语言处理、预训练语言模型与自主智能体安全，R-Judge基准支撑智能体行为风险识别研究~\cite{sjtuAISecLab2026}。
+\end{itemize} \\
+\hline
+
+\SetCell[r=3]{c} 我国科研院所、产业实验室行业智能体安全落地
+& 中国科学院自动化所；曾毅、王飞跃团队
+& \begin{itemize}[tabitem]
+\item \textbf{多智能体博弈攻防评测平台：}PandaGuard（灵御）多智能体博弈攻防评测平台，集成19种攻击算法与12种防御机制~\cite{pandaguardCASIA2026}。
+\item \textbf{多智能体决策开放平台：}JidiAI多智能体开源开放平台面向智能体博弈决策领域，吸引我国外50余所高校机构注册使用~\cite{jidiAI2026}。
+\end{itemize} \\
+\cline{2-3}
+& 上海AI实验室；安全可信AI团队
+& \begin{itemize}[tabitem]
+\item \textbf{产业级安全智能体操作系统：}Intern-Shannon（书安）产业级安全智能体操作系统，以“安全即服务”模式支撑高安全场景部署~\cite{intershannon2026}。
+\item \textbf{安全能力协同演化与科研智能体：}SafeWork-R1通过SafeLadder框架实现安全与智能协同进化，依托InternLM/OpenMMLab开源底座；InternAgent构建面向自主科学发现的闭环多智能体框架~\cite{safework2025,internAgentSHLab2026}。
+\end{itemize} \\
+\hline
+& 华为诺亚方舟实验室；郝建业（决策推理实验室），上交陈海波（IPADS实验室）
+& \begin{itemize}[tabitem]
+\item \textbf{自动驾驶多智能体仿真平台：}SMARTS大规模多智能体强化学习仿真平台，支持数百至数千个智能体在真实交通场景中的交互学习~\cite{noahArkSMARTS2026}。
+\item \textbf{可信执行环境与操作系统级支撑：}sNPU可信执行环境研究被ISCA 2024接收，陈海波担任OpenHarmony技术指导委员会创始主席，IPADS与华为在鸿蒙操作系统上保持长期合作关系~\cite{ipadsSJTU2026}。
+\end{itemize} 
+
+\end{longtblr}
+\end{center}
+\endgroup

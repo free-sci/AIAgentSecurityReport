@@ -1,0 +1,395 @@
+% Table spacing helpers: taller header row and padded fourth-column content.
+\providecommand{\AgentHeader}[1]{\rule[-1.05ex]{0pt}{3.85ex}\strut #1}
+\providecommand{\AgentFourthCell}[1]{%
+  \begin{minipage}[c]{\linewidth}%
+  \vspace*{0.18em}%
+  #1%
+  \vspace*{0.18em}%
+  \end{minipage}%
+}
+
+\renewcommand{\arraystretch}{0.7}
+\begin{table*}[htbp]
+\centering
+\caption{北美主流 AI 智能体安全产品与落地方向}
+\label{tab:north-america-agent-security-products}
+\fontsize{7pt}{7.8pt}\selectfont
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{0.07\textwidth}|>{\raggedright\arraybackslash}m{0.12\textwidth}|>{\hspace{0.35em}\raggedright\arraybackslash}m{0.22\textwidth}|>{\hspace{0.35em}\raggedright\arraybackslash}X|}
+
+\hline
+\multicolumn{1}{|c|}{\AgentHeader{所属区域}} &
+\multicolumn{1}{c|}{\AgentHeader{企业名称}} &
+\multicolumn{1}{c|}{\AgentHeader{所属产业领域}} &
+\multicolumn{1}{c|}{\AgentHeader{安全研究方向与产品/成果}} \\
+
+\hline
+
+
+& OpenAI
+&\begin{itemize}[leftmargin=1.35em,labelsep=0.25em,itemsep=0.05em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 通用基础模型与 ChatGPT 应用
+    \item 开发者智能体 API 与 SDK
+    \item 企业级 Agent 构建与评测工具
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.40\linewidth}@{\hspace{0.8em}}>{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+    \rule[-0.35em]{0pt}{1.35em}\textbullet\hspace{0.25em}终端用户自主任务 Agent 的网页、文件、连接器与代码执行风险控制
+    & \rule[-0.35em]{0pt}{1.35em}\textbullet\hspace{0.25em}ChatGPT agent 及其系统卡，强调用户确认、主动监督、连接器访问限制与提示注入防御 \cite{openaichatgptagent2025,openaichatgptagentsystemcard2025} \\[0.15em]
+    \textbullet\hspace{0.25em}开发者 Agent 的工具编排、状态管理、可观测性与数据隔离
+    & \textbullet\hspace{0.25em}Responses API、Agents SDK，支持工具调用、tracing、handoff、guardrails 与人工审批 \cite{openaiagentssdk2026,openaiobservability2026} \\[0.15em]
+    \textbullet\hspace{0.25em}企业低代码 Agent 的流程治理、护栏配置、评测闭环与连接器管理
+    & \textbullet\hspace{0.25em}AgentKit、Agent Builder、ChatKit、Evals 与 Guardrails \cite{openaiagentkit2025,openaiagentssdk2026}\rule[-0.45em]{0pt}{1.25em}
+  \end{tabular}} \\
+\cline{2-4}
+
+& Anthropic
+& \begin{itemize}[leftmargin=1.35em,labelsep=0.25em,itemsep=0.05em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item Claude 基础模型与企业协作应用
+    \item 工具调用、计算机使用与代码智能体
+    \item AI 安全、对齐与开放协议生态
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.40\linewidth}@{\hspace{0.8em}}>{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+    \textbullet\hspace{0.25em}模型内生对齐、宪法式约束与前沿能力分级治理
+    & \textbullet\hspace{0.25em}Constitutional AI、Claude Constitution、Claude 系统卡与 Responsible Scaling Policy \cite{bai2022constitutionalai,anthropicclaudeconstitution2025,anthropicresponsiblescaling2025} \\[0.15em]
+    \textbullet\hspace{0.25em}工具型 Agent 的 schema 约束、沙箱化计算机使用与人类授权
+    & \textbullet\hspace{0.25em}Claude Tool Use、Computer Use、Messages API 工具调用机制 \cite{anthropictooluse2026,anthropiccomputeruse2026} \\[0.15em]
+    \textbullet\hspace{0.25em}企业数据源接入、代码智能体插件化与连接器权限边界
+    & \textbullet\hspace{0.25em}Model Context Protocol、Claude Code 与企业级 MCP 治理实践 \cite{anthropicmcp2024,anthropicclaudecode2025,mcpsafetyaudit2025}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+& Google / Google DeepMind / Google Cloud
+& \begin{itemize}[leftmargin=1.35em,labelsep=0.25em,itemsep=0.05em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 搜索、网页与云原生企业应用
+    \item Gemini Agent 平台与云安全治理
+    \item 科学智能体与漏洞攻防研究
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.40\linewidth}@{\hspace{0.8em}}>{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+    \textbullet\hspace{0.25em}云原生 Agent 的构建、部署、观测、评测与生命周期治理
+    & \textbullet\hspace{0.25em}Vertex AI Agent Builder、Agent Development Kit、Agent Engine 与 Agent Search \cite{googlevertexagentbuilder2026,googleadk2026,googleagentsearch2026} \\[0.15em]
+    \textbullet\hspace{0.25em}企业工具/API 注册、Agent 身份、最小权限与跨服务访问控制
+    & \textbullet\hspace{0.25em}Cloud API Registry 工具治理、Agent Identity、IAM 条件与 Agent Gateway \cite{googletoolgovernance2025,googleagentidentity2026} \\[0.15em]
+    \textbullet\hspace{0.25em}科学推理与安全攻防 Agent 的受控实验、漏洞发现和结果可复现
+    & \textbullet\hspace{0.25em}AI co-scientist、AlphaEvolve、Project Naptime、Big Sleep / CodeMender \cite{googlecoscientist2025,googlealphaevolve2025,googlenaptime2024,googlecodemender2025}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+美国
+& Meta
+& \begin{itemize}[leftmargin=1.35em,labelsep=0.25em,itemsep=0.05em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 开源/开放权重基础模型
+    \item 开源安全护栏与安全评测
+    \item 端侧部署与开发者生态
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.40\linewidth}@{\hspace{0.8em}}>{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+    \textbullet\hspace{0.25em}开源模型输入/输出内容安全分类与多语种安全策略适配
+    & \textbullet\hspace{0.25em}Llama Guard、Prompt Guard 与 Llama Responsible Use Guide \cite{metapurplellama2026,metallamaguard2024,metallamaresponsibleuse2024} \\[0.15em]
+    \textbullet\hspace{0.25em}代码生成、网络安全能力与提示注入风险的开放评测
+    & \textbullet\hspace{0.25em}CyberSecEval、Code Shield，用于不安全代码过滤与网络安全风险测试 \cite{metapurplellama2026,metacyberseceval2023} \\[0.15em]
+    \textbullet\hspace{0.25em}Agent 运行时安全监控、间接提示注入和危险代码风险拦截
+    & \textbullet\hspace{0.25em}LlamaFirewall，集成 PromptGuard 2、Agent Alignment Checks 与 CodeShield \cite{metallamaprotections2026,metallamafirewall2026}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+& NVIDIA
+& \begin{itemize}[leftmargin=1.35em,labelsep=0.25em,itemsep=0.05em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item AI 算力基础设施与 GPU 软件栈
+    \item 企业级 Agent 编排与护栏框架
+    \item 工业、机器人与物理 AI 仿真
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.40\linewidth}@{\hspace{0.8em}}>{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+    \textbullet\hspace{0.25em}生产级多智能体工作流的编排、工具连接、评测与性能剖析
+    & \textbullet\hspace{0.25em}NVIDIA NeMo Agent Toolkit，支持 MCP/A2A、workflow、evaluation 与 profiler \cite{nvidiaagenttoolkit2026} \\[0.15em]
+    \textbullet\hspace{0.25em}对话式 AI 与 RAG Agent 的输入/输出内容护栏和策略约束
+    & \textbullet\hspace{0.25em}NVIDIA NeMo Guardrails、NIM 与安全 RAG 部署参考 \cite{nvidianemoguardrails2026,rebedea2023nemo} \\[0.15em]
+    \textbullet\hspace{0.25em}可信算力、模型/数据在用保护与物理 AI 安全仿真
+    & \textbullet\hspace{0.25em}NVIDIA Confidential Computing、Isaac Sim / Isaac Lab、Cosmos World Foundation Models \cite{nvidiaconfidentialcomputing2026,nvidiaisaacsim2026,nvidiaisaaclab2026,nvidiacosmos2025}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+& Perplexity
+& \begin{itemize}[leftmargin=1.35em,labelsep=0.25em,itemsep=0.05em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 搜索原生问答与实时联网检索
+    \item 浏览器智能体与网页任务自动化
+    \item 企业研究智能体与 API 平台
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.40\linewidth}@{\hspace{0.8em}}>{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+    \textbullet\hspace{0.25em}联网检索型 Agent 的来源可信、引用溯源与搜索范围控制
+    & \textbullet\hspace{0.25em}Perplexity Sonar API、Search API、Pro Search 与引用型答案机制 \cite{perplexitysonar2026,perplexitysearchapi2026,perplexityprivacysecurity2026} \\[0.15em]
+    \textbullet\hspace{0.25em}浏览器 Agent 的网页上下文处理、跨站任务代理与提示注入风险防护
+    & \textbullet\hspace{0.25em}Comet Browser / Comet Assistant，并结合网页 Agent 安全评测研究 \cite{perplexitycomet2025,bravecometpromptinjection2025,greshake2023indirectprompt,agentdojo2024} \\[0.15em]
+    \textbullet\hspace{0.25em}企业级多步任务 Agent 的连接器、访问边界、数据留存和网络策略治理
+    & \textbullet\hspace{0.25em}Perplexity Enterprise、Perplexity Computer、Enterprise connectors 与 Computer Network Firewall Policy \cite{perplexityenterprise2026,perplexitycomputerenterprise2026}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+& Cursor / Anysphere
+& \begin{itemize}[leftmargin=1.35em,labelsep=0.25em,itemsep=0.05em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item AI IDE 与代码智能体
+    \item 云端/本地软件工程自动化
+    \item 企业研发安全与 MCP 工具接入
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.40\linewidth}@{\hspace{0.8em}}>{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+    \textbullet\hspace{0.25em}IDE 内代码智能体的本地工程访问、终端/浏览器操作与命令审查
+    & \textbullet\hspace{0.25em}Cursor Agent、Plan Mode、Browser Controls、Hooks，用于计划、审计、命令阻断与上下文控制 \cite{cursor17changelog2025,cursorplanmode2025,cursorhooks2025} \\[0.15em]
+    \textbullet\hspace{0.25em}云端代码智能体的隔离执行环境、PR 产物验证与企业内网部署
+    & \textbullet\hspace{0.25em}Cursor Cloud Agents、Bugbot、Self-hosted Cloud Agents \cite{cursorcloudagents2025,cursorbugbot2025,cursorselfhostedcloudagents2026} \\[0.15em]
+    \textbullet\hspace{0.25em}企业级代码数据保护、模型/MCP/网络访问控制和审计合规
+    & \textbullet\hspace{0.25em}Cursor Enterprise、Privacy Mode、SSO/SAML、RBAC、SCIM、audit logs、repository/model/MCP controls \cite{cursorsecurity2026,cursorenterprise2026}
+  \end{tabular}} \\
+
+\hline
+\end{tabularx}
+\end{table*}
+
+
+\renewcommand{\arraystretch}{0.7}
+\begin{table*}[htbp]
+\centering
+\caption{欧洲及周边主流 AI 智能体安全产品与落地方向}
+\label{tab:europe-agent-security-products}
+\fontsize{6.7pt}{7.4pt}\selectfont
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.06}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{0.065\textwidth}|>{\raggedright\arraybackslash}m{0.13\textwidth}|>{\hspace{0.45em}\raggedright\arraybackslash}m{0.20\textwidth}|>{\hspace{0.35em}\raggedright\arraybackslash}X|}
+\hline
+\multicolumn{1}{|c|}{\AgentHeader{所属区域}} & \multicolumn{1}{c|}{\AgentHeader{企业名称}} & \multicolumn{1}{c|}{\AgentHeader{所属产业领域}} & \multicolumn{1}{c|}{\AgentHeader{安全研究方向与产品/成果}} \\
+\hline
+
+法国
+& Mistral AI
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.05em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 欧洲基础模型与企业 AI 平台
+    \item 终端智能体、企业助手与开发者 API
+    \item 私有化部署、模型定制与主权 AI
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}终端与企业智能体的数据使用、连接器访问、组织级隐私和权限控制
+    & \textbullet\hspace{0.18em}Le Chat Enterprise 与企业级连接器/知识库应用 \cite{mistrallachatenterprise2025} \\[0.18em]
+    \textbullet\hspace{0.18em}开发者 Agent 的工具调用、持久记忆、多工具连接与编排控制
+    & \textbullet\hspace{0.18em}Mistral Agents API，支持持久状态、多 Agent、内置工具、handoff 与 MCP 连接 \cite{mistralagentsapi2025} \\[0.18em]
+    \textbullet\hspace{0.18em}生产级智能体的可观测性、持久运行、资产治理与自托管部署
+    & \textbullet\hspace{0.18em}Mistral AI Studio、Agent Runtime、AI Registry、Forge 与 self-hosted / hybrid deployment \cite{mistralaistudio2025,mistralstudio2026,mistralforge2026}
+  \end{tabular}} \\
+
+\hline
+
+德国
+& Aleph Alpha
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.05em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 专用化、主权型大语言模型
+    \item 高可信、可解释企业/政务 AI 平台
+    \item 欧洲基础设施与私有化部署
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}高监管场景下的可解释、可追溯、数据主权与组织级 AI 应用治理
+    & \textbullet\hspace{0.18em}PhariaAI、PhariaAssistant、PhariaStudio、PhariaOS \cite{alephphariaai2026,alephphariaaipdf2025} \\[0.18em]
+    \textbullet\hspace{0.18em}德语区及欧洲多语种、工程/工业领域专用模型的安全对齐与合规训练
+    & \textbullet\hspace{0.18em}Pharia-1-LLM-7B-control / control-aligned \cite{alephphariamodels2026} \\[0.18em]
+    \textbullet\hspace{0.18em}企业和公共部门的本地化部署、生产评测、无用户数据训练与审计可控
+    & \textbullet\hspace{0.18em}Intelligence Layer SDK、on-premise installation、PhariaOS \cite{alephintelligencelayer2026,alephphariaaipdf2025}
+  \end{tabular}} \\
+
+\hline
+
+英国
+& Darktrace
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.05em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item AI 原生网络安全平台
+    \item SOC 自动化、威胁检测与自主响应
+    \item 邮件、网络、云、端点、身份与 OT 安全
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}基于自学习 AI 的组织行为基线建模、已知/未知威胁检测与实时风险闭环
+    & \textbullet\hspace{0.18em}Darktrace ActiveAI Security Platform \cite{darktraceactiveai2026} \\[0.18em]
+    \textbullet\hspace{0.18em}SOC 告警自动研判、事件关联调查、上下文综合与自然语言报告生成
+    & \textbullet\hspace{0.18em}Cyber AI Analyst \cite{darktraceactiveai2026,darktracecyberanalyst2026} \\[0.18em]
+    \textbullet\hspace{0.18em}精准自主响应与跨域安全控制，降低横向移动、邮件攻击和云端异常扩散风险
+    & \textbullet\hspace{0.18em}Autonomous Response、NETWORK、EMAIL、CLOUD、ENDPOINT、IDENTITY、OT、SECURE AI \cite{darktraceautonomousresponse2026,darktraceactiveai2026}
+  \end{tabular}} \\
+
+\hline
+
+俄罗斯
+& Yandex
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.05em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 搜索、云平台与俄语大模型服务
+    \item AI Studio、Agent Atelier 与企业 RAG / AI Search
+    \item Alice 助手生态与云安全合规工具
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}企业智能体构建、RAG、网页搜索、MCP 工具接入与业务流程集成
+    & \textbullet\hspace{0.18em}Yandex AI Studio、Agent Atelier、AI Search、MCP Hub 与 Yandex Workflows \cite{yandexaistudio2026,yandexaisearch2026} \\[0.18em]
+    \textbullet\hspace{0.18em}本地化或私有基础设施内运行智能体，控制数据、请求、处理结果和访问日志
+    & \textbullet\hspace{0.18em}Yandex AI Studio on-premises 与请求日志禁用、访问管理、Audit Trails 等安全设置 \cite{yandexaistudioonprem2026,yandexaistudiosecurity2026} \\[0.18em]
+    \textbullet\hspace{0.18em}云安全配置、合规建议、告警解释与安全运营辅助
+    & \textbullet\hspace{0.18em}Yandex Security Deck AI assistant \cite{yandexsecuritydeckassistant2026}
+  \end{tabular}} \\
+
+\hline
+\end{tabularx}
+\end{table*}
+
+\renewcommand{\arraystretch}{0.7}
+\begin{table*}[htbp]
+\centering
+\caption{国内主流 AI 智能体安全产品与落地方向}
+\label{tab:china-agent-security-products-verified-cited}
+\fontsize{5.0pt}{5.6pt}\selectfont
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.04}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{0.065\textwidth}|>{\raggedright\arraybackslash}m{0.13\textwidth}|>{\hspace{0.45em}\raggedright\arraybackslash}m{0.20\textwidth}|>{\hspace{0.35em}\raggedright\arraybackslash}X|}
+\hline
+\multicolumn{1}{|c|}{\AgentHeader{所属区域}} & \multicolumn{1}{c|}{\AgentHeader{企业名称}} & \multicolumn{1}{c|}{\AgentHeader{所属产业领域}} & \multicolumn{1}{c|}{\AgentHeader{安全研究方向与产品/成果}} \\
+\hline
+
+& 百度
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.04em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 搜索增强大模型
+    \item 智能云 Agent 开发平台
+    \item 飞桨与国产 AI 生态
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}企业 Agent 构建、RAG、工具/MCP 接入与模型服务治理
+    & \textbullet\hspace{0.18em}百度千帆 Agent 开发平台：Agent 引擎、工具/MCP、模型服务与企业服务能力 \cite{baiduqianfanagent2026} \\[0.16em]
+    \textbullet\hspace{0.18em}企业智能体任务执行、Skill 生态与消息平台集成
+    & \textbullet\hspace{0.18em}百度 DuClaw：AI Agent 服务、Skill 系统、SkillMarket 与消息平台配置 \cite{baiduduclaw2026,baiduduclawskillmarket2026} \\[0.16em]
+    \textbullet\hspace{0.18em}国产 AI 框架生态、模型开发与工程化部署基础
+    & \textbullet\hspace{0.18em}飞桨 PaddlePaddle 与百度智能云千帆工程生态 \cite{paddlepaddle2026,baiduqianfanagent2026}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+& 阿里巴巴 / 阿里云
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.04em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 通义/Qwen 模型与百炼 Agent 应用
+    \item 云原生 Workflow、RAG 与插件编排
+    \item OpenClaw 运行时与 AI 应用安全护栏
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}输入输出安全护栏、Prompt 注入检测、敏感信息和恶意链接识别
+    & \textbullet\hspace{0.18em}阿里云 AI 安全护栏 / OpenClaw 运行时防护方案 \cite{aliyunaiguardrails2026,aliyunopenclawdocs2026} \\[0.16em]
+    \textbullet\hspace{0.18em}Agent 运行时防护、工具调用审计、Skill 检测与密钥托管
+    & \textbullet\hspace{0.18em}openclaw-security-assistant 与 OpenClaw runtime security 插件 \cite{aliyunopenclawassistant2026,aliyunopenclawdocs2026} \\[0.16em]
+    \textbullet\hspace{0.18em}RAG/插件/代码解释器边界治理与企业应用编排
+    & \textbullet\hspace{0.18em}阿里云百炼 Model Studio 智能体应用/工作流、Assistant API 代码解释器 \cite{aliyunbailian2026,aliyunopenclawdocs2026}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+& 腾讯
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.04em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 混元大模型与腾讯云 ADP
+    \item LLM+RAG、Workflow 与 Multi-Agent 应用
+    \item CodeBuddy 代码智能体与 MCP 工具生态
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}MCP / Agent 接入网关防护、检测规则、限流、鉴权与脱敏
+    & \textbullet\hspace{0.18em}腾讯云 AI Agent 安全网关：MCP Server 封装、检测规则配置、Prompt 注入/脱敏/访问鉴权等防护 \cite{tencentagentgateway2026,tencentagentgatewayquickstart2026} \\[0.16em]
+    \textbullet\hspace{0.18em}租户隔离、内容风控、权限审计、监控告警与日志分析
+    & \textbullet\hspace{0.18em}腾讯云智能体开发平台（Tencent Cloud ADP）多租户隔离、内容安全、权限与操作审计、监控告警 \cite{tencentadp2026,tencenthunyuan2026} \\[0.16em]
+    \textbullet\hspace{0.18em}代码智能体的本地工程访问、MCP 工具调用和命令执行安全
+    & \textbullet\hspace{0.18em}腾讯云代码助手 CodeBuddy：默认只读、命令/修改审批、MCP 本地服务器与安全配置 \cite{tencentcodebuddysecurity2026,tencentcodebuddymcp2026}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+中国大陆
+& 华为
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.04em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item AgentArts 企业智能体平台与 OfficeAce
+    \item 盘古大模型、ModelArts Studio 与云端 Agent 运行时
+    \item CodeArts 代码智能体与昇腾/鲲鹏工程生态
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}身份鉴权、API Key 认证、沙箱工具与 MCP 网关接入控制
+    & \textbullet\hspace{0.18em}华为云 AgentArts / AgentIdentity / Sandbox Tool：API Key 认证、代码执行与文件管理沙箱、MCP Gateway \cite{huaweiagentarts2026,huaweiagentidentity2026,huaweiagentartssandbox2026} \\[0.16em]
+    \textbullet\hspace{0.18em}高危动作审批护栏与 PC 端安全审批管理
+    & \textbullet\hspace{0.18em}OfficeAce / AgentArts PC 安全审批管理，对敏感操作进行审批拦截和授权确认 \cite{huaweiofficeaceapproval2026} \\[0.16em]
+    \textbullet\hspace{0.18em}代码数据边界、文件保护、权限控制和隔离执行
+    & \textbullet\hspace{0.18em}华为云码道（CodeArts）：dotfile 保护、读写边界、沙箱执行、高危命令阻断与风险提示 \cite{huaweicodearts2026,huaweicodeartssandbox2026}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+& 字节跳动
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.04em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 豆包大模型与火山方舟 AI 云
+    \item 扣子 Coze 智能体、工作流与 Skill 生态
+    \item 飞书 aily / 智能伙伴与组织协同 Agent
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}大模型应用防火墙、Prompt 攻击拦截、模型滥用和敏感数据泄露防护
+    & \textbullet\hspace{0.18em}火山引擎大模型应用防火墙，覆盖输入/输出防护、Prompt 攻击、恶意链接、敏感数据和模型滥用风险 \cite{volcenginellmfirewall2026,volcenginesecuritywhitepaper2026} \\[0.16em]
+    \textbullet\hspace{0.18em}Skill 最小授权、凭证保护、OAuth PKCE 与企业成员权限管理
+    & \textbullet\hspace{0.18em}扣子 Coze 技能安全指南、OAuth PKCE 授权流程和企业版权限管理 \cite{cozeskillsecurity2026,cozeoauthpkce2026,volcenginecozepro2026} \\[0.16em]
+    \textbullet\hspace{0.18em}权限继承、数据保护、模型输入控制策略与组织协同治理
+    & \textbullet\hspace{0.18em}飞书智能伙伴 / aily 数据保护与策略管理，支持敏感数据分级、模型输入控制与组织级权限一致性 \cite{feishuaily2026,feishuailydataprotection2026}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+& 科大讯飞
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.04em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 星火大模型与语音多模态 AI
+    \item 星火企业智能体平台与星辰 Agent 开发
+    \item 行业垂直 Agent 与智能编程助手
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}企业信源、知识库、工具调用与任务规划边界
+    & \textbullet\hspace{0.18em}星火企业智能体平台：企业信源、知识库、工具/技能接入和智能任务规划 \cite{iflyteksparkenterpriseagent2026} \\[0.16em]
+    \textbullet\hspace{0.18em}插件、MCP Server、知识库与工作流编排配置
+    & \textbullet\hspace{0.18em}讯飞星辰 Agent 开发平台及开发指南，支持插件、MCP Server、知识库和工作流节点配置 \cite{iflytekxingchenagent2026,iflytekagentguide2026} \\[0.16em]
+    \textbullet\hspace{0.18em}私域知识检索、企业级知识管理与行业问答治理
+    & \textbullet\hspace{0.18em}星火知识库与星火智能体场景文档，用于企业私域知识问答和低代码智能体构建 \cite{iflyteksparkknowledgebase2026,iflyteksceneagent2026}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+& 360
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.04em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 大模型/Agent 安全防护与风险治理
+    \item 安全运营智能体与安全大模型
+    \item 企业智能体工厂与 Skill 供应链治理
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}大模型内容护栏、内容评测、模型漏洞检测与 Agent 行为管控
+    & \textbullet\hspace{0.18em}360 大模型卫士防护系统 / 大模型安全卫士：内容安全、模型漏洞检测、敏感问题代答、AI Agent 安全智能体 \cite{threesixtymodelguard2026,threesixtywhitepaper2025} \\[0.16em]
+    \textbullet\hspace{0.18em}Agent 生命周期风险、Skill 入口、框架层、生态层和沙箱层安全分析
+    & \textbullet\hspace{0.18em}360《智能体安全实践报告》与《智能体安全报告》：攻击面、Skill 风险、行为审计与智能防御路线 \cite{threesixtyagentsafetyreport2025,threesixtyagentskillsreport2026} \\[0.16em]
+    \textbullet\hspace{0.18em}安全运营自动化、告警研判、威胁狩猎与响应闭环
+    & \textbullet\hspace{0.18em}360 安全运营智能体：9 大 AI 安全智能体矩阵、告警研判、威胁狩猎和响应处置 \cite{threesixtysecurityagent2026,threesixtysecuritybrainagent2024}
+  \end{tabular}} \\
+
+\cline{2-4}
+
+& DeepSeek
+& \begin{itemize}[leftmargin=1.15em,labelsep=0.18em,itemsep=0.04em,topsep=0pt,parsep=0pt,partopsep=0pt,label=\textbullet]
+    \item 开放权重基础模型与推理模型
+    \item API 服务与开发者工具调用生态
+    \item 开源模型二次开发、本地部署与安全评测
+  \end{itemize}
+& \AgentFourthCell{\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\linewidth}@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.56\linewidth}@{}}
+    \textbullet\hspace{0.18em}API / 模型输入输出治理、JSON 输出与兼容式调用
+    & \textbullet\hspace{0.18em}DeepSeek API、JSON Output、OpenAI-compatible API 调用格式 \cite{deepseekapi2026,deepseekjsonoutput2026} \\[0.16em]
+    \textbullet\hspace{0.18em}工具调用边界、JSON Schema 校验与严格函数调用
+    & \textbullet\hspace{0.18em}DeepSeek Tool Calls、Strict Mode / Strict Function Calling \cite{deepseektoolcalls2026} \\[0.16em]
+    \textbullet\hspace{0.18em}开源权重供应链、推理模型透明度与安全评测基础
+    & \textbullet\hspace{0.18em}DeepSeek-R1、DeepSeek-V3 系列技术报告和开源模型仓库 \cite{deepseekr12025,deepseekv32024,deepseekv3github2025}
+  \end{tabular}} \\
+
+\hline
+\end{tabularx}
+\end{table*}

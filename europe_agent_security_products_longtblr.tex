@@ -1,0 +1,111 @@
+% 依赖项（必须放在主文档导言区，即 \begin{document} 之前）：
+% \usepackage{tabularray}
+% \UseTblrLibrary{varwidth}
+% \usepackage{enumitem}
+\begingroup
+% \nopagebreak[4]
+\enlargethispage{1cm}
+\footnotesize
+\centering
+
+\DefTblrTemplate{conthead-text}{default}{（续表）}
+\DefTblrTemplate{contfoot-text}{default}{续下页}
+
+\begin{longtblr}[
+  caption = {欧洲主流AI智能体安全产品与落地方向},
+  label   = {tab:europe-agent-security-products},
+]{
+  width   = \linewidth,
+  colspec = {
+    |Q[wd=0.8cm,l,m]
+    |Q[wd=1.2cm,l,m]
+    |Q[wd=2.8cm,l,m]
+    |Q[wd=0.3\linewidth,l,m]
+    |X[1,l,m]|
+  },
+  cells   = {l,m},
+  colsep  = 3pt,
+  row{1}  = {font=\bfseries},
+  rowhead = 1,
+  % 每行内容与上下边框之间各保留 5pt 空间。
+  rowsep  = 5pt,
+  measure = vbox,
+  stretch = -1,
+}
+\hline
+\textbf{国家} & \textbf{企业} & \textbf{所属产业领域} & \textbf{安全研究方向} & \textbf{产品/成果} \\
+\hline
+法国
+& Mistral AI
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 欧洲基础模型与企业AI平台
+    \item 终端智能体、企业助手与开发者API
+    \item 私有化部署、模型定制与主权AI
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 终端与企业智能体的数据使用、连接器访问、组织级隐私和权限控制
+    \item 开发者智能体的工具调用、持久记忆、多工具连接与编排控制
+    \item 生产级智能体的可观测性、持久运行、资产治理与自托管部署
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item Le Chat Enterprise与企业级连接器/知识库应用 ~\cite{mistrallachatenterprise2025}
+    \item Mistral Agents API、支持持久状态、多Agent、内置工具、handoff与MCP连接 ~\cite{mistralagentsapi2025}
+    \item Mistral AI Studio、Agent Runtime、AI Registry、Forge 与 self-hosted/hybrid deployment ~\cite{mistralaistudio2025,mistralstudio2026,mistralforge2026}
+  \end{itemize} \\
+\hline
+德国
+& Aleph Alpha
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 专用化、主权型大语言模型
+    \item 高可信、可解释企业/政务AI平台
+    \item 欧洲基础设施与私有化部署
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 高监管场景下的可解释、可追溯、数据主权与组织级AI应用治理
+    \item 德语区及欧洲多语种、工程/工业领域专用模型的安全对齐与合规训练
+    \item 企业和公共部门的本地化部署、生产评测、无用户数据训练与审计可控
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item PhariaAI、PhariaAssistant、PhariaStudio、PhariaOS ~\cite{alephphariaai2026,alephphariaaipdf2025}
+    \item Pharia-1-LLM-7B-control/control-aligned ~\cite{alephphariamodels2026}
+    \item Intelligence Layer SDK、on-premise installation、PhariaOS ~\cite{alephintelligencelayer2026,alephphariaaipdf2025}
+  \end{itemize} \\
+\hline
+英国
+& Dark-\newline trace
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item AI原生网络安全平台
+    \item SOC自动化、威胁检测与自主响应
+    \item 邮件、网络、云、端点、身份与OT安全
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 基于自学习AI的组织行为基线建模、已知/未知威胁检测与实时风险闭环
+    \item SOC告警自动研判、事件关联调查、上下文综合与自然语言报告生成
+    \item 精准自主响应与跨域安全控制，降低横向移动、邮件攻击和云端异常扩散风险
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item Darktrace ActiveAI Security Platform ~\cite{darktraceactiveai2026}
+    \item Cyber AI Analyst ~\cite{darktraceactiveai2026,darktracecyberanalyst2026}
+    \item Autonomous Response、NETWORK、EMAIL、CLOUD、ENDPOINT、IDENTITY、OT、SECURE AI ~\cite{darktraceautonomousresponse2026,darktraceactiveai2026}
+  \end{itemize} \\
+\hline
+俄罗斯
+& Yandex
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 搜索、云平台与俄语大模型服务
+    \item AI Studio、Agent Atelier与企业RAG/AISearch
+    \item Alice 助手生态与云安全合规工具
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item 企业智能体构建、RAG、网页搜索、MCP工具接入与业务流程集成
+    \item 本地化或私有基础设施内运行智能体，控制数据、请求、处理结果和访问日志
+    \item 云安全配置、合规建议、告警解释与安全运营辅助
+  \end{itemize}
+& \begin{itemize}[leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=1pt,parsep=0pt]
+    \item Yandex AI Studio、Agent Atelier、AI Search、MCP Hub与Yandex Workflows~\cite{yandexaistudio2026,yandexaisearch2026}
+    \item Yandex AI Studio on-premises与请求日志禁用、访问管理、Audit Trails等安全设置~\cite{yandexaistudioonprem2026,yandexaistudiosecurity2026}
+    \item Yandex Security Deck AI assistant ~\cite{yandexsecuritydeckassistant2026}
+  \end{itemize} \\
+\hline
+\end{longtblr}
+\endgroup

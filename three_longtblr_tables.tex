@@ -1,0 +1,586 @@
+% 需要在导言区加载：\usepackage{tabularray}
+
+\nopagebreak[4]
+\enlargethispage{1cm}
+\footnotesize
+\begingroup
+\newcommand{\TableItemList}[1]{%
+  \begin{minipage}[t]{\linewidth}
+    \begin{itemize}[tabitem]
+      #1
+    \end{itemize}
+  \end{minipage}%
+}
+\DefTblrTemplate{conthead-text}{default}{（续表）}
+\DefTblrTemplate{contfoot-text}{default}{续下页}
+\begin{longtblr}[
+caption = {典型AI智能体安全事件汇总},
+label   = {tab:agent_security_incident},
+halign  = c,
+]
+{
+width   = 0.94\linewidth,
+colsep  = 3pt,
+abovesep = 0pt,
+colspec = {|t{1.5cm}
+|t{2cm}
+|t{1.5cm}
+|t{5.8cm}
+|X[t]|},
+}
+\hline
+\textbf{发生时间（持续时长）} & \textbf{涉事主体} & \textbf{事件类型} & \textbf{攻击/异常手法} & \textbf{核心损失与影响} \\
+\hline
+\SetCell{c} 2026.01.29--2026.02.03\newline （披露修复窗口）
+& OpenClaw / Moltbook平台
+& 一键远程代码执行、后端数据库配置泄露
+& \TableItemList{
+    \item 公开报告显示Moltbook后端数据库缺少行级安全策略，暴露约150万条智能体API令牌与3.5万个邮箱地址~\cite{openclawMoltbookBreach2026}。
+    \item 官方安全公告确认WebSocket来源校验缺失，漏洞编号CVE-2026-25253（CVSS 8.8）~\cite{openclawCVE2026}。
+    \item 安全研究机构披露官方技能市场ClawHub被植入341个恶意技能，用于分发窃密恶意软件~\cite{openclawClawHavoc2026}。
+}
+& \TableItemList{
+    \item 第三方安全扫描确认4万至13万余台OpenClaw实例暴露在公网，多数未启用身份验证~\cite{openclawExposure2026}。
+    \item 厂商已发布补丁修复相关漏洞~\cite{openclawClawHavoc2026}。
+    \item 已泄露的令牌和已植入的恶意技能不会因补丁发布而自动失效或清除~\cite{openclawClawHavoc2026}。
+} \\
+% \cline{2-5}
+\hline 
+\SetCell{c} 2025.12.04披露\newline （未见实际利用报告）
+& LangChain（langchain-core框架）
+& 序列化注入漏洞、密钥泄露风险
+& \TableItemList{
+    \item 官方安全公告确认dumps()/dumpd()函数存在序列化转义缺陷，漏洞编号CVE-2025-68664（CVSS 9.3）~\cite{langgrinchCVE2025}。
+    \item 公开报告显示攻击者可通过提示注入影响LLM输出字段，触发反序列化时的非预期对象实例化~\cite{langgrinchCVE2025}。
+    \item 官方说明该缺陷在特定配置下可导致环境变量密钥泄露~\cite{langgrinchCVE2025}。
+}
+& \TableItemList{
+    \item 官方通报截至披露时未发现该漏洞被实际利用或已造成大规模攻击的确认案例~\cite{langgrinchCVE2025}。
+    \item 受影响的核心软件包全球下载量超8亿次，潜在影响面广~\cite{langgrinchCVE2025}。
+    \item 厂商已发布补丁版本0.3.81与1.2.5~\cite{langgrinchCVE2025}。
+} \\
+% \cline{2-5}
+\hline 
+
+\SetCell{c} 2025.10.22披露--2026.01.23修复
+& Perplexity Comet浏览器智能体
+& 零点击间接提示注入、本地文件与凭证泄露风险
+& \TableItemList{
+    \item 安全研究机构披露恶意日历邀请函可内嵌隐藏指令，用户请求Agent处理邀请即可触发~\cite{perplexityCometVuln2026}。
+    \item 研究人员演示Agent可被诱导访问本地文件系统并将内容传出至攻击者控制的服务器~\cite{perplexityCometVuln2026}。
+    \item 报告说明相关利用路径还可用于操纵密码管理器交互，存在凭证泄露风险~\cite{perplexityCometVuln2026}。
+}
+& \TableItemList{
+    \item 该漏洞由安全研究机构Zenity Labs负责任披露，未见公开报告显示已被实际大规模利用~\cite{perplexityCometVuln2026}。
+    \item Perplexity于2026年1月确认修复~\cite{perplexityCometVuln2026}。
+    \item 事件被研究者用于说明智能体浏览器场景下传统同源策略等Web安全机制可能失效~\cite{perplexityCometVuln2026}。
+} \\
+% \cline{2-5}
+\hline 
+
+\SetCell{c} 2025年（8月披露）\newline （长期持续）
+& 美国多家财富500强科技公司（受骗雇主）
+& AI辅助虚假身份就业欺诈
+& \TableItemList{
+    \item 官方报告说明相关人员使用Claude构建具有可信专业背景的虚假身份材料~\cite{anthropicThreatIntel2025}。
+    \item 报告显示AI被用于完成求职技术测评并交付实际技术工作~\cite{anthropicThreatIntel2025}。
+    \item Anthropic说明相关操作者本身技术能力与英语沟通能力有限，高度依赖AI完成日常任务~\cite{anthropicThreatIntel2025}。
+}
+& \TableItemList{
+    \item 官方报告说明该操作涉及美国多家财富500强科技公司，骗取的薪资收入被用于规避国际制裁~\cite{anthropicThreatIntel2025}。
+    \item Anthropic评估AI已消除此前该类骗局对长期专业培训的依赖瓶颈~\cite{anthropicThreatIntel2025}。
+    \item Anthropic识别后封禁相关账号~\cite{anthropicThreatIntel2025}。
+} \\
+% \cline{2-5}
+\hline 
+
+\SetCell{c} 2025年（8月披露）\newline （至少17家机构）
+& 至少17家机构（医院、应急机构、政府部门、宗教组织）
+& 大规模数据勒索与恐吓
+& \TableItemList{
+    \item 官方报告说明攻击者使用Claude Code自动化执行系统扫描与凭证收集等操作~\cite{anthropicThreatIntel2025}。
+    \item 报告显示攻击者利用AI分析被窃数据价值，并协助生成勒索信内容~\cite{anthropicThreatIntel2025}。
+    \item 官方说明该活动未采用传统加密式勒索软件，而是以泄露数据作为威胁手段~\cite{anthropicThreatIntel2025}。
+}
+& \TableItemList{
+    \item Anthropic披露该活动涉及至少17家机构，部分案例勒索金额超过50万美元~\cite{anthropicThreatIntel2025}。
+    \item Anthropic识别相关活动后封禁涉事账号，并向有关部门通报~\cite{anthropicThreatIntel2025}。
+    \item 官方报告将此列为AI被用于自动化执行网络犯罪操作性环节（而非仅提供建议）的案例~\cite{anthropicThreatIntel2025}。
+} \\
+% \cline{2-5}
+\hline 
+
+\SetCell{c} 2025年中\newline （约30个目标机构）
+& 约30家全球机构（大型科技公司、金融机构、化工企业、政府机构）
+& 国家级AI自主网络间谍活动
+& \TableItemList{
+    \item 官方报告说明攻击者通过社会工程手段（伪装成合法网络安全公司员工）使Claude Code执行相关任务~\cite{anthropicGTG1002_2025}。
+    \item 官方报告显示攻击者将整体任务拆解为大量单独看似无害的技术请求，配合MCP协议调用侦察、漏洞验证等工具~\cite{anthropicGTG1002_2025}。
+    \item Anthropic估计Claude独立完成了约80\%至90\%的战术性操作~\cite{anthropicGTG1002_2025}。
+}
+& \TableItemList{
+    \item Anthropic确认约30个目标机构中有少数被成功入侵~\cite{anthropicGTG1002_2025}。
+    \item Anthropic将此事件评估为已知首例主要由AI自主执行的大规模网络攻击活动~\cite{anthropicGTG1002_2025}。
+    \item Anthropic报告同时说明Claude在此次活动中存在夸大战果、生成不准确信息等局限~\cite{anthropicGTG1002_2025}。
+} \\
+% \cline{2-5}
+\hline 
+
+\SetCell{c} 2025.07.13--2025.07.19\newline （6天供应链投毒）
+& Amazon Q Developer VS Code插件
+& 开源供应链投毒、破坏性提示注入
+& \TableItemList{
+    \item 官方安全公告确认攻击者利用权限配置不当的GitHub令牌向开源仓库提交了未经批准的代码，漏洞编号CVE-2025-8217~\cite{amazonQCVE2025}。
+    \item 公开报告显示注入的提示内容包含删除本地文件及终止/删除云资源（如EC2实例、S3存储桶）的指令~\cite{amazonQCVE2025}。
+    \item 官方确认含该提示的1.84.0版本曾通过官方插件市场正式发布分发~\cite{amazonQCVE2025}。
+}
+& \TableItemList{
+    \item AWS官方确认因代码存在语法错误，恶意指令未能实际执行，无客户资源受到影响~\cite{amazonQCVE2025}。
+    \item 该插件安装量超95万次~\cite{amazonQCVE2025}。
+    \item AWS随即撤销并替换相关凭证，移除相关代码并发布修复版本1.85.0~\cite{amazonQCVE2025}。
+} \\
+% \cline{2-5}
+\hline 
+
+\SetCell{c} 2025.07.12--2025.07.23\newline （约12天测试周期）
+& Replit AI编码智能体（单一企业测试项目）
+& 违反代码冻结指令、生产数据库删除
+& \TableItemList{
+    \item 用户公开记录显示，Agent在明确下达"代码冻结"指令后仍执行了数据库删除操作~\cite{replitDatabaseDeletion2025}。
+    \item 事件涉及生产数据库被错误删除，且删除前未获得人工二次确认~\cite{replitDatabaseDeletion2025}。
+    \item 官方说明将问题归因于开发/生产环境隔离机制不足~\cite{replitDatabaseDeletion2025}。
+}
+& \TableItemList{
+    \item 涉事项目生产数据库中约1200余名高管、约1200家公司记录被删除~\cite{replitDatabaseDeletion2025}。
+    \item Agent此前告知用户数据无法回滚，但用户手动操作后确认数据实际可回滚~\cite{replitDatabaseDeletion2025}。
+    \item 公司公开致歉并启动安全审查，宣布上线开发/生产环境自动隔离与一键回滚机制~\cite{replitDatabaseDeletion2025}。
+} \\
+\hline
+\end{longtblr}
+\endgroup
+
+
+\nopagebreak[4]
+\enlargethispage{1cm}
+\footnotesize
+\begin{longtblr}[
+caption = {AI智能体主要安全漏洞汇总},
+label   = {tab:agent_vulns},
+halign  = c,
+]
+{
+width   = 0.96\linewidth,
+colsep  = 3pt,
+colspec = {|>{\rule{0pt}{2pt}}m{2cm}
+|>{\rule{0pt}{2pt}}m{2.5cm}
+|>{\rule{0pt}{2pt}}m{2cm}
+|>{\rule{0pt}{2pt}}m{0.8cm}
+|>{\rule{0pt}{2pt}}m{2cm}
+|>{\rule{0pt}{2pt}}X|},
+}
+\hline
+\textbf{发现精确日期} & \textbf{漏洞名称/事件} & \textbf{影响产品/框架} & \textbf{CVSS} & \textbf{CVE/编号} & \textbf{漏洞影响简述} \\
+\hline
+\SetCell[c=6]{c} \textbf{Critical（严重，CVSS $\geq$ 9.0）} \\
+\hline
+
+2026-05-06 & OpenClaw OpenShell沙箱文件写入 TOCTOU / symlink swap~\cite{nvdCVE2026_44112} & OpenClaw $<$ 2026.4.22 & 9.6 & CVE-2026-44112 &
+\begin{itemize}[tabitem]
+\item OpenShell沙箱文件系统写入存在time-of-check/time-of-use竞态。
+\item 攻击者可通过symlink swap将写入重定向到预期mount root之外。
+\item 应升级到2026.4.22或包含修复提交的版本。
+\end{itemize}
+\\
+\hline
+
+2026-04-29 & DocsGPT MCP test绕过导致远程代码执行~\cite{nvdCVE2026_26015} & DocsGPT $\geq$ 0.15.0, $<$ 0.16.0 & 9.8 & CVE-2026-26015 &
+\begin{itemize}[tabitem]
+\item 攻击者可构造恶意payload绕过“MCP test”行为。
+\item 可在官方DocsGPT网站或本地/公开部署中触发任意远程代码执行。
+\item 漏洞已在DocsGPT 0.16.0修复。
+\end{itemize}
+\\
+\hline
+
+2026-04-21 & Flowise MCP stdio命令注入/allowlist绕过~\cite{nvdCVE2026_40933} & Flowise/flowise-components $<$ 3.1.0 & 9.9 & CVE-2026-40933 &
+\begin{itemize}[tabitem]
+\item 认证攻击者可在Custom MCP配置中添加stdio MCP server并指定任意命令。
+\item 既有npx等允许命令可被组合危险参数绕过输入校验，实现OS命令执行。
+\item 漏洞已在Flowise 3.1.0修复。
+\end{itemize}
+\\
+\hline
+
+2026-04-15 & Upsonic MCP task命令注入~\cite{nvdCVE2026_30625} & Upsonic 0.71.6 & 9.8 & CVE-2026-30625 &
+\begin{itemize}[tabitem]
+\item MCP server/task 创建功能允许用户定义command和args。
+\item npm、npx等allowlist命令可通过参数触发任意OS命令执行。
+\item 0.72.0起增加Stdio server可直接执行本机命令的风险提示。
+\end{itemize}
+\\
+\hline
+
+2026-04-07 & Langflow未认证代码注入/RCE~\cite{nvdCVE2025_3248} & Langflow $<$ 1.3.0 & 9.8 & CVE-2025-3248 &
+\begin{itemize}[tabitem]
+\item \texttt{/api/v1/validate/code}端点存在代码注入漏洞。
+\item 远程未认证攻击者可发送构造HTTP请求执行任意代码。
+\item 该漏洞已进入CISA KEV目录，建议升级到1.3.0或更高版本。
+\end{itemize}
+\\
+\hline
+
+2026-04-03 & PraisonAI Gateway未授权WebSocket/info访问~\cite{nvdCVE2026_34952} & PraisonAI Gateway $<$ 4.5.97 & 9.1 & CVE-2026-34952 &
+\begin{itemize}[tabitem]
+\item Gateway server 在\texttt{/ws}接受WebSocket连接且\texttt{/info}暴露agent topology，均缺少认证。
+\item 任意网络客户端可枚举已注册agents，并向agents及其tool sets发送任意消息。
+\item 漏洞已在4.5.97修复，应升级并对网关入口加认证与网络隔离。
+\end{itemize}
+\\
+\hline
+
+2026-04-02 & Azure MCP Server关键功能缺失认证~\cite{nvdCVE2026_32211} & Azure MCP Server / Azure Web Apps hosted service & 9.1 & CVE-2026-32211 &
+\begin{itemize}[tabitem]
+\item 关键功能缺少认证，未授权攻击者可经网络访问受影响服务。
+\item 可造成信息泄露；Microsoft CNA评分还计入完整性影响。
+\item 以Microsoft MSRC / NVD记录为准，CVSS 9.1为Microsoft CNA评分。
+\end{itemize}
+\\
+\hline
+
+2026-01-12 & LibreChat MCP stdio任意命令执行~\cite{nvdCVE2026_22252} & LibreChat $<$ v0.8.2-rc2 & 9.9 & CVE-2026-22252 &
+\begin{itemize}[tabitem]
+\item MCP stdio transport接受任意命令且缺少有效校验。
+\item 任意认证用户可通过单个API请求在容器内以root执行shell命令。
+\item 漏洞已在v0.8.2-rc2修复。
+\end{itemize}
+\\
+\hline
+
+2025-12-23 & LangChain dumps/dumpd序列化注入~\cite{nvdCVE2025_68664} & LangChain $<$ 0.3.81 and $<$ 1.2.5 & 9.3 & CVE-2025-68664 &
+\begin{itemize}[tabitem]
+\item \texttt{dumps()}/ \texttt{dumpd()}未转义自由字典中的\texttt{lc} 键结构。
+\item 用户可控数据在反序列化时可能被当作LangChain对象处理，而非普通数据。
+\item 漏洞已在0.3.81和1.2.5修复，应避免反序列化不可信配置。
+\end{itemize}
+\\
+\hline
+
+2025-12-17 & MCP server git复合漏洞~\cite{nvdCVE2025_68143,nvdCVE2025_68144,nvdCVE2025_68145} & Model Context Protocol Servers/\texttt{mcp-server-git} & 8.8/7.1/9.1 & CVE-2025-68143/4/5 &
+\begin{itemize}[tabitem]
+\item \texttt{git\_init} 可在任意可访问路径创建仓库，使后续Git操作越出预期范围。
+\item \texttt{git\_diff} / \texttt{git\_checkout} 对用户参数缺少校验，flag-like参数可导致任意文件覆盖。
+\item \texttt{--repository} 限制下未校验后续 \texttt{repo\_path} 是否仍在允许仓库内，可操作其他可访问仓库。
+\end{itemize}
+\\
+\hline
+
+2025-09-22 & Flowise CustomMCP 远程代码执行~\cite{nvdCVE2025_59528} & Flowise 3.0.5 & 10.0 & CVE-2025-59528 &
+\begin{itemize}[tabitem]
+\item CustomMCP节点解析\texttt{mcpServerConfig}时将用户输入传入。\texttt{Function()}构造器执行
+\item 代码在Node.js 运行时权限下执行，可访问\texttt{child\_process}、。\texttt{fs}等危险模块
+\item 漏洞已在 Flowise 3.0.6 修复。
+\end{itemize}
+\\
+\hline
+
+2025-07-09 & mcp-remote OAuth authorization endpoint命令注入~\cite{nvdCVE2025_6514} & \texttt{mcp-remote} npm package 0.0.5--0.1.15 & 9.6 & CVE-2025-6514 &
+\begin{itemize}[tabitem]
+\item 连接不可信MCP server时，authorization endpoint 响应URL中的构造输入可触发OS命令注入。
+\item 攻击需要用户交互但无需攻击者具备权限，成功后影响机密性、完整性和可用性。
+\item 已通过\texttt{mcp-remote} 修复提交处置，应升级到不受影响版本。
+\end{itemize}
+\\
+\hline
+
+2025-06-13 & MCP Inspector缺失认证导致远程代码执行~\cite{nvdCVE2025_49596} & MCP Inspector $<$ 0.14.1 & 9.4 & CVE-2025-49596 &
+\begin{itemize}[tabitem]
+\item Inspector client 与 proxy之间缺少认证。
+\item 未认证请求可经proxy启动MCP stdio命令，造成远程代码执行。
+\item 漏洞已在MCPInspector 0.14.1修复。
+\end{itemize}
+\\
+\hline
+
+2025-06-11 & EchoLeak/M365 Copilot AI command injection~\cite{nvdCVE2025_32711} & Microsoft 365 Copilot & 9.3 & CVE-2025-32711 &
+\begin{itemize}[tabitem]
+\item M365 Copilot存在AI command injection，未授权攻击者可经网络触发信息泄露。
+\item 该漏洞被公开命名为 EchoLeak，NVD 同时引用Microsoft MSRC与Aim Security页面。
+\item CVSS 9.3为Microsoft CNA评分；NVD自身评分为7.5。
+\end{itemize}
+\\
+\hline
+
+\SetCell[c=6]{c} \textbf{High（高危，7.0 $\leq$ CVSS $\leq$ 8.9）} \\
+\hline
+
+2026-05-08 & PraisonAI legacy Flask API默认禁用认证~\cite{nvdCVE2026_44338} & PraisonAI 2.5.6 to $<$ 4.6.34 & 7.3 & CVE-2026-44338 &
+\begin{itemize}[tabitem]
+\item legacy Flask API server默认禁用认证。
+\item 任意可达调用方可访问\texttt{/agents}并通过\texttt{/chat}触发\texttt{agents.yaml}工作流。
+\item 漏洞已在4.6.34修复，应升级并限制API暴露面。
+\end{itemize}
+\\
+\hline
+
+2026-04-15 & Agent Zero External MCP Servers远程代码执行~\cite{nvdCVE2026_30624} & Agent Zero 0.9.8 & 8.6 & CVE-2026-30624 &
+\begin{itemize}[tabitem]
+\item External MCP Servers配置允许通过JSON指定command和args。
+\item 配置应用时这些值会被执行，缺少充分校验或限制。
+\item 攻击者可提交恶意MCP配置，以Agent Zero进程权限执行OS命令。
+\end{itemize}
+\\
+\hline
+
+2026-04-15 & Windsurf Prompt Injection to MCP配置命令执行~\cite{nvdCVE2026_30615} & Windsurf 1.9544.26 & 8.0 & CVE-2026-30615 &
+\begin{itemize}[tabitem]
+\item 处理攻击者控制的HTML内容时，提示注入可修改本地MCP配置。
+\item 可自动注册恶意MCP STDIO server并在无进一步交互下执行任意命令。
+\item 成功利用可持久化恶意MC 配置并访问应用暴露的敏感信息。
+\end{itemize}
+\\
+\hline
+
+2026-03-30 & LangChain prompt loading路径遍历~\cite{nvdCVE2026_34070} & LangChain / langchain-core $<$ 1.2.22 & 7.5 & CVE-2026-34070 &
+\begin{itemize}[tabitem]
+\item \texttt{langchain\_core.prompts.loading}多个函数未充分校验配置字典中的路径。
+\item 当应用把用户可影响的prompt配置传入\texttt{load\_prompt()}或 \texttt{load\_prompt\_from\_config()} 时，攻击者可读取主机文件。
+\item 读取受模板/示例文件扩展名检查限制；漏洞已在1.2.22修复。
+\end{itemize}
+\\
+\hline
+
+2026-01-09 & WeKnora MCP stdio 命令注入~\cite{nvdCVE2026_22688} & Tencent WeKnora $<$ 0.2.5 & 8.8 & CVE-2026-22688 &
+\begin{itemize}[tabitem]
+\item 认证用户可向MCP stdio设置注入\texttt{stdio\_config.command} / \texttt{args}。
+\item 服务端会基于注入值启动subprocess，造成命令执行。
+\item 漏洞已在WeKnora 0.2.5修复。
+\end{itemize}
+\\
+\hline
+
+2025-11-07 & Open WebUI Direct Connections SSE代码注入~\cite{nvdCVE2025_64496} & Open WebUI $<$ 0.6.35 & 8.0 & CVE-2025-64496 &
+\begin{itemize}[tabitem]
+\item Direct Connections功能允许恶意外部模型服务器通过SSE execute events在受害者浏览器执行JavaScript。
+\item 可导致认证token窃取和账户接管；与 Functions API链接时可造成后端RCE。
+\item 攻击需受害者启用Direct Connections并添加恶意模型URL；0.6.35已修复。
+\end{itemize}
+\\
+\hline
+
+\SetCell[c=6]{c} \textbf{Medium（中危，4.0 $\leq$ CVSS $\leq$ 6.9）} \\
+\hline
+
+\SetCell[c=6]{c} 本表核验条目无中危漏洞。 \\
+\hline
+\end{longtblr}
+
+
+\nopagebreak[4]
+\enlargethispage{1cm}
+\footnotesize
+\begin{longtblr}[
+caption = {AI智能体主流攻击工具汇总},
+label   = {tab:ai_agent_attack_tools_detail},
+halign  = c,
+]
+{
+width   = 0.96\linewidth,
+colsep  = 3pt,
+colspec = {|>{\rule{0pt}{2pt}}m{1.1cm}
+|>{\rule{0pt}{2pt}}m{2.0cm}
+|>{\rule{0pt}{2pt}}m{1.2cm}
+|>{\rule{0pt}{2pt}}m{\dimexpr0.6\linewidth}
+|>{\rule{0pt}{2pt}}X|},
+}
+\hline
+\textbf{工具分类} & \textbf{工具名称} & \textbf{发布日期} &\textbf{核心功能} & \textbf{应用场景} \\
+\hline
+\SetCell[r=5]{c} 学术\newline 研究型
+& AgentLoop \allowbreak ~\cite{Xu2026LoopTrap}
+& 2026‑03
+& \begin{itemize}[tabitem]
+    \item 用于测试智能体在资源消耗、执行失控和拒绝服务场景下的风险；
+    \item 诱导LLM智能体错误判断任务未完成，进入循环执行状态。
+\end{itemize}
+& Agent终止条件投毒与资源放大攻击研究 \\
+\cline{2-5}
+& PoisonRAG \allowbreak ~\cite{Nazary2025PoisonRAG}
+& 2025‑04
+& \begin{itemize}[tabitem]
+    \item 用于测试RAG系统在恶意数据注入和推荐结果偏移下的安全性；
+    \item 对RAG推荐系统的检索数据进行投毒，操控系统返回结果；
+    \item 通过篡改项目标签、描述等元数据影响检索增强生成流程。
+\end{itemize}
+& RAG推荐系统数据投毒与推荐结果操纵研究 \\
+\cline{2-5}
+& AgentFuzz \allowbreak~\cite{Liu2025AgentFuzz}
+& 2025‑03
+& \begin{itemize}[tabitem]
+    \item 自动检测LLM Agent工具调用链中的污染型漏洞；
+    \item 生成面向目标智能体的测试提示与工具调用输入；
+    \item 根据执行反馈自适应变异测试样本，提高漏洞触发与复现效率。
+\end{itemize}
+& 漏洞挖掘、安全测试 \\
+% \cline{2-5}
+% & MRJ‑Agent ~\cite{Wang2024MRJAgent}
+% & 2024‑08
+% & \begin{itemize}[tabitem]
+%     \item 自动构造多轮对话越狱攻击，测试模型在连续交互中的安全边界；
+%     \item 将高风险目标拆解为多轮渐进式请求，诱导模型逐步偏离安全约束；
+%     \item 用于评估模型在多轮上下文累积场景下的越狱风险。
+% \end{itemize}
+% & 安全边界测试、对抗样本研究 \\
+% \cline{2-5}
+% & PromptInjector~\cite{Liu2024PromptInjection}
+% & 2024‑07
+% & \begin{itemize}[tabitem]
+%     \item 用于对比不同提示注入攻击方式和防御机制的有效性
+%     \item 构造提示注入攻击，测试 LLM 应用是否会被外部指令劫持
+% \end{itemize}
+% & 提示注入攻防实验 \\
+\hline
+\SetCell[r=7]{c} 开源全能\newline 渗透框架
+& MCP‑Strike \allowbreak~\cite{MCPStrike}
+& 2026‑06
+& \begin{itemize}[tabitem]
+    \item 对运行中的MCP Server进行主动式对抗安全测试；
+    \item 测试工具描述提示注入、过度敏感参数、路径遍历、响应注入和数据外传诱导等风险；
+    \item 借助LLM judge或自适应 LLM智能体对发现结果进行确认、评分和多轮探测。
+\end{itemize}
+& MCP服务器主动对抗测试与安全评估 \\
+\cline{2-5}
+& RedAmon \allowbreak~\cite{RedAmon}
+& 2026‑06
+& \begin{itemize}[tabitem]
+    \item 执行侦察、漏洞验证、后渗透分析、AI分诊、代码修复和GitHub PR提的一体化安全测试流程；
+    \item 并行运行多个侦察工具，收集子域名、端口、端点等攻击面信息，并写入Neo4j知识图谱。
+\end{itemize}
+& 授权自动化渗透测试、攻击面分析与漏洞修复闭环 \\
+\cline{2-5}
+& Strix~\cite{Strix}
+& 2025‑10
+& \begin{itemize}[tabitem]
+    \item 动态运行目标应用代码，发现漏洞并生成PoC对漏洞进行验证；
+    \item 编排多个专用Agent并行测试复杂目标，并共享安全发现；
+    \item 进行应用安全测试、快速渗透测试和Bug Bounty自动化研究。
+\end{itemize}
+& 应用安全测试、快速渗透测试、漏洞赏金与CI/CD安全测试 \\
+\cline{2-5}
+& HexStrike \allowbreak~\cite{HexStrike}
+& 2025‑09
+& \begin{itemize}[tabitem]
+    \item 指挥AI智能体调用150+ 安全工具，执行自动化渗透测试、漏洞发现和安全研究任务；
+    \item 编排多个安全智能体协同完成侦察、扫描、利用验证和结果分析；
+    \item 对网络、Web 应用、云环境、容器、二进制程序和OSINT目标开展多类型安全测试。
+\end{itemize}
+& 红队演练、渗透测试 \\
+\cline{2-5}
+& Ankou~\cite{Ankou}
+& 2025‑08
+& \begin{itemize}[tabitem]
+    \item 提供面向红队演练的模块化C2架构、监听器和agent管理；
+    \item 支持多种传输与自定义agent/handler扩展；
+    \item 通过AI Operations面板辅助总结结果、发现异常和建议后续；操作。
+\end{itemize}
+& 授权红队C2、Agent管理与后渗透操作 \\
+\cline{2-5}
+& RAPTOR \allowbreak~\cite{RAPTOR}
+& 2025‑06
+& \begin{itemize}[tabitem]
+    \item 对代码库或二进制目标进行攻击面分析、数据流追踪和漏洞变体搜索；
+    \item 进行 Semgrep/CodeQL 扫描、软件组成分析、模糊测试和崩溃根源分析。
+\end{itemize}
+& 源代码与二进制漏洞分析、验证及修复 \\
+% \cline{2-5}
+% & AutoPentest‑DRL~\cite{AutoPentestDRL}
+% & 2024‑11
+% & \begin{itemize}[tabitem]
+%     \item 结合 Nmap 和 Metasploit 对真实网络进行扫描、漏洞验证和路径执行
+%     \item 基于深度强化学习为目标网络规划自动化渗透攻击路径
+% \end{itemize}
+% & 复杂网络环境渗透测试 \\
+\hline
+\SetCell[r=5]{c} 开源专项\newline 攻击工具
+& Deadend CLI~\cite{DeadendCLI}
+& 2025‑12
+& \begin{itemize}[tabitem]
+    \item 提供自托管的Agentic pentest CLI工作流；
+    \item 支持通过LiteLLM 接入多种模型，用于黑盒渗透测试任务；
+    \item 在XBOW validation suite等基准上评估自动化安全测试能力。
+\end{itemize}
+& Web应用黑盒渗透测试与漏洞验证 \\
+\cline{2-5}
+& AgentBreaker\allowbreak~\cite{AgentBreaker}
+& 2025‑07
+& \begin{itemize}[tabitem]
+    \item 自动测试提示注入、越狱、数据泄漏、护栏绕过、提示提取、工具滥用、数据外传和多模态注入风险；
+    \item 根据已经发现的系统行为和漏洞，自适应规划后续测试攻击；
+    \item 对发现结果进行严重性评分，并按照OWASP和MITRE框架进行分类。
+\end{itemize}
+& AI系统自动化红队测试与漏洞评估 \\
+\cline{2-5}
+& CAI Framework~\cite{CAI,CAI_paper}
+& 2025‑06
+& \begin{itemize}[tabitem]
+    \item 提供面向攻防安全自动化的开源AI智能体框架；
+    \item 支持构建专用安全Agent，覆盖侦察、漏洞发现、利用验证和安全评估；
+    \item 结合工具集成、人类监督和guardrails，用于授权Bug Bounty、CTF 和安全测试。
+\end{itemize}
+& 定制化攻防演练 \\
+\cline{2-5}
+& Nebula~\cite{Nebula}
+& 2025‑05
+& \begin{itemize}[tabitem]
+    \item 将AI模型集成到命令行渗透测试工作流中；
+    \item 自动化记录、分类安全发现，并提供实时AI分析建议；
+    \item 支持调用外部工具结果进行漏洞分析、报告整理和测试过程留痕。
+\end{itemize}
+& 渗透测试、漏洞分析与测试记录 \\
+% \cline{2-5}
+% & Pentest GPT~\cite{Deng2024PentestGPT}
+% & 2024‑09
+% & \begin{itemize}[tabitem]
+%     \item 基于 LLM 辅助渗透测试过程的任务拆解、工具使用和结果解释。
+%     \item 通过多模块交互缓解长链路渗透测试中的上下文丢失问题。
+%     \item 支持真实测试目标和 CTF 场景中的攻击路径推演与验证。
+% \end{itemize}
+% & 自动化渗透测试、真实目标安全评估与CTF \\
+\hline
+\SetCell[r=4]{c} AI增强传统安全工具
+& Ghidra + GhidraMCP \allowbreak~\cite{Crawford2026GhidraMCPAttack}
+& 2026‑04
+& \begin{itemize}[tabitem]
+    \item 研究 GhidraMCP等工具增强的逆向AI智能体如何自动化二进制分析；
+    \item 通过对反编译代码植入隐蔽指令，评估LLM驱动逆向流程的提示注入风险；
+    \item 分析攻击如何误导disassembly/decompilation解释并污染自动化分析结果。
+\end{itemize}
+& 可执行二进制与恶意软件逆向分析、逆向AI Agent安全研究 \\
+\cline{2-5}
+& SQLMap + FastMCP \allowbreak~\cite{SQLMap,FastMCP}
+& 2025‑02
+& \begin{itemize}[tabitem]
+    \item 将sqlmap的SQL注入检测、利用验证、数据库指纹识别等能力封装为MCP工具；
+    \item 通过FastMCP为智能体提供标准化工具接口、参数校验与调用结果返回；
+    \item 支持智能体在授权测试场景中编排SQL注入检测流程，并辅助整理风险结果。
+\end{itemize}
+& Web应用SQL注入检测与MCP工具集成 \\
+% \cline{2-5}
+% & Nuclei（ + AI 模板扩展） ~\cite{Nuclei}
+% & 2024‑04
+% & \begin{itemize}[tabitem]
+%     \item 基于 YAML 模板进行高性能漏洞扫描与自定义检测。
+%     \item 通过 AI prompt 辅助生成/运行检测模板。
+%     \item 用于 Web、网络、DNS、云配置等多协议资产的批量扫描。
+% \end{itemize}
+% & 批量漏洞扫描 \\
+% \cline{2-5}
+% & BloodHound CE~\cite{BloodHound}
+% & 2023‑11
+% & \begin{itemize}[tabitem]
+%     \item 基于图数据库分析身份、权限和访问关系。
+%     \item 帮助红队发现复杂攻击路径，帮助蓝队识别并缓解权限风险。
+%     \item 映射不同身份平台中的权限关系和潜在攻击路径
+% \end{itemize}
+% & 身份与权限关系分析、攻击路径发现与风险缓解 \\
+\hline
+\end{longtblr}

@@ -1,0 +1,114 @@
+\subsection{欧洲 AI 硬件与芯片安全研究现状}
+
+欧洲 AI 硬件与芯片安全研究现状的核心特点可以概括为“可信、隐私、合规和主权算力优先”。与北美更强调漏洞快速转化和云端商业闭环不同，欧洲更倾向于把 AI 算力底座放在公共部门可控部署、产业数字主权、供应链韧性和高风险系统合规的框架中理解。European Chips Act 将半导体生态韧性、供应安全、数字主权和降低第三方依赖纳入政策目标 \cite{euchipsact2023}；EU AI Act 建立面向统一市场的可信 AI 风险治理框架，对高风险 AI 系统提出安全、透明、数据治理、技术文档、人类监督和问责要求 \cite{euaiact2024}；EuroHPC AI Factories 则把 AI 优化超算、数据、人才和支持服务连接起来，为科研、创业、产业和公共部门提供欧洲范围内的 AI 算力入口 \cite{eurohpcAIFactories2026,ecAIFactories2026}。
+
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{p{0.9cm}p{1.75cm}p{1.9cm}X X X X}
+\toprule
+核心维度 & 细分落地 & 核心主体 & 代表性成果 & 技术方案 & 核心价值 & 不足 \\
+\midrule
+学术侧 & 机密计算、TEE 与云端 AI 隔离边界验证 & ETH Zurich、TU Berlin、CISPA、KU Leuven、Cambridge、Imperial、EPFL 等 &
+1. SEVered 证明恶意 hypervisor 可从 AMD SEV 加密 VM 中抽取明文内存 \cite{severed2018}。\newline
+2. One Glitch to Rule Them All 通过 AMD Secure Processor 故障注入破坏 SEV 信任根 \cite{oneglitch2021}。\newline
+3. WeSee 利用 SEV-SNP 的 \#VC 异常处理路径，展示恶意 hypervisor 仍可影响机密 VM 执行完整性 \cite{wesee2024}。 &
+1. 构造恶意页映射和服务交互，把加密 VM 内存转化为可抽取明文。\newline
+2. 对安全协处理器进行电压故障注入，绕过固件信任根和密钥保护。\newline
+3. 注入恶意虚拟化异常，引导 guest 内核执行非预期复制、状态破坏或代码路径。 &
+1. 说明 CVM/TEE 是 AI 云底座的重要机制，但不能视为一次性可信。\newline
+2. 推动云端 AI 证明链扩展到固件、异常处理、设备路由和平台初始化。\newline
+3. 为高风险 Agent 平台提供“持续攻击-验证-修补”的安全论证方式。 &
+1. 多数攻击针对 CPU TEE，和 GPU/NPU 机密执行的结合仍需扩展。\newline
+2. 防护依赖芯片商、OEM、云厂商同步更新固件和证明策略。\newline
+3. 真实云平台内部配置不完全公开，第三方可复验性有限。 \\
+\midrule
+学术侧 & SEV-SNP、远程证明与平台初始化细节安全 & ETH Zurich、CISPA、欧洲形式化方法与云安全团队；AMD PSIRT 协调披露生态 &
+1. AMD-SB-3034 披露 SEV-SNP Routing Misconfiguration，MMIO 路由和 ASP 固件锁定检查缺陷可影响 guest 完整性 \cite{amdsb3034}。\newline
+2. SEV-SNP 软件接口形式化分析覆盖远程证明、密钥派生、页面交换和迁移，并指出证明完整性弱点 \cite{formalsevsnp2024}。\newline
+3. SEVered/WeSee 等连续工作构成欧洲对 SEV 系列机密计算边界的持续回归测试 \cite{severed2018,wesee2024}。 &
+1. 检查平台初始化、RMP、MMIO 路由、ASP/PSP 固件锁定和 TCB 版本传播。\newline
+2. 用符号模型刻画证明、迁移、密钥派生协议，验证 secrecy、authentication、freshness 等性质。\newline
+3. 将漏洞公告、固件 TCB 值和云端证明策略纳入同一条安全链。 &
+1. 把“是否运行在 SEV-SNP 中”细化为“以何种固件、路由、证明和配置运行”。\newline
+2. 支撑公共部门和高风险行业采购 CVM/机密 AI 服务时提出可审计要求。\newline
+3. 强化 Agent 平台对底层证明材料、固件版本和异常路径的证据化治理。 &
+1. 证明链过长，普通部署方难以理解每个 TCB 字段和固件版本含义。\newline
+2. 形式化模型难完全覆盖实际固件和主板配置。\newline
+3. 漏洞修复依赖 BIOS/固件发布节奏，云租户缺乏直接控制权。 \\
+\midrule
+学术侧 & 工业边缘可信连接、设备证明与数据空间安全 & Fraunhofer、Industrial Data Space/International Data Spaces 生态、欧洲嵌入式/IoT 安全团队 &
+1. Industrial Data Space Trusted Connector 将可信边缘网关用于跨组织工业数据交换 \cite{trustedconnector2018}。\newline
+2. PSA Certified/Arm TrustZone 生态把 Root of Trust、证明 API、加密 API 和安全存储抽象为 IoT/边缘设备可复用框架 \cite{psacertified2026,armplatformsecurity2026}。\newline
+3. TrustZone 运行时完整性测量、TEE 安全缓存等研究探索在边缘设备上保护敏感数据和本地 AI/TinyML 工作负载 \cite{kevlartz2021,pdrima2025}。 &
+1. 在边缘网关中结合 TPM/TEE、容器、策略引擎和远程证明。\newline
+2. 以 PSA RoT、TrustZone、Secure Boot、Attestation、Secure Storage 为设备侧信任基元。\newline
+3. 对 TEE 内核、TA、安全调用和本地缓存进行运行时测量与完整性审计。 &
+1. 更贴合工业 Agent 接触传感器、PLC、网关、运维账户和现场数据的部署形态。\newline
+2. 支撑“数据不出域、节点可证明、策略可审计”的欧洲工业数据空间目标。\newline
+3. 为边缘 AI、TinyML 和工业 Agent 的设备身份与固件可信提供基础。 &
+1. 工业现场设备生命周期长，旧设备缺少 TEE/TPM/安全元件。\newline
+2. 跨厂商网关、PLC、工业协议和数据空间策略互操作复杂。\newline
+3. 边缘证明仍难覆盖物理篡改、现场维护绕过和长期补丁缺口。 \\
+\midrule
+产业侧 & 主权算力、合规 AI 与公共超算基础设施 & European Commission、EuroHPC JU、成员国超算中心、AI Factories、JUPITER/LUMI/BSC 等生态 &
+1. European Chips Act 强调增强欧洲半导体生态、供应链安全、韧性、数字主权和降低第三方依赖 \cite{euchipsact2023}。\newline
+2. EU AI Act 以风险分级方式约束高风险 AI 系统，要求风险管理、数据治理、技术文档、记录、人类监督、鲁棒性和网络安全 \cite{euaiact2024}。\newline
+3. EuroHPC AI Factories 已形成 19 个 AI Factories 和 13 个 Antennas，为欧洲用户提供 AI 优化超算和支持服务 \cite{eurohpcAIFactories2026,ecAIFactories2026}。 &
+1. 用法规和公共投资把芯片供应、AI 算力、数据治理和高风险系统合规连接起来。\newline
+2. 通过 AI Factories 把超算中心、大学、SME、创业公司、产业和公共部门接入统一服务网络。\newline
+3. 在采购、访问控制、支持服务和合规文档中嵌入可信 AI 要求。 &
+1. 让 AI 硬件底座成为公共部门和产业主权能力，而不只是商业云资源。\newline
+2. 为高风险 Agent 在医疗、金融、交通、能源、制造等场景部署提供合规接口。\newline
+3. 以公共采购和监管要求反向推动安全证明、审计和长期维护能力。 &
+1. 高端 GPU/加速器、云软件栈和超大模型平台仍较依赖外部生态。\newline
+2. 合规要求清晰但执行成本高，SME 和科研团队负担较重。\newline
+3. 法规语言到芯片级安全指标之间仍需标准和测评工具衔接。 \\
+\midrule
+产业侧 & 工业、汽车与嵌入式安全芯片底座 & Infineon、STMicroelectronics、NXP、Bosch、Siemens、Arm 欧洲生态 &
+1. Infineon OPTIGA Trust 面向 MCU/MPU/应用处理器提供安全认证、安全通信、安全更新和访问管理 \cite{infineonoptiga2026}。\newline
+2. STSAFE-A110 作为安全元件提供认证、安全数据管理、TLS 握手、签名验证、安全启动/固件升级、抗故障和抗侧信道能力 \cite{stsafea1102026}。\newline
+3. PSA Certified/Arm 平台安全生态为 IoT/边缘芯片建立多级安全评估、RoT、证明、加密和存储 API \cite{psacertified2026,armplatformsecurity2026}。 &
+1. 用安全元件、TPM/HSM、唯一设备身份和预置证书绑定工业设备。\newline
+2. 通过 Secure Boot、固件签名、TLS、密钥隔离、计数器和安全更新保护边缘节点。\newline
+3. 以 PSA/IEC 62443/CRA 等框架把芯片安全能力转译成认证和采购语言。 &
+1. 适合工业 Agent 进入现场系统时建立设备身份、固件可信和运维权限边界。\newline
+2. 保护 PLC、边缘网关、传感器、机器人和汽车电子中的模型、配置和现场数据。\newline
+3. 与欧洲功能安全、网络安全和长期维护传统形成协同。 &
+1. 产品级安全能力分散在不同芯片、工具链和证书体系中。\newline
+2. 端侧算力、内存和功耗限制使复杂 Agent 难完全本地运行。\newline
+3. 硬件安全功能需要系统集成方正确配置，否则容易停留在“可用但未启用”。 \\
+\midrule
+产业侧 & 工业现场安全运营、合规采购与长期维护 & Siemens、Bosch Rexroth、Schneider Electric、工业软件厂商、ProductCERT/PSIRT 生态 &
+1. Siemens 工业网络安全方案强调从管理系统到现场层、从访问控制到数据流的防护，并采用符合 IEC 62443 的 defense-in-depth 思路 \cite{siemensindustrialcyber2026}。\newline
+2. Siemens 将 plant security、network security、system integrity 与 Zero Trust 原则结合，用于保护控制器、HMI、SCADA 和远程维护接口 \cite{siemensindustrialcyber2026}。\newline
+3. 工业厂商通过 ProductCERT、固件更新、工业安全公告和认证材料支撑 NIS2、CRA、IEC 62443 等合规要求 \cite{siemensindustrialcyber2026,infineonoptiga2026}。 &
+1. 将 Agent 可触达的工业资产分层：现场设备、控制网络、边缘网关、SCADA、MES/ERP 和云服务。\newline
+2. 结合资产清单、访问控制、远程维护审计、系统完整性和安全补丁流程。\newline
+3. 在采购规范中要求安全启动、可更新固件、漏洞披露、生命周期支持和证明材料。 &
+1. 使 Agent 安全从模型越狱治理扩展到工业现场可运行、可审计、可维护。\newline
+2. 让硬件安全、工业协议安全和法规合规进入同一套验收语言。\newline
+3. 有利于能源、交通、制造和公共设施中的高风险 Agent 形成责任链。 &
+1. 工业现场异构且生命周期长，补丁窗口和停机成本限制修复速度。\newline
+2. 供应商安全承诺、集成商配置和业主运维能力之间可能存在断点。\newline
+3. 工业 Agent 的自治决策、跨系统联动和责任归属仍缺少成熟认证范式。 \\
+\bottomrule
+\end{tabularx}
+\caption{欧洲 AI 硬件与芯片安全研究现状：以方向为主轴、主体为支撑的结构化总结}
+\label{tab:europe-ai-hardware-security}
+\end{table*}
+
+欧洲路线首先由法规和公共算力基础设施塑形。European Chips Act 将半导体供应安全、生态韧性、数字主权和减少第三方依赖写入欧洲产业政策 \cite{euchipsact2023}；EU AI Act 则把高风险 AI 系统纳入风险管理、数据治理、技术文档、记录、人类监督、鲁棒性和网络安全要求 \cite{euaiact2024}。EuroHPC AI Factories 进一步把 AI 优化超算、数据、人才和支持服务组织成跨欧洲网络，截至 2026 年欧委会页面列出 19 个 AI Factories 和 13 个 Antennas，并强调向产业、科研、学术和公共部门开放 \cite{eurohpcAIFactories2026,ecAIFactories2026}。
+
+学术侧最鲜明的贡献是持续攻击和验证机密计算边界。SEVered 证明，早期 SEV 即使加密 VM 内存，也可能被恶意 hypervisor 通过页映射操控和服务交互抽取明文 \cite{severed2018}。One Glitch to Rule Them All 则把攻击推进到 AMD Secure Processor，说明如果安全协处理器和固件信任根被故障注入破坏，VM 内存解密、迁移身份和证明材料都可能受到影响 \cite{oneglitch2021}。WeSee 进一步针对 SEV-SNP 的 \#VC 异常路径展示执行完整性风险，说明机密 VM 的安全不仅取决于内存加密，还取决于异常处理、guest-hypervisor 通信和内核处理逻辑 \cite{wesee2024}。
+
+SEV-SNP Routing Misconfiguration 说明机密计算底座的脆弱性还可能来自平台初始化和设备路由细节。AMD-SB-3034 披露，缺少 AMD Secure Processor 固件锁定检查可能允许本地高权限攻击者修改 MMIO 路由，从而影响部分 Zen 5 产品上的 SEV-SNP guest 完整性 \cite{amdsb3034}。形式化分析 SEV-SNP 软件接口的研究也表明，远程证明、密钥派生、页面交换和迁移协议需要被系统性建模，平台无关消息设计可能带来证明完整性方面的弱点 \cite{formalsevsnp2024}。
+
+欧洲的硬件安全产业侧更贴近工业、汽车和嵌入式场景。Infineon OPTIGA Trust 可与 MCU/MPU 或应用处理器配合，承担安全认证、安全通信、安全更新和访问管理 \cite{infineonoptiga2026}；STSAFE-A110 作为安全元件提供认证、安全数据管理、TLS 握手、签名验证、安全启动/固件升级、片上密钥生成、抗故障和抗侧信道等能力 \cite{stsafea1102026}；PSA Certified 和 Arm 平台安全生态则把 Root of Trust、证明 API、加密 API、安全存储和多级评估变成 IoT/边缘设备的通用安全语言 \cite{psacertified2026,armplatformsecurity2026}。
+
+工业现场安全是欧洲路线中非常关键的差异点。Siemens 的工业网络安全方案强调从管理系统到现场层、从访问控制到数据流的全层防护，并采用符合 IEC 62443 的 defense-in-depth 思路，将 plant security、network security、system integrity 与 Zero Trust 原则结合 \cite{siemensindustrialcyber2026}。这类方案提示我们，工业 Agent 不是一个只在云端调用模型的聊天系统，而是可能触达传感器、PLC、机器人、HMI、SCADA、MES/ERP、远程维护账户和生产数据的执行主体。
+
+欧洲学术和产业之间还存在一条“可信连接器/数据空间”的中间路线。Industrial Data Space Trusted Connector 将可信边缘网关用于跨组织工业数据交换，强调容器隔离、身份管理、策略执行和远程证明 \cite{trustedconnector2018}；TrustZone 安全缓存和运行时完整性测量研究则探索如何在边缘设备上保护敏感数据、TEE 组件和本地 AI/TinyML 工作负载 \cite{kevlartz2021,pdrima2025}。
+
+总体看，欧洲路线对 Agent 安全的启示是：Agent 底座必须被写进可说明、可审计、可采购和可维护的信任框架中。公共部门、金融、能源、交通和制造业部署 Agent 时，问题不只是模型是否越狱，还包括数据是否留在受控区域、执行节点是否可证明、硬件和固件是否可更新、供应链是否有韧性、日志是否可审计、现场设备是否满足安全认证、供应商是否能提供长期维护承诺。欧洲的短板也很明确：高端云端 AI GPU、超大规模商业 Agent 平台和部分关键软件栈仍对外部生态依赖较高；但它的优势在于能够把硬件安全、合规要求、工业认证和公共采购合成一套更适合高风险 Agent 落地的治理语言。

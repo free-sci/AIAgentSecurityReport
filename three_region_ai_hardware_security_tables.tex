@@ -1,0 +1,149 @@
+% 需要：\usepackage{tabularx}
+% 说明：每一行对应一个代表性成果；核心主体按成果对应的官方主体分行列出。
+
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{|p{0.85cm}|p{1.45cm}|p{2.25cm}|X|X|X|X|}
+\hline
+核心维度 & 细分落地 & 核心主体 & 代表性成果 & 技术方案 & 核心价值 & 不足 \\
+\hline
+学术侧 & GPU 渲染侧信道 & \begin{tabular}[t]{@{}l@{}}Yingchen Wang\\Riccardo Paccagnella\\Zhao Gang\\Willy Vasquez\\David Kohlbrenner\end{tabular} & GPU.zip 像素泄露 \cite{gpuzip2024} & 压缩延迟观测 & 暴露渲染风险 & 依赖硬件实现 \\
+\hline
+学术侧 & GPU 渲染侧信道 & \begin{tabular}[t]{@{}l@{}}Georgia Institute of Technology\\University of Michigan\\Ruhr University Bochum\end{tabular} & Hot Pixels 混合泄露 \cite{hotpixels2023} & DVFS 传感推断 & 推动浏览器隔离 & 缓解影响性能 \\
+\hline
+学术侧 & GPU 渲染侧信道 & \begin{tabular}[t]{@{}l@{}}Binghamton University\end{tabular} & WebGPU 缓存指纹 \cite{webgpuispy2024} & GPU 缓存计时 & 支撑 Agent 建模 & 缺企业验证 \\
+\hline
+学术侧 & 显存与多租户 & \begin{tabular}[t]{@{}l@{}}Trail of Bits\\University of California, Santa Cruz\end{tabular} & LeftoverLocals 残留 \cite{leftoverlocals2024} & 读取残留显存 & 保护提示响应 & 依赖驱动版本 \\
+\hline
+学术侧 & 显存与多租户 & \begin{tabular}[t]{@{}l@{}}Pacific Northwest National Laboratory\\Binghamton University\\University of California, Riverside\end{tabular} & GPU-box 跨卡信道 \cite{spygpubox2022} & 远端缓存争用 & 识别多卡风险 & 复现条件苛刻 \\
+\hline
+学术侧 & 显存与多租户 & \begin{tabular}[t]{@{}l@{}}University of California, Riverside\\Pacific Northwest National Laboratory\end{tabular} & NVBleed 互连泄露 \cite{nvbleed2025} & NVLink 侧信道 & 指导云隔离 & 云细节不透明 \\
+\hline
+学术侧 & 硬件木马与安全 EDA & \begin{tabular}[t]{@{}l@{}}University of Connecticut\\Rice University\end{tabular} & 木马分类检测 \cite{tehranipoor2010trojan} & 触发载荷建模 & 前移芯片安全 & 少连 AI 芯片 \\
+\hline
+学术侧 & 硬件木马与安全 EDA & \begin{tabular}[t]{@{}l@{}}University of Florida\end{tabular} & 信息流验证 \cite{nahiyan2018ifs} & RTL 策略检查 & 发现恶意逻辑 & 大 SoC 成本高 \\
+\hline
+学术侧 & 硬件木马与安全 EDA & \begin{tabular}[t]{@{}l@{}}Defense Advanced Research Projects Agency\end{tabular} & DARPA AISS \cite{darpaAISS} & 安全自动设计 & 支撑供应链可信 & 落地协同复杂 \\
+\hline
+产业侧 & 云端机密 AI & \begin{tabular}[t]{@{}l@{}}NVIDIA Corporation\end{tabular} & H100 机密 GPU \cite{nvidiah100cc2023} & RoT 测量启动 & 保护使用中数据 & TCB 复杂 \\
+\hline
+产业侧 & 云端机密 AI & \begin{tabular}[t]{@{}l@{}}Advanced Micro Devices, Inc.\\Intel Corporation\end{tabular} & SEV-SNP/TDX \cite{amdsev2026,inteltdx2026} & CVM 远程证明 & 支撑敏感上云 & 证明链较长 \\
+\hline
+产业侧 & 云端机密 AI & \begin{tabular}[t]{@{}l@{}}NVIDIA Corporation\end{tabular} & Secure AI/NRAS \cite{nvidiasecureai2025} & 证明后放密钥 & 产品化可信 AI & 依赖厂商服务 \\
+\hline
+产业侧 & 漏洞响应与治理 & \begin{tabular}[t]{@{}l@{}}CERT Coordination Center\\Trail of Bits\end{tabular} & CERT 协调披露 \cite{certleftoverlocals2024} & CVE 协同修复 & 加速问题闭环 & 修复链条长 \\
+\hline
+产业侧 & 漏洞响应与治理 & \begin{tabular}[t]{@{}l@{}}Advanced Micro Devices, Inc.\end{tabular} & AMD 驱动修复 \cite{amdleftoverlocals2024} & 清理本地内存 & 强化显存基线 & 并发性能受损 \\
+\hline
+产业侧 & 漏洞响应与治理 & \begin{tabular}[t]{@{}l@{}}Apple Inc.\\Google LLC\\Qualcomm Technologies, Inc.\end{tabular} & 终端厂商缓解 \cite{certleftoverlocals2024} & 系统级补丁 & 覆盖终端生态 & 旧设备难覆盖 \\
+\hline
+产业侧 & 端云私有 AI & \begin{tabular}[t]{@{}l@{}}Apple Inc.\end{tabular} & PCC 私有云 \cite{applepcc2024} & SEP 安全启动 & 延伸端侧隐私 & 封闭生态依赖 \\
+\hline
+产业侧 & 端云私有 AI & \begin{tabular}[t]{@{}l@{}}Apple Inc.\end{tabular} & 无 shell 少日志 \cite{applepcc2024} & 限制运维访问 & 约束服务方 & 实现仍闭源 \\
+\hline
+产业侧 & 端云私有 AI & \begin{tabular}[t]{@{}l@{}}Apple Inc.\end{tabular} & 透明日志证明 \cite{applepcc2024} & 设备侧验证 & 支持可证推理 & 不治提示注入 \\
+\hline
+\end{tabularx}
+\caption{北美 AI 硬件与芯片安全研究现状}
+\label{tab:north-america-ai-hardware-security-compact}
+\end{table*}
+
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{|p{0.85cm}|p{1.45cm}|p{2.25cm}|X|X|X|X|}
+\hline
+核心维度 & 细分落地 & 核心主体 & 代表性成果 & 技术方案 & 核心价值 & 不足 \\
+\hline
+学术侧 & TEE 边界验证 & \begin{tabular}[t]{@{}l@{}}Fraunhofer Institute for Applied and Integrated Security AISEC\end{tabular} & SEVered 抽取内存 \cite{severed2018} & 恶意页映射 & 验证 CVM 边界 & 偏 CPU TEE \\
+\hline
+学术侧 & TEE 边界验证 & \begin{tabular}[t]{@{}l@{}}Technische Universit\"at Berlin\\Fraunhofer Institute for Secure Information Technology SIT\end{tabular} & One Glitch 破根 \cite{oneglitch2021} & 安全核故障注入 & 暴露固件风险 & 修复依赖厂商 \\
+\hline
+学术侧 & TEE 边界验证 & \begin{tabular}[t]{@{}l@{}}ETH Zurich\end{tabular} & WeSee 异常攻击 \cite{wesee2024} & \#VC 异常注入 & 补足执行完整性 & 云配置不透明 \\
+\hline
+学术侧 & SEV-SNP 与证明 & \begin{tabular}[t]{@{}l@{}}Advanced Micro Devices, Inc.\end{tabular} & SNP 路由误配 \cite{amdsb3034} & MMIO 路由检查 & 细化固件证明 & TCB 字段复杂 \\
+\hline
+学术侧 & SEV-SNP 与证明 & \begin{tabular}[t]{@{}l@{}}University of Zagreb Faculty of Electrical Engineering and Computing\\University of Zagreb Faculty of Science\end{tabular} & SNP 形式化分析 \cite{formalsevsnp2024} & 协议符号建模 & 提升证明完整性 & 抽象实现细节 \\
+\hline
+学术侧 & SEV-SNP 与证明 & \begin{tabular}[t]{@{}l@{}}Fraunhofer Institute for Applied and Integrated Security AISEC\\ETH Zurich\end{tabular} & SEV 持续回归 \cite{severed2018,wesee2024} & 漏洞链复测 & 支撑持续验证 & 租户控制有限 \\
+\hline
+学术侧 & 边缘可信连接 & \begin{tabular}[t]{@{}l@{}}Fraunhofer Institute for Applied and Integrated Security AISEC\end{tabular} & Trusted Connector \cite{trustedconnector2018} & 网关远程证明 & 支撑数据空间 & 互操作复杂 \\
+\hline
+学术侧 & 边缘可信连接 & \begin{tabular}[t]{@{}l@{}}Arm Limited\\PSA Certified\end{tabular} & PSA/TrustZone \cite{psacertified2026} & 设备 RoT 抽象 & 统一设备安全语 & 旧设备缺能力 \\
+\hline
+学术侧 & 边缘可信连接 & \begin{tabular}[t]{@{}l@{}}Jingkai Mao\\Xiaolin Chang\end{tabular} & TEE 运行测量 \cite{pdrima2025} & 运行时完整性 & 保护边缘 AI & 难防物理绕过 \\
+\hline
+产业侧 & 主权算力与合规 & \begin{tabular}[t]{@{}l@{}}European Parliament\\Council of the European Union\end{tabular} & European Chips Act \cite{euchipsact2023} & 供应链政策 & 增强数字主权 & 高端 GPU 依赖 \\
+\hline
+产业侧 & 主权算力与合规 & \begin{tabular}[t]{@{}l@{}}European Parliament\\Council of the European Union\end{tabular} & EU AI Act \cite{euaiact2024} & 高风险治理 & 提供合规入口 & 执行成本高 \\
+\hline
+产业侧 & 主权算力与合规 & \begin{tabular}[t]{@{}l@{}}European High Performance Computing Joint Undertaking\\European Commission\end{tabular} & AI Factories \cite{eurohpcAIFactories2026} & 公共超算服务 & 连接科研产业 & 芯片指标待细化 \\
+\hline
+产业侧 & 嵌入式安全芯片 & \begin{tabular}[t]{@{}l@{}}Infineon Technologies AG\end{tabular} & OPTIGA Trust \cite{infineonoptiga2026} & 安全元件身份 & 保护设备接入 & 能力分散 \\
+\hline
+产业侧 & 嵌入式安全芯片 & \begin{tabular}[t]{@{}l@{}}STMicroelectronics N.V.\end{tabular} & STSAFE-A110 \cite{stsafea1102026} & 签名安全启动 & 保护固件更新 & 配置依赖集成 \\
+\hline
+产业侧 & 嵌入式安全芯片 & \begin{tabular}[t]{@{}l@{}}PSA Certified\\Arm Limited\end{tabular} & PSA Certified \cite{psacertified2026} & 多级安全评估 & 转译采购语言 & 端侧算力有限 \\
+\hline
+产业侧 & 工业现场安全 & \begin{tabular}[t]{@{}l@{}}Siemens AG\end{tabular} & IEC 62443 防护 \cite{siemensindustrialcyber2026} & 纵深防御 & 覆盖工业现场 & 补丁窗口受限 \\
+\hline
+产业侧 & 工业现场安全 & \begin{tabular}[t]{@{}l@{}}Siemens AG\end{tabular} & Zero Trust 工业化 \cite{siemensindustrialcyber2026} & 分层访问控制 & 约束远程维护 & 运维能力不均 \\
+\hline
+产业侧 & 工业现场安全 & \begin{tabular}[t]{@{}l@{}}Siemens ProductCERT\end{tabular} & ProductCERT 机制 \cite{siemensindustrialcyber2026} & 公告补丁流 & 形成责任链 & Agent 认证不足 \\
+\hline
+\end{tabularx}
+\caption{欧洲 AI 硬件与芯片安全研究现状}
+\label{tab:europe-ai-hardware-security-compact}
+\end{table*}
+
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{|p{0.85cm}|p{1.45cm}|p{2.25cm}|X|X|X|X|}
+\hline
+核心维度 & 细分落地 & 核心主体 & 代表性成果 & 技术方案 & 核心价值 & 不足 \\
+\hline
+学术侧 & 可信计算与 vTPM & \begin{tabular}[t]{@{}l@{}}Wuhan University\\Baidu USA X-Lab\\The Ohio State University\\The Pennsylvania State University\\Clemson University\end{tabular} & SvTPM 生命周期保护 \cite{svtpm2019} & TEE 隔离 vTPM & 保护云租户密钥 & 未联动 NPU \\
+\hline
+学术侧 & 可信计算与 vTPM & \begin{tabular}[t]{@{}l@{}}Institute of Software, Chinese Academy of Sciences\end{tabular} & CCxTrust 复合证明 \cite{ccxtrust2024} & TEE+TPM 协同 & 支撑机密 VM & 接口未统一 \\
+\hline
+学术侧 & 可信计算与 vTPM & \begin{tabular}[t]{@{}l@{}}State Administration for Market Regulation\\Standardization Administration of China\end{tabular} & 可信计算标准 \cite{gbt29829_2022} & 度量可信报告 & 衔接等保密评 & 缺芯片细则 \\
+\hline
+学术侧 & 国产 NPU 适配 & \begin{tabular}[t]{@{}l@{}}Beihang University\\State Key Laboratory of Complex and Critical Software Environment\end{tabular} & OpenPangu 量化 \cite{openpanguquant2026} & PTQ 方法比较 & 降低部署成本 & 安全指标较少 \\
+\hline
+学术侧 & 国产 NPU 适配 & \begin{tabular}[t]{@{}l@{}}Huawei Technologies Co., Ltd.\end{tabular} & HiFloat 低比特 \cite{hifloat2026} & 权重激活压缩 & 提升推理效率 & 泛化仍有限 \\
+\hline
+学术侧 & 国产 NPU 适配 & \begin{tabular}[t]{@{}l@{}}PKU-Changsha Institute of Computing and Digital Economy\\Peking University\end{tabular} & W4A16 kernel \cite{w4a16ascend2026} & 混合精度矩阵乘 & 定位访存瓶颈 & 缺攻击基准 \\
+\hline
+学术侧 & 端侧边缘 AI & \begin{tabular}[t]{@{}l@{}}Institute of Computing Technology, Chinese Academy of Sciences\\University of Chinese Academy of Sciences\\University of Science and Technology of China\\Peking University\\Shanghai Innovation Center for Processor Technologies\\Cambricon Technologies Corporation Limited\end{tabular} & Cambricon-LLM \cite{cambriconllm2024} & NPU+Flash 芯粒 & 支撑本地推理 & 安全非主线 \\
+\hline
+学术侧 & 端侧边缘 AI & \begin{tabular}[t]{@{}l@{}}Li Auto Inc.\end{tabular} & M100 数据流 \cite{m100dataflow2026} & 编译器管数据流 & 降低访存压力 & 少谈证明接口 \\
+\hline
+学术侧 & 端侧边缘 AI & \begin{tabular}[t]{@{}l@{}}Jinghe Zhang\\Daliang Xu\\Chenghua Wang\\Weikai Xie\\Tao Qi\\Yun Ma\\Mengwei Xu\\Gang Huang\end{tabular} & Quant.npu \cite{quantnpu2026} & 静态量化适配 & 贴近移动 NPU & 缺物理防护 \\
+\hline
+产业侧 & 昇腾与国产栈 & \begin{tabular}[t]{@{}l@{}}Huawei Technologies Co., Ltd.\\Ascend Computing Business\end{tabular} & CANN 异构架构 \cite{ascendcann2026} & NPU 软件栈 & 替代 CUDA 依赖 & 固件证明少 \\
+\hline
+产业侧 & 昇腾与国产栈 & \begin{tabular}[t]{@{}l@{}}MindSpore Community\\Huawei Technologies Co., Ltd.\end{tabular} & MindSpore 适配 \cite{mindspore2026} & 框架芯片协同 & 支撑私有化 AI & 攻击面复杂 \\
+\hline
+产业侧 & 昇腾与国产栈 & \begin{tabular}[t]{@{}l@{}}OpenAtom openEuler Community\end{tabular} & openEuler 多架构 \cite{openeuler2026} & 国产 OS 底座 & 接入审计体系 & 硬件联动不足 \\
+\hline
+产业侧 & 信创 CPU/加速器 & \begin{tabular}[t]{@{}l@{}}Hygon Information Technology Co., Ltd.\\Phytium Technology Co., Ltd.\\HiSilicon Technologies Co., Ltd.\\Loongson Technology Corporation Limited\end{tabular} & 国产 CPU 底座 & 可信启动根 & 保障供应连续 & 自主不等于安全 \\
+\hline
+产业侧 & 信创 CPU/加速器 & \begin{tabular}[t]{@{}l@{}}Cambricon Technologies Corporation Limited\\Biren Technology\\MetaX Integrated Circuits Co., Ltd.\\Moore Threads Technology Co., Ltd.\end{tabular} & 国产加速器入场 & 适配异构软件栈 & 支撑本地算力 & 证明接口分散 \\
+\hline
+产业侧 & 信创 CPU/加速器 & \begin{tabular}[t]{@{}l@{}}China Electronics Standardization Institute\\China Information Technology Security Evaluation Center\end{tabular} & 兼容适配采购 & 信创全栈集成 & 推动生态替代 & 测评材料不足 \\
+\hline
+产业侧 & 标准与合规补齐 & \begin{tabular}[t]{@{}l@{}}State Administration for Market Regulation\\Standardization Administration of China\end{tabular} & 等保 2.0 \cite{gbt22239_2019} & 系统安全基线 & 支撑上线验收 & 偏系统级 \\
+\hline
+产业侧 & 标准与合规补齐 & \begin{tabular}[t]{@{}l@{}}State Administration for Market Regulation\\Standardization Administration of China\end{tabular} & 密评要求 \cite{gbt39786_2021} & 密码应用约束 & 规范密钥保护 & 难测芯片隔离 \\
+\hline
+产业侧 & 标准与合规补齐 & \begin{tabular}[t]{@{}l@{}}National Information Security Standardization Technical Committee\\Cyberspace Administration of China\end{tabular} & 生成式 AI 要求 \cite{tc260genai2024} & 数据模型治理 & 补齐服务安全 & 硬件约束间接 \\
+\hline
+\end{tabularx}
+\caption{中国 AI 硬件与芯片安全研究现状}
+\label{tab:china-ai-hardware-security-compact}
+\end{table*}

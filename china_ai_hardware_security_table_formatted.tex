@@ -1,0 +1,132 @@
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{0.9cm}|>{\centering\arraybackslash}p{1.8cm}|>{\raggedright\arraybackslash}p{2.1cm}|X|X|X|X|}
+\hline
+核心维度 & 细分落地 & 核心主体 & 代表性成果 & 技术方案 & 核心价值 & 不足 \\
+\hline
+\multirow[c]{3}{0.9cm}{\centering 学术侧} &
+\multirow[c]{3}{1.8cm}{\centering 可信计算、vTPM 与云端信任链} &
+\multirow[c]{3}{2.1cm}{中科院、清华、上海交大、中科大、浙大、北航、国防科大等；SvTPM/CCxTrust 相关团队} &
+SvTPM 保护云环境 vTPM 生命周期 \cite{svtpm2019}。 &
+利用硬件根信任和 TEE 隔离 vTPM 私钥、NVRAM 和时钟状态。 &
+可映射到政企 Agent 的模型镜像、API 密钥、工具执行器和日志可信。 &
+研究多围绕 CPU/TEE/TPM，和国产 NPU/GPU 联合证明结合不足。 \\
+\cline{4-7}
+& & &
+CCxTrust 探索 TEE+TPM 复合证明 \cite{ccxtrust2024}。 &
+将 CPU-TEE 的黑盒 RoT 与 TPM 的白盒 RoT 组合，形成复合 attestation。 &
+支撑私有云/行业云中“谁在什么硬件和镜像上运行”的证明。 &
+证明材料如何绑定 Agent 工具权限、模型哈希和数据访问策略仍缺统一规范。 \\
+\cline{4-7}
+& & &
+可信计算标准提供密码支撑语言 \cite{gbt29829_2022}。 &
+用度量启动、密钥封装、远程证明和可信报告支撑云租户信任链。 &
+为等保、密评和信创环境下的 Agent 部署提供底层信任接口。 &
+真实国产云管平台、容器插件和 NPU 驱动的公开复现实验较少。 \\
+\hline
+\multirow[c]{3}{0.9cm}{\centering 学术侧} &
+\multirow[c]{3}{1.8cm}{\centering 国产 NPU/GPU 大模型适配、量化与推理系统} &
+\multirow[c]{3}{2.1cm}{北航、清华、中科院计算所、华为/昇腾生态、国产 GPU/NPU 研究团队} &
+OpenPangu 量化在 Ascend NPU 上得到系统评估 \cite{openpanguquant2026}。 &
+在 Ascend NPU 上比较 RTN、GPTQ、AWQ、SmoothQuant 等量化路线。 &
+说明国产 AI 芯片正从“能跑”走向“可量化、可服务化、可集群优化”。 &
+重点仍是性能和精度，安全指标如显存清零、kernel 隔离、侧信道较少覆盖。 \\
+\cline{4-7}
+& & &
+HiFloat 低比特格式用于 Ascend NPU 推理 \cite{hifloat2026}。 &
+用 HiF8/HiF4 等低比特浮点格式适配权重、激活和 KV-cache。 &
+为政企私有化部署中的成本、吞吐、显存占用和精度损失提供依据。 &
+评估多围绕特定模型、特定 NPU 和特定软件版本，泛化性有限。 \\
+\cline{4-7}
+& & &
+W4A16 kernel 面向 Ascend 910 优化 \cite{w4a16ascend2026}。 &
+通过 Cube/Vector 核协同、INT4 解量化和 Split-K 并行优化矩阵乘。 &
+使国产 NPU 软件栈的性能瓶颈逐步可测量、可定位。 &
+缺少类似 GPU.zip/LeftoverLocals 的公开攻击样例和第三方安全基准。 \\
+\hline
+\multirow[c]{3}{0.9cm}{\centering 学术侧} &
+\multirow[c]{3}{1.8cm}{\centering 端侧/边缘 AI 芯片架构与本地私有推理} &
+\multirow[c]{3}{2.1cm}{中科院计算所、寒武纪相关团队、高校体系结构与边缘智能团队} &
+Cambricon-LLM 探索 70B 模型端侧推理 \cite{cambriconllm2024}。 &
+通过 NPU+NAND flash chiplet、in-flash computing 和硬件 tiling 降低数据搬运。 &
+支撑工业、移动和政企 Agent 在本地/边缘运行，减少敏感数据上云。 &
+端侧架构论文多关注能效和吞吐，安全隔离与证明接口不是主线。 \\
+\cline{4-7}
+& & &
+M100 展示数据流 AI 计算架构 \cite{m100dataflow2026}。 &
+用 compiler/runtime 管理 tensor 数据流，弱化传统 cache 依赖。 &
+为国产端侧 AI 芯片提供从架构到编译器的系统优化路径。 &
+对侧信道、物理攻击、固件更新和调试口控制讨论不足。 \\
+\cline{4-7}
+& & &
+Quant.npu 面向移动 NPU 静态量化 \cite{quantnpu2026}。 &
+用整数静态量化、旋转矩阵和混合精度适配移动 NPU 约束。 &
+与“数据不出域、私有化部署、低时延推理”的国内需求一致。 &
+从论文原型到行业 Agent 现场部署仍需工程化和认证支撑。 \\
+\hline
+\multirow[c]{3}{0.9cm}{\centering 产业侧} &
+\multirow[c]{3}{1.8cm}{\centering 昇腾生态、国产 AI 软件栈与政企私有化部署} &
+\multirow[c]{3}{2.1cm}{华为昇腾、CANN、MindSpore、openEuler、鲲鹏/昇腾服务器、ModelArts/云管平台生态} &
+CANN 构成昇腾异构计算架构 \cite{ascendcann2026}。 &
+形成 NPU、驱动、算子库、编译器、框架、OS、服务器和云管平台的国产化栈。 &
+降低对 CUDA/NVIDIA 生态和外部供应链的单点依赖。 &
+公开材料更强调生态与性能，对 NPU 固件证明、显存清零、跨租户隔离披露不足。 \\
+\cline{4-7}
+& & &
+MindSpore 与 Ascend 处理器深度适配 \cite{mindspore2026}。 &
+通过 MindSpore、CANN、openEuler、ModelArts 等连接模型训练、推理和运维。 &
+支撑政府、金融、能源、运营商等场景的本地化 Agent 算力底座。 &
+CANN/驱动/算子库攻击面复杂，第三方漏洞样例和复现实验不足。 \\
+\cline{4-7}
+& & &
+openEuler 支持多架构数字基础设施 \cite{openeuler2026}。 &
+在政企私有云中适配国产 CPU、OS、容器、镜像仓库和安全审计体系。 &
+便于把等保、密评、国产化采购和运维审计接入 AI 平台。 &
+与 Agent 工具权限、模型仓库、密钥访问之间的硬件级联动规范尚未统一。 \\
+\hline
+\multirow[c]{3}{0.9cm}{\centering 产业侧} &
+\multirow[c]{3}{1.8cm}{\centering 国产 CPU/AI 加速器协同与信创适配} &
+\multirow[c]{3}{2.1cm}{海光、飞腾、鲲鹏、龙芯；寒武纪、壁仞、沐曦、摩尔线程等 AI 芯片/GPU 厂商} &
+国产 CPU 提供服务器信创底座。 &
+以国产 CPU、国产 OS、数据库、中间件、容器和 AI 加速卡组成政企一体化环境。 &
+满足自主可控、供应链连续性和信创采购要求。 &
+“供应链自主”不能自动等同于侧信道、固件、驱动和多租户安全充分。 \\
+\cline{4-7}
+& & &
+国产 AI 加速器进入训练/推理场景。 &
+通过适配 CUDA-like/MUSA/MACA/Neuware/CANN 等软件栈降低迁移成本。 &
+为行业 Agent 提供可私有化、可本地运维的算力环境。 &
+各厂商证明接口、固件度量、设备身份和安全公告机制不统一。 \\
+\cline{4-7}
+& & &
+软硬件兼容适配成为采购重点。 &
+以可信启动、密码模块、安全处理器和设备身份支撑服务器根信任。 &
+推动国产芯片从单点硬件替代走向系统级生态替代。 &
+高端训练生态、工具链成熟度和第三方安全测评仍弱于 NVIDIA/主流云生态。 \\
+\hline
+\multirow[c]{3}{0.9cm}{\centering 产业侧} &
+\multirow[c]{3}{1.8cm}{\centering 等保、密评、数据安全与生成式 AI 标准补齐} &
+\multirow[c]{3}{2.1cm}{国家标准委、TC260、密码管理部门、网信部门、测评机构、政企采购方} &
+等保 2.0 提供系统安全基线 \cite{gbt22239_2019}。 &
+以身份鉴别、访问控制、安全审计、入侵防范、可信验证和数据保护约束系统。 &
+为政企 Agent 采购、验收、上线和审计提供明确语言。 &
+标准多偏系统级，尚未完整覆盖 NPU/GPU 固件、显存、kernel、互连和证明接口。 \\
+\cline{4-7}
+& & &
+密码应用标准提供密评依据 \cite{gbt39786_2021}。 &
+以密码算法、密钥管理、密码服务、密码产品和应用安全支撑密评。 &
+促使 Agent 平台把日志、权限、密钥、数据和模型安全纳入制度化测评。 &
+等保/密评容易验收“平台配置”，难直接评估芯片级隔离有效性。 \\
+\cline{4-7}
+& & &
+生成式 AI 管理与安全要求补齐模型治理 \cite{cacgenai2023,tc260genai2024}。 &
+将训练数据、模型输出、内容安全、安全评估和算法备案纳入监管入口。 &
+为后续制定 AI 加速芯片安全功能基线提供制度基础。 &
+生成式 AI 安全要求主要面向服务和内容安全，对硬件底座约束仍间接。 \\
+\hline
+\end{tabularx}
+\caption{中国 AI 硬件与芯片安全研究现状：以方向为主轴、主体为支撑的结构化总结}
+\label{tab:china-ai-hardware-security-formatted}
+\end{table*}

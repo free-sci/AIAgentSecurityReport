@@ -1,68 +1,64 @@
-import { NavLink, useLocation, Link } from 'react-router-dom';
-import { ShieldCheck, Download, ExternalLink } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { BookOpen, Download, ShieldCheck } from 'lucide-react';
+import { Link, NavLink } from 'react-router-dom';
 
 const NAV_ITEMS = [
-  { id: 'survey', label: 'Survey', path: '/vulnerability' },
-  { id: 'appendix', label: 'Appendix', path: '/appendix' },
-  { id: 'tables', label: 'Tables', path: '/tables' },
-  { id: 'incidents', label: 'Incidents', path: '/incidents' },
+  { label: 'Survey', path: '/survey' },
+  { label: 'Research', path: '/research' },
+  { label: 'Products', path: '/products' },
+  { label: 'Incidents', path: '/incidents' },
+  { label: 'Policy', path: '/policy' },
+  { label: 'Tables', path: '/tables' },
+  { label: 'References', path: '/references' },
 ];
 
 export default function Header() {
-  const location = useLocation();
-  const [activeNav, setActiveNav] = useState('');
-
-  useEffect(() => {
-    const current = NAV_ITEMS.find(item => item.path === location.pathname);
-    if (current) {
-      setActiveNav(current.id);
-    }
-  }, [location.pathname]);
-
   return (
-    <header className="w-full h-20 bg-[#0f172a] text-white flex items-center px-8 z-50 sticky top-0 border-b border-slate-800">
-      {/* Logo & Brand */}
-      <Link to="/" className="flex items-center gap-3 pr-8 border-r border-slate-700 h-10">
-        <div className="w-9 h-9 bg-blue-600 rounded flex items-center justify-center">
-          <ShieldCheck className="text-white text-xl" size={22} />
-        </div>
-        <span className="font-bold text-xl tracking-tighter">ASR PORTAL</span>
-      </Link>
-
-      {/* Navigation Menu */}
-      <nav className="flex flex-1 items-center px-10 gap-10 h-full overflow-x-auto no-scrollbar">
-        {NAV_ITEMS.map((item) => (
-          <NavLink
-            key={item.id}
-            to={item.path}
-            className={`nav-link text-xs font-semibold uppercase tracking-widest ${
-              activeNav === item.id ? 'active text-white' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            {item.label}
-          </NavLink>
-        ))}
-      </nav>
-
-      {/* Action Buttons */}
-      <div className="flex items-center gap-4 pl-8 border-l border-slate-700 h-10">
-        <a
-          href="#"
-          onClick={(e) => { e.preventDefault(); alert('报告下载功能即将上线'); }}
-          className="flex items-center px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold uppercase tracking-widest rounded transition-colors"
-        >
-          <Download size={14} className="mr-2" />
-          Download
-        </a>
-        <Link
-          to="/vulnerability"
-          className="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-500 text-xs font-bold uppercase tracking-widest rounded transition-colors"
-        >
-          <ExternalLink size={14} className="mr-2" />
-          Survey
+    <header className="sticky top-0 z-50 h-[72px] w-full border-b border-slate-800 bg-slate-950 text-white">
+      <div className="mx-auto flex h-full max-w-[1600px] items-center px-4 md:px-6">
+        <Link to="/" className="flex h-10 flex-none items-center gap-3 pr-5 md:border-r md:border-slate-700">
+          <div className="flex h-9 w-9 items-center justify-center rounded bg-blue-600">
+            <ShieldCheck size={21} />
+          </div>
+          <div className="hidden sm:block">
+            <div className="text-sm font-bold">AI 智能体安全</div>
+            <div className="text-[10px] text-slate-400">REPORT 2026</div>
+          </div>
         </Link>
+
+        <nav className="no-scrollbar flex h-full min-w-0 flex-1 items-center gap-6 overflow-x-auto px-5">
+          {NAV_ITEMS.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `nav-link flex h-full flex-none items-center text-xs font-bold ${
+                  isActive ? 'active text-white' : 'text-slate-400 hover:text-white'
+                }`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="hidden flex-none items-center gap-2 border-l border-slate-700 pl-4 xl:flex">
+          <a
+            href="/AI_智能体安全调研报告.pdf"
+            title="下载报告"
+            className="flex h-9 w-9 items-center justify-center rounded border border-slate-700 text-slate-300 hover:border-slate-500 hover:text-white"
+          >
+            <Download size={16} />
+          </a>
+          <Link
+            to="/references"
+            title="查看参考文献"
+            className="flex h-9 w-9 items-center justify-center rounded bg-blue-600 text-white hover:bg-blue-500"
+          >
+            <BookOpen size={16} />
+          </Link>
+        </div>
       </div>
     </header>
   );
 }
+

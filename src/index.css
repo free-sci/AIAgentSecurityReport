@@ -10,7 +10,7 @@
 
 /* ===== Base Styles ===== */
 body {
-  font-family: 'General Sans', 'Satoshi', 'Inter', sans-serif;
+  font-family: Inter, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
   background-color: #ffffff;
   color: #1e293b;
   -webkit-font-smoothing: antialiased;
@@ -31,7 +31,7 @@ body {
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: -20px;
+  bottom: 0;
   left: 50%;
   width: 0;
   height: 2px;
@@ -41,11 +41,27 @@ body {
 }
 
 .nav-link.active::after {
-  width: 80%;
+  width: 100%;
 }
 
 .nav-link:hover {
-  color: #94a3b8;
+  color: #ffffff;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #dbeafe;
+  color: #172554;
 }
 
 /* ===== Sidebar Item Styles ===== */

@@ -1,0 +1,142 @@
+% 需要：\usepackage{tabularx,array}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\cellsubj}[1]{\begin{tabular}[t]{@{}l@{}}#1\end{tabular}}
+
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.22}
+\begin{tabularx}{\textwidth}{|p{0.78cm}|p{1.05cm}|p{2.45cm}|Y|Y|Y|}
+\hline
+核心维度 & 研究方向 & 核心主体 & 代表性成果 & 技术方案 & 核心价值 \\
+\hline
+学术侧 & GPU 渲染侧信道 & \cellsubj{The University of Texas at Austin\\Carnegie Mellon University\\University of Washington} & GPU.zip 图形压缩泄露 \cite{gpuzip2024} & 利用压缩差异计时 & 证明压缩可成侧信道 \\
+\hline
+学术侧 & GPU 混合侧信道 & \cellsubj{Georgia Institute of Technology\\University of Michigan\\Ruhr University Bochum} & Hot Pixels 传感器泄露 \cite{hotpixels2023} & 观测频率功耗温度 & 验证软件可见泄露 \\
+\hline
+学术侧 & WebGPU 缓存攻击 & \cellsubj{University of California, Riverside} & WebGPU-SPY 指纹识别 \cite{webgpuispy2024} & GPU 计时与缓存争用 & 证明 WebGPU 攻击面 \\
+\hline
+学术侧 & GPU 本地内存 & \cellsubj{Trail of Bits\\University of California, Santa Cruz} & LeftoverLocals 残留读取 \cite{leftoverlocals2024} & 读取 GPU local memory & 证明跨进程数据残留 \\
+\hline
+学术侧 & 多 GPU 侧信道 & \cellsubj{University of California, Riverside\\Pacific Northwest National Laboratory} & Spy in the GPU-box \cite{spygpubox2022} & 远端 L2 缓存争用 & 证明跨 GPU 信道 \\
+\hline
+学术侧 & 多 GPU 互连 & \cellsubj{University of California, Riverside\\Pacific Northwest National Laboratory} & NVBleed 互连泄露 \cite{nvbleed2025} & 观测 NVLink 争用 & 扩展互连威胁模型 \\
+\hline
+学术侧 & 硬件木马 & \cellsubj{University of Connecticut\\Rice University} & 木马分类与检测 \cite{tehranipoor2010trojan} & 分类触发与载荷 & 奠定木马研究框架 \\
+\hline
+学术侧 & 信息流验证 & \cellsubj{University of Florida} & RTL 信息流检测 \cite{nahiyan2018ifs} & 验证设计信息流 & 支持设计期检测 \\
+\hline
+学术侧 & 安全 EDA & \cellsubj{Defense Advanced Research Projects Agency} & DARPA AISS 项目 \cite{darpaAISS} & 自动化安全设计 & 推动安全前移设计 \\
+\hline
+产业侧 & 机密 GPU & \cellsubj{NVIDIA Corporation} & H100 机密计算 \cite{nvidiah100cc2023} & GPU RoT 与证明 & 保护 GPU 使用中数据 \\
+\hline
+产业侧 & 机密虚拟机 & \cellsubj{Advanced Micro Devices, Inc.\\Intel Corporation} & SEV-SNP 与 TDX \cite{amdsev2026,inteltdx2026} & VM 加密与远程证明 & 保护主机侧内存 \\
+\hline
+产业侧 & 可信 AI 产品 & \cellsubj{NVIDIA Corporation} & Secure AI/NRAS \cite{nvidiasecureai2025} & 证明后释放密钥 & 产品化 GPU 证明 \\
+\hline
+产业侧 & 漏洞协调 & \cellsubj{CERT Coordination Center\\Trail of Bits} & LeftoverLocals 披露 \cite{certleftoverlocals2024} & CVE 与厂商协调 & 建立漏洞响应链 \\
+\hline
+产业侧 & GPU 修复 & \cellsubj{Advanced Micro Devices, Inc.} & AMD-SB-6010 修复 \cite{amdleftoverlocals2024} & 驱动清理本地内存 & 缓解已知内存泄露 \\
+\hline
+产业侧 & 终端缓解 & \cellsubj{Apple Inc.\\Google LLC\\Qualcomm Incorporated} & 多厂商缓解进展 \cite{certleftoverlocals2024} & 系统与驱动更新 & 扩大受影响面修复 \\
+\hline
+产业侧 & 私有云推理 & \cellsubj{Apple Inc.} & Private Cloud Compute \cite{applepcc2024} & Secure Enclave 与启动 & 约束云端访问路径 \\
+\hline
+产业侧 & 云端可验证性 & \cellsubj{Apple Inc.} & PCC 透明日志 \cite{applepcc2024} & 设备侧验证镜像 & 提供节点验证机制 \\
+\hline
+\end{tabularx}
+\caption{北美 AI 硬件与芯片安全研究现状}
+\label{tab:north-america-ai-hardware-security-revised}
+\end{table*}
+
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.22}
+\begin{tabularx}{\textwidth}{|p{0.78cm}|p{1.05cm}|p{2.45cm}|Y|Y|Y|}
+\hline
+核心维度 & 研究方向 & 核心主体 & 代表性成果 & 技术方案 & 核心价值 \\
+\hline
+学术侧 & SEV 内存保护 & \cellsubj{Fraunhofer Institute for Applied and Integrated Security AISEC} & SEVered 内存抽取 \cite{severed2018} & 恶意页映射与重放 & 证明早期 SEV 局限 \\
+\hline
+学术侧 & 安全处理器 & \cellsubj{Technische Universit\"at Berlin\\secunet Security Networks AG} & One Glitch 攻击 \cite{oneglitch2021} & AMD-SP 电压故障 & 证明 RoT 依赖固件 \\
+\hline
+学术侧 & SEV-SNP 异常 & \cellsubj{ETH Zurich} & WeSee 异常注入 \cite{wesee2024} & 注入恶意 \#VC 异常 & 揭示执行完整性风险 \\
+\hline
+学术侧 & SEV-SNP 配置 & \cellsubj{Advanced Micro Devices, Inc.} & SNP 路由误配公告 \cite{amdsb3034} & 检查 MMIO 路由 & 明确平台配置风险 \\
+\hline
+学术侧 & SNP 协议分析 & \cellsubj{University of Zagreb} & SNP 软件接口分析 \cite{formalsevsnp2024} & 符号化证明协议 & 检查证明协议性质 \\
+\hline
+学术侧 & 工业数据空间 & \cellsubj{Fraunhofer Institute for Applied and Integrated Security AISEC} & Trusted Connector \cite{trustedconnector2018} & 网关证明与策略 & 支撑可信数据交换 \\
+\hline
+学术侧 & 边缘安全框架 & \cellsubj{Arm Limited\\PSA Certified} & PSA 安全框架 \cite{psacertified2026} & RoT 与安全 API & 统一设备安全接口 \\
+\hline
+学术侧 & TrustZone 缓存 & \cellsubj{University of Neuchatel\\Universitat Politecnica de Catalunya} & KEVLAR-TZ 安全缓存 \cite{kevlartz2021} & TrustZone 缓存隔离 & 降低 TEE 侧信道面 \\
+\hline
+产业侧 & 芯片主权 & \cellsubj{European Parliament\\Council of the European Union} & European Chips Act \cite{euchipsact2023} & 半导体政策框架 & 支撑供应链韧性 \\
+\hline
+产业侧 & AI 合规 & \cellsubj{European Parliament\\Council of the European Union} & EU AI Act \cite{euaiact2024} & 高风险系统要求 & 明确 AI 合规义务 \\
+\hline
+产业侧 & 公共算力 & \cellsubj{European High Performance Computing Joint Undertaking\\European Commission} & AI Factories \cite{eurohpcAIFactories2026} & AI 超算与服务 & 提供公共算力入口 \\
+\hline
+产业侧 & 安全元件 & \cellsubj{Infineon Technologies AG} & OPTIGA Trust \cite{infineonoptiga2026} & 设备身份与密钥 & 支撑设备认证 \\
+\hline
+产业侧 & 安全元件 & \cellsubj{STMicroelectronics N.V.} & STSAFE-A110 \cite{stsafea1102026} & 签名与安全启动 & 支撑固件可信更新 \\
+\hline
+产业侧 & 安全认证 & \cellsubj{Arm Limited\\PSA Certified} & PSA Certified \cite{psacertified2026} & 分级安全评估 & 提供采购评估语言 \\
+\hline
+产业侧 & 工业网络安全 & \cellsubj{Siemens AG} & Defense-in-depth \cite{siemensindustrialcyber2026} & 分层工业防护 & 覆盖工业系统边界 \\
+\hline
+产业侧 & 工业访问控制 & \cellsubj{Siemens AG} & Zero Trust 工业化 \cite{siemensindustrialcyber2026} & 分区与访问控制 & 约束远程维护访问 \\
+\hline
+\end{tabularx}
+\caption{欧洲 AI 硬件与芯片安全研究现状}
+\label{tab:europe-ai-hardware-security-revised}
+\end{table*}
+
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.22}
+\begin{tabularx}{\textwidth}{|p{0.78cm}|p{1.05cm}|p{2.45cm}|Y|Y|Y|}
+\hline
+核心维度 & 研究方向 & 核心主体 & 代表性成果 & 技术方案 & 核心价值 \\
+\hline
+学术侧 & vTPM 保护 & \cellsubj{The Ohio State University\\Pennsylvania State University\\Clemson University} & SvTPM 生命周期保护 \cite{svtpm2019} & TEE 隔离 vTPM 状态 & 保护 vTPM 敏感数据 \\
+\hline
+学术侧 & 复合证明 & \cellsubj{Institute of Information Engineering, Chinese Academy of Sciences} & CCxTrust 复合证明 \cite{ccxtrust2024} & TEE 与 TPM 协同 & 强化机密 VM 证明 \\
+\hline
+学术侧 & 可信标准 & \cellsubj{State Administration for Market Regulation\\Standardization Administration of China} & 可信计算密码标准 \cite{gbt29829_2022} & 度量与可信报告 & 提供标准化接口 \\
+\hline
+学术侧 & Ascend 量化 & \cellsubj{Beihang University} & OpenPangu 量化评估 \cite{openpanguquant2026} & 比较 PTQ 方法 & 给出量化选择依据 \\
+\hline
+学术侧 & Ascend 低比特 & \cellsubj{Huawei Technologies Co., Ltd.} & HiFloat 格式评估 \cite{hifloat2026} & HiF8/HiF4 推理 & 验证低比特可用性 \\
+\hline
+学术侧 & Ascend kernel & \cellsubj{Chinese Academy of Sciences} & W4A16 kernel \cite{w4a16ascend2026} & INT4 到 FP16 解量化 & 优化量化矩阵乘 \\
+\hline
+学术侧 & 端侧 LLM 架构 & \cellsubj{Institute of Computing Technology, Chinese Academy of Sciences\\Cambricon Technologies Corporation Limited} & Cambricon-LLM \cite{cambriconllm2024} & NPU 与 Flash 芯粒 & 探索端侧大模型推理 \\
+\hline
+学术侧 & 数据流架构 & \cellsubj{Cambricon Technologies Corporation Limited} & M100 数据流架构 \cite{m100dataflow2026} & 编译器管数据流 & 降低推理访存压力 \\
+\hline
+学术侧 & 移动 NPU 量化 & \cellsubj{Peking University\\Beijing University of Posts and Telecommunications} & Quant.npu 静态量化 \cite{quantnpu2026} & 移动 NPU 静态量化 & 适配端侧推理约束 \\
+\hline
+产业侧 & Ascend 软件栈 & \cellsubj{Huawei Technologies Co., Ltd.} & CANN 异构架构 \cite{ascendcann2026} & NPU 编译与算子栈 & 支撑 Ascend 部署 \\
+\hline
+产业侧 & AI 框架适配 & \cellsubj{MindSpore Community\\Huawei Technologies Co., Ltd.} & MindSpore 适配 \cite{mindspore2026} & 框架与 Ascend 协同 & 支撑国产框架部署 \\
+\hline
+产业侧 & 国产操作系统 & \cellsubj{OpenAtom openEuler Community} & openEuler 多架构 \cite{openeuler2026} & 多架构 OS 底座 & 支撑信创基础环境 \\
+\hline
+产业侧 & 信创服务器 & \cellsubj{Hygon Information Technology Co., Ltd.\\Phytium Technology Co., Ltd.\\Huawei Technologies Co., Ltd.} & 国产 CPU 底座 & 服务器软硬件适配 & 降低供应链依赖 \\
+\hline
+产业侧 & AI 加速器适配 & \cellsubj{Cambricon Technologies Corporation Limited\\Biren Technology\\Moore Threads Technology Co., Ltd.\\MetaX Integrated Circuits Co., Ltd.} & 国产加速器入场 & 异构软件栈适配 & 支撑本地化算力 \\
+\hline
+产业侧 & 等保要求 & \cellsubj{State Administration for Market Regulation\\Standardization Administration of China} & 等保 2.0 基线 \cite{gbt22239_2019} & 系统安全控制项 & 支撑系统安全验收 \\
+\hline
+产业侧 & 密码应用 & \cellsubj{State Administration for Market Regulation\\Standardization Administration of China} & 密码应用要求 \cite{gbt39786_2021} & 密钥与密码服务 & 规范密码应用测评 \\
+\hline
+产业侧 & 生成式 AI 安全 & \cellsubj{National Information Security Standardization Technical Committee} & 生成式 AI 要求 \cite{tc260genai2024} & 数据与服务测评 & 补充模型服务要求 \\
+\hline
+\end{tabularx}
+\caption{中国 AI 硬件与芯片安全研究现状}
+\label{tab:china-ai-hardware-security-revised}
+\end{table*}

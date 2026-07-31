@@ -142,6 +142,9 @@ CHAPTERS = [
 
 def normalize_spaces(text: str) -> str:
     text = text.replace("\u00a0", " ").replace("\u200b", "")
+    text = re.sub(r"\(cid:0\)\s*腾", "昇腾", text)
+    text = re.sub(r"\uffff\s*腾", "昇腾", text)
+    text = re.sub(r"华为\s+昇腾", "华为昇腾", text)
     text = re.sub(r"\[\s*(\d+)\s*\]", r"[\1]", text)
     text = re.sub(r"\[\s*(\d+)\s*,\s*\[\s*(\d+)\s*\]", r"[\1], [\2]", text)
     text = re.sub(r"[ \t]+", " ", text)
@@ -284,7 +287,9 @@ def extract_tables(pdf: Any, page_texts: list[str]) -> list[dict[str, Any]]:
                 row: list[str] = []
                 for cell_index, raw_value in enumerate(padded):
                     value = clean_table_cell(raw_value)
-                    if raw_value is None and previous[cell_index]:
+                    if cell_index == 0 and not value and previous[cell_index]:
+                        value = previous[cell_index]
+                    elif raw_value is None and previous[cell_index]:
                         value = previous[cell_index]
                     row.append(value)
                 if not any(row):
@@ -691,6 +696,8 @@ def main() -> None:
     parsed_bib = parse_bib_entries()
     bib_entries = parsed_bib or existing_bib
     references = existing_references or build_reference_from_bib(bib_entries)
+    for reference in references:
+        reference["citation"] = normalize_spaces(reference["citation"])
     data = {
         "meta": {
             "title": "AI 智能体安全调研报告",

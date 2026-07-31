@@ -12,7 +12,7 @@ export default function TablesPage() {
       <PageIntro
         eyebrow="报告结构化数据"
         title="报告表格"
-        description="完整展示第 2 章数据表、第 3–5 章六维安全分析表，以及第 6 章重点研究方向表格。可按内容类型筛选并搜索表名、字段或单元格文本。"
+        description="完整展示终稿第 2 章研究、产品、事件、政策与产业瓶颈数据表，第 3–5 章全生命周期分析表，以及第 6 章重点研究方向表格。"
         meta={`${REPORT_TABLES.length} 张表 · ${REPORT_TABLES.reduce((sum, table) => sum + table.rows.length, 0)} 行`}
         icon={<TableProperties size={24} />}
       />
@@ -28,6 +28,7 @@ export default function TablesPage() {
           { id: 'vulnerabilities', label: '漏洞' },
           { id: 'tools', label: '攻击工具' },
           { id: 'policy', label: '政策法规' },
+          { id: 'bottlenecks', label: '产业瓶颈' },
           { id: 'six-dimension', label: '六维安全分析' },
           { id: 'research-directions', label: '重点研究方向' },
         ]}

@@ -47,7 +47,7 @@ const ENTRY_POINTS = [
   {
     path: '/tables',
     title: '完整表格',
-    description: '浏览并搜索报告第 2 章的全部原表。',
+    description: '浏览并搜索终稿第 2–6 章的全部 48 张原表。',
     icon: TableProperties,
   },
 ];
@@ -55,7 +55,7 @@ const ENTRY_POINTS = [
 const DIRECTIONS = [
   '大规模自主协同多智能体系统安全',
   '基于 AI 智能体的漏洞挖掘与修复体系',
-  '多模型集成安全推理体系',
+  '多专用小模型集成安全推理体系',
   '国产化多模型聚合安全网关',
 ];
 
@@ -70,7 +70,7 @@ export default function HomePage() {
           <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 md:px-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:py-16">
             <div className="self-center">
               <div className="mb-4 text-xs font-bold text-blue-600">
-                计算机网络信息中心安全部 · 2026 年 7 月
+                中国科学院计算机网络信息中心 · 2026 年 7 月 31 日
               </div>
               <h1 className="max-w-4xl text-4xl font-bold leading-tight text-slate-950 md:text-5xl">
                 AI 智能体安全调研报告
@@ -104,8 +104,8 @@ export default function HomePage() {
         <section className="border-b border-slate-200">
           <div className="mx-auto grid max-w-7xl grid-cols-2 px-5 md:grid-cols-4 md:px-8">
             {[
-              ['254', '报告页数'],
-              [String(REPORT_TABLES.length), '第 2 章原表'],
+              [String(REPORT_META.pages), '报告页数'],
+              [String(REPORT_TABLES.length), '报告原表'],
               [String(REPORT_META.referenceCount), '参考文献'],
               [String(citedWithUrl), '可访问外链'],
             ].map(([value, label]) => (
@@ -166,4 +166,3 @@ export default function HomePage() {
     </div>
   );
 }
-

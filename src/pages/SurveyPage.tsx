@@ -71,7 +71,7 @@ export default function SurveyPage() {
           </div>
           <h1 className="text-3xl font-bold text-slate-950 md:text-4xl">AI 智能体安全调研</h1>
           <p className="mt-3 max-w-4xl leading-7 text-slate-600">
-            展示报告第 1–7 章正文。生命周期章节按七个阶段组织，其余章节按报告原有小节组织。
+            展示终稿序言、报告信息与第 1–7 章全部正文。生命周期章节按七个阶段组织，其余章节按报告原有小节组织。
           </p>
         </div>
       </section>
@@ -96,7 +96,9 @@ export default function SurveyPage() {
                   >
                     <Icon size={17} className="mt-0.5 flex-none" />
                     <span className="min-w-0 flex-1">
-                      <span className="block text-xs opacity-70">第 {item.number} 章</span>
+                      <span className="block text-xs opacity-70">
+                        {item.id === 'frontmatter' ? '前置内容' : `第 ${item.number} 章`}
+                      </span>
                       <span className="mt-1 block text-sm leading-5">{item.title}</span>
                     </span>
                     {expanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
@@ -137,7 +139,9 @@ export default function SurveyPage() {
                 className="h-11 w-full rounded border border-slate-200 bg-white px-3 text-sm font-semibold"
               >
                 {SURVEY_CHAPTERS.map((item) => (
-                  <option key={item.id} value={item.id}>第 {item.number} 章 {item.title}</option>
+                  <option key={item.id} value={item.id}>
+                    {item.id === 'frontmatter' ? '前置内容' : `第 ${item.number} 章`} {item.title}
+                  </option>
                 ))}
               </select>
             </label>
@@ -157,7 +161,7 @@ export default function SurveyPage() {
 
           <header className="mb-8 border-b border-slate-200 pb-6">
             <div className="mb-2 text-xs font-bold text-blue-600">
-              第 {chapter.number} 章 · {section.number}
+              {chapter.id === 'frontmatter' ? '前置内容' : `第 ${chapter.number} 章`} · {section.number}
             </div>
             <h2 className="text-3xl font-bold leading-tight text-slate-950">{section.title}</h2>
             <p className="mt-3 text-sm text-slate-500">{chapter.title}</p>
@@ -195,6 +199,23 @@ export default function SurveyPage() {
                     </p>
                   ))}
             </div>
+            {section.figures && section.figures.length > 0 && (
+              <div className="mx-auto mt-12 max-w-4xl space-y-10">
+                {section.figures.map((figure) => (
+                  <figure key={figure.number}>
+                    <img
+                      src={figure.src}
+                      alt={`图 ${figure.number} ${figure.caption}`}
+                      loading="lazy"
+                      className="mx-auto h-auto w-full max-w-4xl"
+                    />
+                    <figcaption className="mt-3 text-center text-sm leading-6 text-slate-500">
+                      图 {figure.number}：{figure.caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            )}
             {sectionTables.length > 0 && (
               <div className="mt-12 space-y-12">
                 {sectionTables.map((table) => (

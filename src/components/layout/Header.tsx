@@ -1,4 +1,4 @@
-import { BookOpen, Download, ShieldCheck } from 'lucide-react';
+import { BookOpen, ExternalLink, ShieldCheck } from 'lucide-react';
 import { Link, NavLink } from 'react-router-dom';
 
 const NAV_ITEMS = [
@@ -43,11 +43,13 @@ export default function Header() {
 
         <div className="hidden flex-none items-center gap-2 border-l border-slate-700 pl-4 xl:flex">
           <a
-            href="/AI_智能体安全调研报告.pdf"
-            title="下载报告"
+            href="https://github.com/qzx-ikun/SecurityReport.git"
+            target="_blank"
+            rel="noreferrer"
+            title="查看 GitHub 项目"
             className="flex h-9 w-9 items-center justify-center rounded border border-slate-700 text-slate-300 hover:border-slate-500 hover:text-white"
           >
-            <Download size={16} />
+            <ExternalLink size={16} />
           </a>
           <Link
             to="/references"
@@ -61,4 +63,3 @@ export default function Header() {
     </header>
   );
 }
-

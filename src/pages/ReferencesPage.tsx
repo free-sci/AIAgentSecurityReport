@@ -24,6 +24,7 @@ export default function ReferencesPage() {
         {key: "researchwebpage", label: "学术与项目主页"},
     ];
 
+
     useEffect(() => {
         setQuery(citationKey);
     }, [citationKey]);
@@ -54,7 +55,7 @@ export default function ReferencesPage() {
         if (!needle) return list;
         return list.filter((reference) =>
             reference.citation.toLowerCase().includes(needle) ||
-            reference.key.toLowerCase().includes(needle) ||
+            reference.key?.toLowerCase().includes(needle) ||
             String(reference.number) === needle,
         );
     }, [query, activeTypeTab]);

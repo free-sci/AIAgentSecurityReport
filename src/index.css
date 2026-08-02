@@ -229,3 +229,186 @@ a {
 .sidebar-scroll::-webkit-scrollbar-thumb:hover {
   background: #cbd5e1;
 }
+
+/*!* 封面轮播容器 *!*/
+/*.cover-box {*/
+/*  position: relative;*/
+/*  width: 100%;*/
+/*  !* 删掉固定max-width，让它自动填充父容器宽度 *!*/
+/*  aspect-ratio: 210 / 297;*/
+/*}*/
+/*.cover-box img {*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  object-fit: contain;*/
+/*  border: 1px solid #e2e8f0;*/
+/*  background: #fff;*/
+/*  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);*/
+/*  opacity: 0;*/
+/*  transition: opacity 1s ease;*/
+/*}*/
+/*.cover-box img.active {*/
+/*  opacity: 1;*/
+/*}*/
+/*.dot-group {*/
+/*  display: flex;*/
+/*  gap: 10px;*/
+/*  justify-content: center;*/
+/*  margin-top: 18px;*/
+/*}*/
+/*.dot {*/
+/*  width: 11px;*/
+/*  height: 11px;*/
+/*  border-radius: 50%;*/
+/*  background-color: #cbd5e1;*/
+/*  cursor: pointer;*/
+/*  transition: all 0.2s;*/
+/*}*/
+/*.dot.active {*/
+/*  background-color: #2563eb;*/
+/*  transform: scale(1.2);*/
+/*}*/
+
+
+/*!* 中心聚焦轮播外层 *!*/
+/*.slider-wrap {*/
+/*  width: 100%;*/
+/*  overflow: hidden;*/
+/*  padding: 40px 0;*/
+/*}*/
+/*.slider-track {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  transition: transform 0.6s ease-out;*/
+/*}*/
+/*.slide-item {*/
+/*  flex: 0 0 62%;*/
+/*  padding: 0 10px;*/
+/*  transition: all 0.6s ease-out;*/
+/*  transform: scale(0.68);*/
+/*  opacity: 0.45;*/
+/*}*/
+/*.slide-item.active {*/
+/*  transform: scale(1);*/
+/*  opacity: 1;*/
+/*}*/
+/*.slide-item img {*/
+/*  width: 100%;*/
+/*  border: 1px solid #e2e8f0;*/
+/*  background: #fff;*/
+/*  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);*/
+/*}*/
+
+/*.dot-group {*/
+/*  display: flex;*/
+/*  gap: 10px;*/
+/*  justify-content: center;*/
+/*  margin-top: 16px;*/
+/*}*/
+/*.dot {*/
+/*  width: 11px;*/
+/*  height: 11px;*/
+/*  border-radius: 50%;*/
+/*  background-color: #cbd5e1;*/
+/*  cursor: pointer;*/
+/*  transition: all 0.2s;*/
+/*}*/
+/*.dot.active {*/
+/*  background-color: #2563eb;*/
+/*  transform: scale(1.2);*/
+/*}*/
+
+
+.carousel-wrap {
+    width: 100%;
+    position: relative;
+    padding: 10px 0;
+}
+.slider-view {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    /* 设置合理最低高度，防止容器塌陷，图片消失 */
+    min-height: 440px;
+}
+.slide-panel {
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
+    width: 62%;
+    transition: all 0.35s ease-out;
+}
+.slide-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.slide-left {
+    left: -60%;
+    opacity: 0.42;
+    transform: translateY(-25px) scale(0.7);
+}
+.slide-center {
+    left: 53%;
+    transform: translateX(-50%) translateY(-25px) scale(1);
+    opacity: 1;
+    z-index: 2;
+}
+.slide-right {
+    right: -60%;
+    opacity: 0.42;
+    transform: translateY(-25px) scale(0.7);
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top:12px;
+}
+.dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 999px;
+    background-color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.dot.dot-active {
+    background-color: #2563eb;
+    transform: scale(1.2);
+}
+
+
+/* Tab横向容器隐藏滚动条 */
+.overflow-x-auto {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+
+/* 页面垂直滚动条美化 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
